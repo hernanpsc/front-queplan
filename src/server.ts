@@ -40,7 +40,7 @@ connectToDatabase(ATLAS_URI)
 
         const {PORT} = process.env;
         // start the Express server
-        app.listen(!PORT, () => {
+        app.listen(5200, () => {
             console.log(`Server running at http://localhost:5200...`);
         });
 
