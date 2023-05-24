@@ -38,8 +38,9 @@ connectToDatabase(ATLAS_URI)
         app.use('/cotizacion', cotizacionRouter);
         app.use('/precios', listasdepreciosRouter);
 
+        const {PORT} = process.env;
         // start the Express server
-        app.listen(5200, () => {
+        app.listen(!PORT, () => {
             console.log(`Server running at http://localhost:5200...`);
         });
 
