@@ -42,6 +42,7 @@ function connectToDatabase(uri) {
         const db = client.db("api-crud");
         const db1 = client.db("planes");
         const db2 = client.db("precios");
+        const db3 = client.db("posts");
         // await applySchemaValidation(db);
         // await applySchemasValidation(db1);
         const employeesCollection = db.collection("employees");
@@ -54,6 +55,8 @@ function connectToDatabase(uri) {
         exports.collections.clinicas = clinicasCollection;
         const preciosCollection = db2.collection("listasdeprecios");
         exports.collections.precios = preciosCollection;
+        const postsCollection = db3.collection("posts");
+        exports.collections.posts = postsCollection;
     });
 }
 exports.connectToDatabase = connectToDatabase;

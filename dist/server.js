@@ -47,6 +47,7 @@ const clinicas_routes_1 = require("./routes/clinicas.routes");
 const cotizacion_routes_1 = require("./routes/cotizacion.routes");
 const database_2 = require("./conection/database");
 const listasdeprecios_routes_1 = require("./routes/listasdeprecios.routes");
+const posts_routes_1 = require("./routes/posts.routes");
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
 const { ATLAS_URI } = process.env;
@@ -58,7 +59,7 @@ if (!ATLAS_URI) {
     .then(() => {
     const app = (0, express_1.default)();
     app.get('/', (req, res) => {
-        res.send('Hello World!');
+        res.send('Hello  World!');
     });
     app.use((0, cors_1.default)());
     app.use("/employees", employees_routes_1.employeesRouter);
@@ -67,10 +68,11 @@ if (!ATLAS_URI) {
     app.use("/clinicas", clinicas_routes_1.clinicasRouter);
     app.use('/cotizacion', cotizacion_routes_1.cotizacionRouter);
     app.use('/precios', listasdeprecios_routes_1.listasdepreciosRouter);
+    app.use('/posts', posts_routes_1.postsRouter);
     const { PORT } = process.env;
     // start the Express server
     app.listen(PORT, () => {
-        console.log(`Server running at http://localhost:` + PORT + ` ...`);
+        console.log(`Server running at http://localhost:` + PORT + `...`);
     });
 })
     .catch(error => console.error(error));
