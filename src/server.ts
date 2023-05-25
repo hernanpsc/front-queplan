@@ -29,7 +29,7 @@ connectToDatabase(ATLAS_URI)
     .then(() => {
         const app = express();
         app.get('/', (req, res) => {
-            res.send('Hello World!');
+            res.send('Hello  World!');
           });
         app.use(cors());
         app.use("/employees",employeesRouter);
