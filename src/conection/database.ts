@@ -4,6 +4,8 @@ import { Empresa } from "../interfaces/empresas";
 import { Planes } from "../interfaces/planes";
 import { Clinicas } from "../interfaces/clinicas";
 import { Precios } from "../interfaces/precios";
+import { Posts } from "../interfaces/posts";
+
 
 
 
@@ -13,6 +15,7 @@ export const collections: {
     todoslosplanes?: mongodb.Collection<Planes>,
     clinicas?: mongodb.Collection<Clinicas>,
     precios?: mongodb.Collection<Precios>,
+    posts?: mongodb.Collection<Posts>,
  
 } = {};
 
@@ -24,6 +27,8 @@ export async function connectToDatabase(uri: string) {
     const db = client.db("api-crud");
     const db1 = client.db("planes");
     const db2 = client.db("precios");
+    const db3 = client.db("posts");
+
 
 
     // await applySchemaValidation(db);
@@ -44,6 +49,10 @@ export async function connectToDatabase(uri: string) {
 
     const preciosCollection = db2.collection<Precios>("listasdeprecios"); 
     collections.precios = preciosCollection;
+
+    
+    const postsCollection = db3.collection<Posts>("posts"); 
+    collections.posts = postsCollection;
 
     
 

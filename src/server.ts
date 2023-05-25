@@ -11,6 +11,8 @@ import { clinicasRouter } from "./routes/clinicas.routes";
 import { cotizacionRouter } from './routes/cotizacion.routes';
 import { collections } from './conection/database';
 import { listasdepreciosRouter } from "./routes/listasdeprecios.routes";
+import { postsRouter } from "./routes/posts.routes";
+
 
 
 // Load environment variables from the .env file, where the ATLAS_URI is configured
@@ -37,6 +39,8 @@ connectToDatabase(ATLAS_URI)
         app.use("/clinicas", clinicasRouter);
         app.use('/cotizacion', cotizacionRouter);
         app.use('/precios', listasdepreciosRouter);
+        app.use('/posts', postsRouter);
+
 
         const {PORT} = process.env
         // start the Express server

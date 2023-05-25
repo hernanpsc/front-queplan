@@ -12,4 +12,8 @@ export interface Imagen {
     provincia: string;
     CP: string;
   }
-    
+  
+  export interface Content {
+    text: string;
+    descripcion: string;
+  }
