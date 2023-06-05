@@ -18,7 +18,7 @@ dotenv.config();
 
 const { ATLAS_URI, PORT } = process.env;
 
-const whitelist = ['http://localhost', 'https://sakai-ng-front.vercel.app'];
+const whitelist = ['http://localhost:4200','https://sakai-ng-front.vercel.app'];
 
 const portRegex = /^http:\/\/localhost(?::\d+)?$/;
 
@@ -34,7 +34,7 @@ connectToDatabase(ATLAS_URI)
     const app = express();
 
     app.use(cors({
-      origin: filteredWhitelist,
+      origin: whitelist,
       allowedHeaders: ['Authorization', 'Content-Type']
     }));
 

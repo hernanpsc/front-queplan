@@ -51,7 +51,7 @@ const posts_routes_1 = require("./routes/posts.routes");
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
 const { ATLAS_URI, PORT } = process.env;
-const whitelist = ['http://localhost', 'https://sakai-ng-front.vercel.app'];
+const whitelist = ['http://localhost:4200', 'https://sakai-ng-front.vercel.app'];
 const portRegex = /^http:\/\/localhost(?::\d+)?$/;
 const filteredWhitelist = whitelist.filter((origin) => portRegex.test(origin));
 if (!ATLAS_URI) {
@@ -62,7 +62,7 @@ if (!ATLAS_URI) {
     .then(() => {
     const app = (0, express_1.default)();
     app.use((0, cors_1.default)({
-        origin: filteredWhitelist,
+        origin: whitelist,
         allowedHeaders: ['Authorization', 'Content-Type']
     }));
     app.get('/', (req, res) => {
