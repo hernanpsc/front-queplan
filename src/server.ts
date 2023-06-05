@@ -41,7 +41,8 @@ connectToDatabase(ATLAS_URI)
         app.use('/precios', listasdepreciosRouter);
         app.use('/posts', postsRouter);
 
-
+       app.use(cors())
+       
         const {PORT} = process.env
         // start the Express server
         app.listen(PORT, () => {

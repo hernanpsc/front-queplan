@@ -675,7 +675,6 @@ if (tipoIngreso === "M" || tipoIngreso === "D") {
 }
 
 
-
 //	<!--------------------Bonificacion Aportes OMINT end--------------------------->		
 adPlan('OMINT Plan '+plan_nombre, precio_final_a_pagar);
 
