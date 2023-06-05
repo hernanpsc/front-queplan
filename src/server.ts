@@ -18,6 +18,11 @@ dotenv.config();
 
 const { ATLAS_URI, PORT } = process.env;
 
+const whitelist = ['http://localhost', 'https://sakai-ng-front.vercel.app'];
+
+const portRegex = /^http:\/\/localhost(?::\d+)?$/;
+
+const filteredWhitelist = whitelist.filter((origin) => portRegex.test(origin));
 
 if (!ATLAS_URI) {
   console.error("No ATLAS_URI environment variable has been defined in config.env");
@@ -28,7 +33,10 @@ connectToDatabase(ATLAS_URI)
   .then(() => {
     const app = express();
 
-    app.use(cors());
+    app.use(cors({
+      origin: filteredWhitelist,
+      allowedHeaders: ['Authorization', 'Content-Type']
+    }));
 
     app.get('/', (req, res) => {
       res.send('Hello World!');
