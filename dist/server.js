@@ -69,6 +69,7 @@ if (!ATLAS_URI) {
     app.use('/cotizacion', cotizacion_routes_1.cotizacionRouter);
     app.use('/precios', listasdeprecios_routes_1.listasdepreciosRouter);
     app.use('/posts', posts_routes_1.postsRouter);
+    app.use((0, cors_1.default)());
     const { PORT } = process.env;
     // start the Express server
     app.listen(PORT, () => {
