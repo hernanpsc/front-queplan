@@ -18,7 +18,6 @@ dotenv.config();
 
 const { ATLAS_URI, PORT } = process.env;
 
-const whitelist = ['http://localhost:63744'];
 
 if (!ATLAS_URI) {
   console.error("No ATLAS_URI environment variable has been defined in config.env");
@@ -29,9 +28,7 @@ connectToDatabase(ATLAS_URI)
   .then(() => {
     const app = express();
 
-    app.use(cors({
-      origin: whitelist
-    }));
+    app.use(cors());
 
     app.get('/', (req, res) => {
       res.send('Hello World!');

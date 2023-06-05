@@ -50,7 +50,7 @@ const listasdeprecios_routes_1 = require("./routes/listasdeprecios.routes");
 const posts_routes_1 = require("./routes/posts.routes");
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
-const { ATLAS_URI } = process.env;
+const { ATLAS_URI, PORT } = process.env;
 if (!ATLAS_URI) {
     console.error("No ATLAS_URI environment variable has been defined in config.env");
     process.exit(1);
@@ -58,10 +58,10 @@ if (!ATLAS_URI) {
 (0, database_1.connectToDatabase)(ATLAS_URI)
     .then(() => {
     const app = (0, express_1.default)();
-    app.get('/', (req, res) => {
-        res.send('Hello  World!');
-    });
     app.use((0, cors_1.default)());
+    app.get('/', (req, res) => {
+        res.send('Hello World!');
+    });
     app.use("/employees", employees_routes_1.employeesRouter);
     app.use("/empresas", empresas_routes_1.empresasRouter);
     app.use("/planes", planes_routes_1.planesRouter);
@@ -69,9 +69,6 @@ if (!ATLAS_URI) {
     app.use('/cotizacion', cotizacion_routes_1.cotizacionRouter);
     app.use('/precios', listasdeprecios_routes_1.listasdepreciosRouter);
     app.use('/posts', posts_routes_1.postsRouter);
-    app.use((0, cors_1.default)());
-    const { PORT } = process.env;
-    // start the Express server
     app.listen(PORT, () => {
         console.log(`Server running at http://localhost:` + PORT + `...`);
     });
