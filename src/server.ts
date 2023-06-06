@@ -18,7 +18,7 @@ dotenv.config();
 
 const { ATLAS_URI, PORT } = process.env;
 
-const whitelist = ['http://localhost:4200','https://sakai-ng-front.vercel.app'];
+const whitelist = ['http://localhost:4200','http://localhost:4300','http://localhost:4400','http://localhost:4500','https://sakai-ng-front.vercel.app'];
 
 const portRegex = /^http:\/\/localhost(?::\d+)?$/;
 
