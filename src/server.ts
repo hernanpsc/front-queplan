@@ -18,8 +18,15 @@ dotenv.config();
 
 const { ATLAS_URI, PORT } = process.env;
 
-const whitelist = ['https://brokersalud.vercel.app/','http://localhost:4200','http://localhost:4300','http://localhost:4400','http://localhost:4500','https://sakai-ng-front.vercel.app','https://soloclinic.vercel.app'];
-
+const whitelist = [
+  'http://localhost:4200',
+  'http://localhost:4300',
+  'http://localhost:4400',
+  'http://localhost:4500',
+  'https://sakai-ng-front.vercel.app',
+  'https://soloclinic.vercel.app',
+  'https://brokersalud.vercel.app/'
+];
 const portRegex = /^http:\/\/localhost(?::\d+)?$/;
 
 const filteredWhitelist = whitelist.filter((origin) => portRegex.test(origin));
