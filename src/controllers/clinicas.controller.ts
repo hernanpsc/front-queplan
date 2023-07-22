@@ -45,12 +45,12 @@ export const  createClinica = async (req: Request, res: Response) => {
 
   
 
-export const  updateClinica = async (req: Request, res: Response) => {
+export const updateClinica = async (req: Request, res: Response) => {
   try {
     const id = req?.params?.id;
-    const clinica = req.body;
+    const { _id, ...updatedClinica } = req.body; // Destructuración para eliminar el campo _id
     const query = { _id: new mongodb.ObjectId(id) };
-    const  result = await collections.clinicas.replaceOne(query, req.body);
+    const result = await collections.clinicas.replaceOne(query, updatedClinica); // Usa updatedClinica en lugar de req.body
     if (result.modifiedCount === 0) {
       return res.status(404).send('clinica not found');
     }
@@ -59,6 +59,7 @@ export const  updateClinica = async (req: Request, res: Response) => {
     res.status(500).send(error.message);
   }
 };
+
 export const  deleteClinica = async (req: Request, res: Response) => {
   try {
     const id = req?.params?.id;
