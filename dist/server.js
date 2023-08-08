@@ -22,15 +22,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -39,6 +30,7 @@ exports.getEmployees2 = void 0;
 const dotenv = __importStar(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
+const multer_1 = __importDefault(require("multer"));
 const database_1 = require("./conection/database");
 const employees_routes_1 = require("./routes/employees.routes");
 const empresas_routes_1 = require("./routes/empresas.routes");
@@ -48,6 +40,7 @@ const cotizacion_routes_1 = require("./routes/cotizacion.routes");
 const database_2 = require("./conection/database");
 const listasdeprecios_routes_1 = require("./routes/listasdeprecios.routes");
 const posts_routes_1 = require("./routes/posts.routes");
+const uploads_routes_1 = require("./routes/uploads.routes");
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
 const { ATLAS_URI, PORT } = process.env;
@@ -76,6 +69,7 @@ if (!ATLAS_URI) {
     app.get('/', (req, res) => {
         res.send('Hello World!');
     });
+    app.use(express_1.default.static('./uploads'));
     app.use("/employees", employees_routes_1.employeesRouter);
     app.use("/empresas", empresas_routes_1.empresasRouter);
     app.use("/planes", planes_routes_1.planesRouter);
@@ -83,19 +77,42 @@ if (!ATLAS_URI) {
     app.use('/cotizacion', cotizacion_routes_1.cotizacionRouter);
     app.use('/precios', listasdeprecios_routes_1.listasdepreciosRouter);
     app.use('/posts', posts_routes_1.postsRouter);
+    app.use('/uploads', uploads_routes_1.uploadsRouter);
+    const storage = multer_1.default.diskStorage({
+        filename: function (res, file, cb) {
+            const ext = file.originalname.split('.').pop(); // TODO pdf / jpg / mp3
+            const fileName = Date.now(); // TODO 123234124
+            cb(null, `${fileName}.${ext}`); // TODO 123234124.pdf
+        },
+        destination: function (res, file, cb) {
+            cb(null, './uploads');
+        }
+    });
+    // const storage = multer.diskStorage({
+    //   destination: './uploads', // Carpeta de destino
+    //   filename: (req, file, cb) => {
+    //     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    //     cb(null, file.fieldname + '-' + uniqueSuffix);
+    //   }
+    // });
+    const upload = (0, multer_1.default)({ storage });
+    app.post('/upload', upload.single('myFile'), (req, res) => {
+        const file = req.file.filename;
+        res.send({ data: 'ok', url: `http://localhost:` + PORT + `/` + `${file}` });
+    });
     app.listen(PORT, () => {
         console.log(`Server running at http://localhost:` + PORT + `...`);
     });
 })
     .catch(error => console.error(error));
-const getEmployees2 = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getEmployees2 = async (req, res) => {
     try {
-        const employees = yield database_2.collections.employees.find({}).toArray();
+        const employees = await database_2.collections.employees.find({}).toArray();
         res.status(200).send(employees);
     }
     catch (error) {
         res.status(500).send(error.message);
     }
-});
+};
 exports.getEmployees2 = getEmployees2;
 //# sourceMappingURL=server.js.map

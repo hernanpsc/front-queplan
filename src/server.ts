@@ -1,8 +1,10 @@
 import * as dotenv from "dotenv";
+import path from 'path';
 import cors from "cors";
 import express from "express";
-import { Request, Response } from "express";
+import multer from "multer";
 
+import { Request, Response } from "express";
 import { connectToDatabase } from "./conection/database";
 import { employeesRouter } from "./routes/employees.routes";
 import { empresasRouter } from "./routes/empresas.routes";
@@ -12,6 +14,8 @@ import { cotizacionRouter } from './routes/cotizacion.routes';
 import { collections } from './conection/database';
 import { listasdepreciosRouter } from "./routes/listasdeprecios.routes";
 import { postsRouter } from "./routes/posts.routes";
+import { uploadsRouter } from "./routes/uploads.routes";
+
 
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
@@ -48,7 +52,8 @@ connectToDatabase(ATLAS_URI)
     app.get('/', (req, res) => {
       res.send('Hello World!');
     });
-
+  
+    app.use(express.static('./uploads'));
     app.use("/employees", employeesRouter);
     app.use("/empresas", empresasRouter);
     app.use("/planes", planesRouter);
@@ -56,7 +61,9 @@ connectToDatabase(ATLAS_URI)
     app.use('/cotizacion', cotizacionRouter);
     app.use('/precios', listasdepreciosRouter);
     app.use('/posts', postsRouter);
+    app.use('/uploads', uploadsRouter);
 
+    
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:` + PORT + `...`);
     });

@@ -17,7 +17,9 @@ export interface Planes {
     beneficios?:string[];
     clinicas?:string[];
     _id?: mongodb.ObjectId;
-  
+    item_id?: string;
+    empresa?: string;
+    sigla?: string; 
 }
 
 

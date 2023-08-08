@@ -22,35 +22,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteEmployee = exports.updateEmployee = exports.createEmployee = exports.getEmployeeById = exports.getEmployees = void 0;
 const database_1 = require("../conection/database");
 const mongodb = __importStar(require("mongodb"));
-const getEmployees = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getEmployees = async (req, res) => {
     try {
-        const employees = yield database_1.collections.employees.find({}).toArray();
+        const employees = await database_1.collections.employees.find({}).toArray();
         res.status(200).send(employees);
     }
     catch (error) {
         res.status(500).send(error.message);
     }
-});
+};
 exports.getEmployees = getEmployees;
-const getEmployeeById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+const getEmployeeById = async (req, res) => {
     try {
-        const id = (_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.id;
+        const id = req?.params?.id;
         const query = { _id: new mongodb.ObjectId(id) };
-        const employee = yield database_1.collections.employees.findOne(query);
+        const employee = await database_1.collections.employees.findOne(query);
         if (!employee) {
             return res.status(404).send('Employee not found');
         }
@@ -59,12 +49,12 @@ const getEmployeeById = (req, res) => __awaiter(void 0, void 0, void 0, function
     catch (error) {
         res.status(500).send(error.message);
     }
-});
+};
 exports.getEmployeeById = getEmployeeById;
-const createEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createEmployee = async (req, res) => {
     try {
         const employee = req.body;
-        const result = yield database_1.collections.employees.insertOne(employee);
+        const result = await database_1.collections.employees.insertOne(employee);
         if (result.acknowledged) {
             res.status(201).send(`Se creo una nueva employee: ID ${result.insertedId}.`);
         }
@@ -76,31 +66,29 @@ const createEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.error(error);
         res.status(400).send(error.message);
     }
-});
+};
 exports.createEmployee = createEmployee;
-const updateEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
+const updateEmployee = async (req, res) => {
     try {
-        const id = (_b = req === null || req === void 0 ? void 0 : req.params) === null || _b === void 0 ? void 0 : _b.id;
+        const id = req?.params?.id;
         const employee = req.body;
         const query = { _id: new mongodb.ObjectId(id) };
-        const result = yield database_1.collections.employees.replaceOne(query, req.body);
+        const result = await database_1.collections.employees.replaceOne(query, req.body);
         if (result.modifiedCount === 0) {
             return res.status(404).send('Employee not found');
         }
-        res.status(200).send(yield database_1.collections.employees.findOne(query));
+        res.status(200).send(await database_1.collections.employees.findOne(query));
     }
     catch (error) {
         res.status(500).send(error.message);
     }
-});
+};
 exports.updateEmployee = updateEmployee;
-const deleteEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c;
+const deleteEmployee = async (req, res) => {
     try {
-        const id = (_c = req === null || req === void 0 ? void 0 : req.params) === null || _c === void 0 ? void 0 : _c.id;
+        const id = req?.params?.id;
         const query = { _id: new mongodb.ObjectId(id) };
-        const result = yield database_1.collections.employees.deleteOne(query);
+        const result = await database_1.collections.employees.deleteOne(query);
         if (result && result.deletedCount) {
             res.status(202).send(`Clinica eliminada: ID ${id}`);
         }
@@ -114,6 +102,6 @@ const deleteEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function*
     catch (error) {
         res.status(500).send(error.message);
     }
-});
+};
 exports.deleteEmployee = deleteEmployee;
 //# sourceMappingURL=employees.controller.js.map

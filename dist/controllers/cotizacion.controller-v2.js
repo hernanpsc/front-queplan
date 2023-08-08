@@ -22,20 +22,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.calcularPrecio = void 0;
 const funciones = __importStar(require("../funciones"));
 const database_1 = require("../conection/database");
-const calcularPrecio = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const calcularPrecio = async (req, res) => {
     const formCotizar = req.body;
     const preciosCollection = database_1.collections.precios;
     console.log('Datos recibidos en el servidor del formulario:', formCotizar);
@@ -88,15 +79,15 @@ const calcularPrecio = (req, res) => __awaiter(void 0, void 0, void 0, function*
     let hijoIdOMINT = { _id: 'omint' + idOmint[2] };
     let hijo2IdOMINT = { _id: 'omint' + idOmint[3] };
     // <! -----------------------------VALOR PRECIO SANCOR START---------------------------------------------------->
-    let price1Hijo = yield preciosCollection.findOne(hijoId);
+    let price1Hijo = await preciosCollection.findOne(hijoId);
     let precio1Hijo = price1Hijo.precios;
-    let price2Hijo = yield preciosCollection.findOne(hijo2Id);
+    let price2Hijo = await preciosCollection.findOne(hijo2Id);
     let precio2Hijo = price2Hijo.precios;
-    let priceTitular = yield preciosCollection.findOne(edadID1);
+    let priceTitular = await preciosCollection.findOne(edadID1);
     let precioTitular = priceTitular.precios;
     let precioConyuge = null;
     if (edad_2 > 17) {
-        precioConyuge = yield preciosCollection.findOne(edadID2);
+        precioConyuge = await preciosCollection.findOne(edadID2);
     }
     let valorSanCor = funciones.valorSancorSalud(edad_2, // dato del formulario - edad del conyuge
     numkids, // dato del formulario - cantidad total de hijos
@@ -120,11 +111,11 @@ const calcularPrecio = (req, res) => __awaiter(void 0, void 0, void 0, function*
     console.log(valorSanCor);
     // <! -----------------------------VALOR PRECIO SANCOR START---------------------------------------------------->
     // <! -----------------------------VALOR PRECIO PREMEDIC START---------------------------------------------------->
-    let valueAdultosPremedic = yield preciosCollection.findOne(edadIdPremedic);
+    let valueAdultosPremedic = await preciosCollection.findOne(edadIdPremedic);
     let valorAdultosPremedic = valueAdultosPremedic.precios;
-    let pricehm1 = yield preciosCollection.findOne(hijoIdmenor1preme);
+    let pricehm1 = await preciosCollection.findOne(hijoIdmenor1preme);
     let preciohm1 = pricehm1.precios;
-    let pricehm25 = yield preciosCollection.findOne(hijoIdmenor25preme);
+    let pricehm25 = await preciosCollection.findOne(hijoIdmenor25preme);
     let preciohm25 = pricehm25.precios;
     let valor_Premedic = funciones.valorPremedic(edad_2, // dato del formulario - edad del conyuge
     numkids, valorAdultosPremedic, preciohm25, preciohm1, edadIdPremedic, afinidad, // dato del formulario ( check = true/false )
@@ -138,13 +129,13 @@ const calcularPrecio = (req, res) => __awaiter(void 0, void 0, void 0, function*
     // let valorGaleno = valueGaleno.precios;
     // <! -----------------------------VALOR PRECIO GALENO END----------------------------------------------------->
     // <! -----------------------------VALOR PRECIO OMINT START------------------------------------------------------>
-    let price_titular_Omint = yield preciosCollection.findOne(edadID1OMINT);
+    let price_titular_Omint = await preciosCollection.findOne(edadID1OMINT);
     let precio_titular_Omint = price_titular_Omint;
-    let price_conyuge_Omint = yield preciosCollection.findOne(edadID2OMINT);
+    let price_conyuge_Omint = await preciosCollection.findOne(edadID2OMINT);
     let precio_conyuge_Omint = price_conyuge_Omint;
-    let price_hijo1_Omint = yield preciosCollection.findOne(hijoIdOMINT);
+    let price_hijo1_Omint = await preciosCollection.findOne(hijoIdOMINT);
     let precio_hijo1_Omint = price_hijo1_Omint;
-    let price_hijo2_Omint = yield preciosCollection.findOne(hijo2IdOMINT);
+    let price_hijo2_Omint = await preciosCollection.findOne(hijo2IdOMINT);
     let precio_hijo2_Omint = price_hijo2_Omint;
     let valor_Omint = funciones.valorOmint(edad_2, // dato del formulario - edad del conyuge
     numHijos, // respuesta funcion grupoFamiliar
@@ -160,6 +151,6 @@ const calcularPrecio = (req, res) => __awaiter(void 0, void 0, void 0, function*
     // console.log(preciosTodos);
     // const precioCalculado = preciosTodos; 
     // res.status(200).json({ precio: precioCalculado });
-});
+};
 exports.calcularPrecio = calcularPrecio;
 //# sourceMappingURL=cotizacion.controller-v2.js.map

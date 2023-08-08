@@ -255,18 +255,38 @@ function valorSancorSalud(edad2, kids, precio1Hijo, precio2Hijo, precioTitular, 
     let array = [];
     if (edad2 > 17) {
         precio_adultos_Sancor = Object.entries(preciosConyuge).reduce((acc, [key, value]) => // matrimonio
-         (Object.assign(Object.assign({}, acc), { [key]: parseInt((acc[key]) || 0) + parseInt(value) })), Object.assign({}, precioTitular));
+         ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value)
+        }), {
+            ...precioTitular
+        });
     }
     else {
         precio_adultos_Sancor = precioTitular;
     }
     if (kids == 1) {
-        valor_plan_sancor = Object.entries(precio1Hijo).reduce((acc, [key, value]) => (Object.assign(Object.assign({}, acc), { [key]: parseInt((acc[key]) || 0) + parseInt(value) })), Object.assign({}, precio_adultos_Sancor));
+        valor_plan_sancor = Object.entries(precio1Hijo).reduce((acc, [key, value]) => ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value)
+        }), {
+            ...precio_adultos_Sancor
+        });
     }
     else if (kids > 1) {
         let precio_hijos = Object.entries(precio2Hijo).reduce((acc, [key, value]) => // dis hijos o mas
-         (Object.assign(Object.assign({}, acc), { [key]: parseInt((acc[key]) || 0) + parseInt(value * numhijo2) })), Object.assign({}, precio1Hijo));
-        valor_plan_sancor = Object.entries(precio_hijos).reduce((acc, [key, value]) => (Object.assign(Object.assign({}, acc), { [key]: parseInt((acc[key]) || 0) + parseInt(value) })), Object.assign({}, precio_adultos_Sancor));
+         ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value * numhijo2)
+        }), {
+            ...precio1Hijo
+        });
+        valor_plan_sancor = Object.entries(precio_hijos).reduce((acc, [key, value]) => ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value)
+        }), {
+            ...precio_adultos_Sancor
+        });
     }
     else {
         valor_plan_sancor = precio_adultos_Sancor;
@@ -459,7 +479,12 @@ function valorPremedic(edad2, numHijo, valorAdultosPremedic, preciohm25, precioh
     let array = [];
     if (edadIdPremedic.includes('I') == true) {
         valor_plan_premedic = Object.entries(preciohm25).reduce((acc, [key, value]) => // dis hijos o mas
-         (Object.assign(Object.assign({}, acc), { [key]: parseInt((acc[key]) || 0) + parseInt(value * numHijo) })), Object.assign({}, valorAdultosPremedic));
+         ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value * numHijo)
+        }), {
+            ...valorAdultosPremedic
+        });
     }
     else {
         valor_plan_premedic = valorAdultosPremedic;
@@ -569,18 +594,38 @@ function valorOmint(edad2, numHijos, numhijo_2, precio_titular, precio_conyuge, 
     console.log(precio_hijo2_Omint);
     if (edad2 > 17) {
         precio_adultos_Omint = Object.entries(precio_conyuge_Omint).reduce((acc, [key, value]) => // matrimonio
-         (Object.assign(Object.assign({}, acc), { [key]: parseInt((acc[key]) || 0) + parseInt(value) })), Object.assign({}, precio_titular_Omint));
+         ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value)
+        }), {
+            ...precio_titular_Omint
+        });
     }
     else {
         precio_adultos_Omint = precio_titular_Omint;
     }
     if (numHijos == 1) {
-        valor_plan_omint = Object.entries(precio_hijo1_Omint).reduce((acc, [key, value]) => (Object.assign(Object.assign({}, acc), { [key]: parseInt((acc[key]) || 0) + parseInt(value) })), Object.assign({}, precio_adultos_Omint));
+        valor_plan_omint = Object.entries(precio_hijo1_Omint).reduce((acc, [key, value]) => ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value)
+        }), {
+            ...precio_adultos_Omint
+        });
     }
     else if (numHijos > 1) {
         let precio_hijos_Omint = Object.entries(precio_hijo2_Omint).reduce((acc, [key, value]) => // dis hijos o mas
-         (Object.assign(Object.assign({}, acc), { [key]: parseInt((acc[key]) || 0) + parseInt(value * numhijo2) })), Object.assign({}, precio_hijo1_Omint));
-        valor_plan_omint = Object.entries(precio_hijos_Omint).reduce((acc, [key, value]) => (Object.assign(Object.assign({}, acc), { [key]: parseInt((acc[key]) || 0) + parseInt(value) })), Object.assign({}, precio_adultos_Omint));
+         ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value * numhijo2)
+        }), {
+            ...precio_hijo1_Omint
+        });
+        valor_plan_omint = Object.entries(precio_hijos_Omint).reduce((acc, [key, value]) => ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value)
+        }), {
+            ...precio_adultos_Omint
+        });
     }
     else {
         valor_plan_omint = precio_adultos_Omint;

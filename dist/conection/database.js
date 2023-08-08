@@ -22,42 +22,31 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectToDatabase = exports.collections = void 0;
 const mongodb = __importStar(require("mongodb"));
 exports.collections = {};
-function connectToDatabase(uri) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const client = new mongodb.MongoClient(uri);
-        yield client.connect();
-        const db = client.db("api-crud");
-        const db1 = client.db("planes");
-        const db2 = client.db("precios");
-        const db3 = client.db("posts");
-        // await applySchemaValidation(db);
-        // await applySchemasValidation(db1);
-        const employeesCollection = db.collection("employees");
-        exports.collections.employees = employeesCollection;
-        const empresasCollection = db1.collection("empresas");
-        exports.collections.empresas = empresasCollection;
-        const planesCollection = db1.collection("todoslosplanes");
-        exports.collections.todoslosplanes = planesCollection;
-        const clinicasCollection = db1.collection("clinicas");
-        exports.collections.clinicas = clinicasCollection;
-        const preciosCollection = db2.collection("listasdeprecios");
-        exports.collections.precios = preciosCollection;
-        const postsCollection = db3.collection("posts");
-        exports.collections.posts = postsCollection;
-    });
+async function connectToDatabase(uri) {
+    const client = new mongodb.MongoClient(uri);
+    await client.connect();
+    const db = client.db("api-crud");
+    const db1 = client.db("planes");
+    const db2 = client.db("precios");
+    const db3 = client.db("posts");
+    // await applySchemaValidation(db);
+    // await applySchemasValidation(db1);
+    const employeesCollection = db.collection("employees");
+    exports.collections.employees = employeesCollection;
+    const empresasCollection = db1.collection("empresas");
+    exports.collections.empresas = empresasCollection;
+    const planesCollection = db1.collection("todoslosplanes");
+    exports.collections.todoslosplanes = planesCollection;
+    const clinicasCollection = db1.collection("clinicas");
+    exports.collections.clinicas = clinicasCollection;
+    const preciosCollection = db2.collection("listasdeprecios");
+    exports.collections.precios = preciosCollection;
+    const postsCollection = db3.collection("posts");
+    exports.collections.posts = postsCollection;
 }
 exports.connectToDatabase = connectToDatabase;
 //# sourceMappingURL=database.js.map
