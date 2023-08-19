@@ -29,7 +29,8 @@ const whitelist = [
   'http://localhost:4500',
   'https://sakai-ng-front.vercel.app',
   'https://soloclinic.vercel.app',
-  'https://brokersalud.vercel.app'
+  'https://brokersalud.vercel.app',
+  'https://front-prepagas.vercel.app'
 ];
 const portRegex = /^http:\/\/localhost(?::\d+)?$/;
 
