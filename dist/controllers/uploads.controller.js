@@ -27,32 +27,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fileUpload = void 0;
-const multer_1 = __importDefault(require("multer"));
+const cloudinary_1 = __importDefault(require("../utils/cloudinary"));
 const dotenv = __importStar(require("dotenv"));
+const multer_1 = __importDefault(require("../middleware/multer"));
 dotenv.config();
-const { ATLAS_URI, PORT } = process.env;
-const storage = multer_1.default.diskStorage({
-    filename: function (req, file, cb) {
-        const ext = file.originalname.split('.').pop();
-        const fileName = Date.now();
-        cb(null, `${fileName}.${ext}`);
-    },
-    destination: function (req, file, cb) {
-        cb(null, './uploads');
-    }
-});
-const upload = (0, multer_1.default)({ storage });
+const { PORT } = process.env;
 const fileUpload = async (req, res) => {
     try {
         // Middleware de carga de archivos, aquí se procesa el archivo y lo guarda en `req.file`
-        upload.single('myFile')(req, res, function (err) {
+        multer_1.default.single('myFile')(req, res, async function (err) {
             if (err) {
                 console.error(err);
                 return res.status(500).send(err.message);
             }
-            // Acceso a la información del archivo
-            const file = req.file.filename;
-            res.send({ data: 'ok', url: `http://localhost:` + PORT + `/` + `${file}` });
+            if (!req.file) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'No file uploaded',
+                });
+            }
+            try {
+                const result = await cloudinary_1.default.uploader.upload(req.file.path); // Subir a Cloudinary
+                res.status(200).json({
+                    success: true,
+                    message: 'Uploaded!',
+                    data: result,
+                });
+            }
+            catch (cloudinaryError) {
+                console.error(cloudinaryError);
+                return res.status(500).json({
+                    success: false,
+                    message: 'Error uploading to Cloudinary',
+                });
+            }
         });
     }
     catch (error) {

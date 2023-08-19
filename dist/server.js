@@ -30,7 +30,6 @@ exports.getEmployees2 = void 0;
 const dotenv = __importStar(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
-const multer_1 = __importDefault(require("multer"));
 const database_1 = require("./conection/database");
 const employees_routes_1 = require("./routes/employees.routes");
 const empresas_routes_1 = require("./routes/empresas.routes");
@@ -78,28 +77,6 @@ if (!ATLAS_URI) {
     app.use('/precios', listasdeprecios_routes_1.listasdepreciosRouter);
     app.use('/posts', posts_routes_1.postsRouter);
     app.use('/uploads', uploads_routes_1.uploadsRouter);
-    const storage = multer_1.default.diskStorage({
-        filename: function (res, file, cb) {
-            const ext = file.originalname.split('.').pop(); // TODO pdf / jpg / mp3
-            const fileName = Date.now(); // TODO 123234124
-            cb(null, `${fileName}.${ext}`); // TODO 123234124.pdf
-        },
-        destination: function (res, file, cb) {
-            cb(null, './uploads');
-        }
-    });
-    // const storage = multer.diskStorage({
-    //   destination: './uploads', // Carpeta de destino
-    //   filename: (req, file, cb) => {
-    //     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    //     cb(null, file.fieldname + '-' + uniqueSuffix);
-    //   }
-    // });
-    const upload = (0, multer_1.default)({ storage });
-    app.post('/upload', upload.single('myFile'), (req, res) => {
-        const file = req.file.filename;
-        res.send({ data: 'ok', url: `http://localhost:` + PORT + `/` + `${file}` });
-    });
     app.listen(PORT, () => {
         console.log(`Server running at http://localhost:` + PORT + `...`);
     });

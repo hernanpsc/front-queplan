@@ -54,12 +54,18 @@ exports.getEmpresaById = getEmpresaById;
 const createEmpresa = async (req, res) => {
     try {
         const empresa = req.body;
+        console.log(empresa._id);
+        // Convierte el _id a ObjectId
+        if (empresa._id) {
+            empresa._id = new mongodb.ObjectId(empresa._id);
+        }
+        console.log(empresa._id);
         const result = await database_1.collections.empresas.insertOne(empresa);
         if (result.acknowledged) {
-            res.status(201).send(`Se creo una nueva empresa: ID ${result.insertedId}.`);
+            res.status(201).send(`Se creó una nueva empresa: ID ${result.insertedId}.`);
         }
         else {
-            res.status(500).send("Falló crear una nueva empresa.");
+            res.status(500).send('Falló crear una nueva empresa.');
         }
     }
     catch (error) {

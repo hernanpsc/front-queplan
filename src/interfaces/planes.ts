@@ -13,6 +13,7 @@ export interface Planes {
     hijosSolos?: string;
     name?: string;
     images?:string[];
+    imagenes?: string[] | undefined;
     folletos?:string[];
     beneficios?:string[];
     clinicas?:string[];

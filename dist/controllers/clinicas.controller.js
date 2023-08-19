@@ -54,6 +54,10 @@ exports.getClinicaById = getClinicaById;
 const createClinica = async (req, res) => {
     try {
         const clinica = req.body;
+        // Convierte el _id a ObjectId
+        if (clinica._id) {
+            clinica._id = new mongodb.ObjectId(clinica._id);
+        }
         const result = await database_1.collections.clinicas.insertOne(clinica);
         if (result.acknowledged) {
             res.status(201).send(`Se creo una nueva clinica: ID ${result.insertedId}.`);

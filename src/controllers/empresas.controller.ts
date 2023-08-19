@@ -27,20 +27,27 @@ export const  getEmpresaById = async (req: Request, res: Response) => {
   }
 };
 
-export const  createEmpresa = async (req: Request, res: Response) => {
+
+
+export const createEmpresa = async (req: Request, res: Response) => {
   try {
     const empresa = req.body;
-    const result = await collections.empresas.insertOne (empresa);
+    // Convierte el _id a ObjectId
+    if (empresa._id) {
+      empresa._id = new mongodb.ObjectId(empresa._id);
+    }
+    const result = await collections.empresas.insertOne(empresa);
     if (result.acknowledged) {
-      res.status(201).send(`Se creo una nueva empresa: ID ${result.insertedId}.`);
-  } else {
-      res.status(500).send("Falló crear una nueva empresa.");
-  }
+      res.status(201).send(`Se creó una nueva empresa: ID ${result.insertedId}.`);
+    } else {
+      res.status(500).send('Falló crear una nueva empresa.');
+    }
   } catch (error) {
     console.error(error);
     res.status(400).send(error.message);
   }
 };
+
  
 
   
