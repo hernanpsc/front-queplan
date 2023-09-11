@@ -33,4 +33,5 @@ exports.clinicasRouter.get('/:id', clinicas_controller_1.getClinicaById);
 exports.clinicasRouter.post('/', clinicas_controller_1.createClinica);
 exports.clinicasRouter.put('/:id', clinicas_controller_1.updateClinica);
 exports.clinicasRouter.delete('/:id', clinicas_controller_1.deleteClinica);
+exports.clinicasRouter.get('/search', clinicas_controller_1.searchClinicas);
 //# sourceMappingURL=clinicas.routes.js.map

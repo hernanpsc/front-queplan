@@ -27,15 +27,20 @@ export const  getPlanById = async (req: Request, res: Response) => {
   }
 };
 
-export const  createPlan = async (req: Request, res: Response) => {
+
+export const createPlan = async (req: Request, res: Response) => {
   try {
     const plan = req.body;
-    const result = await collections.todoslosplanes.insertOne (plan);
+    // Convierte el _id a ObjectId
+    if (plan._id) {
+      plan._id = new mongodb.ObjectId(plan._id);
+    }
+    const result = await collections.empresas.insertOne(plan);
     if (result.acknowledged) {
-      res.status(201).send(`Se creo una nueva plan: ID ${result.insertedId}.`);
-  } else {
-      res.status(500).send("Falló crear una nueva plan.");
-  }
+      res.status(201).send(`Se creó una nueva empresa: ID ${result.insertedId}.`);
+    } else {
+      res.status(500).send('Falló crear una nueva empresa.');
+    }
   } catch (error) {
     console.error(error);
     res.status(400).send(error.message);

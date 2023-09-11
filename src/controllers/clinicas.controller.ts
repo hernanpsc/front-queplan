@@ -83,4 +83,18 @@ export const  deleteClinica = async (req: Request, res: Response) => {
 
 
 
+export const searchClinicas = async (req: Request, res: Response) => {
+  try {
+    const query = req.query.textSearch as string; // Asegúrate de que query es una cadena
+
+    // Realiza la búsqueda en la base de datos, por ejemplo, por nombre
+    const clinicas = await collections.clinicas.find({
+      nombre: { $regex: query, $options: 'i' } as { $regex: string, $options: string },
+    }).toArray();
+
+    res.status(200).send(clinicas);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
 

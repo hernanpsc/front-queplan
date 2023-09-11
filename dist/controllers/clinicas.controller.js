@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteClinica = exports.updateClinica = exports.createClinica = exports.getClinicaById = exports.getClinicas = void 0;
+exports.searchClinicas = exports.deleteClinica = exports.updateClinica = exports.createClinica = exports.getClinicaById = exports.getClinicas = void 0;
 const database_1 = require("../conection/database");
 const mongodb = __importStar(require("mongodb"));
 const getClinicas = async (req, res) => {
@@ -108,4 +108,14 @@ const deleteClinica = async (req, res) => {
     }
 };
 exports.deleteClinica = deleteClinica;
+const searchClinicas = async (req, res) => {
+    try {
+        const clinicas = await database_1.collections.clinicas.find({}).toArray();
+        res.status(200).send(clinicas);
+    }
+    catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+exports.searchClinicas = searchClinicas;
 //# sourceMappingURL=clinicas.controller.js.map
