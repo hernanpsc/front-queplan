@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.valorOmint = exports.valorPremedic = exports.valorSancorSalud = exports.productIdOmint = exports.productIdPremedic = exports.productIdGaleno = exports.productID = exports.tipoAsociado = exports.grupoFamiliar = void 0;
+exports.combinePlansWithPrices = exports.valorOmint = exports.valorPremedic = exports.valorSancorSalud = exports.productIdOmint = exports.productIdPremedic = exports.productIdGaleno = exports.productID = exports.tipoAsociado = exports.grupoFamiliar = void 0;
 function grupoFamiliar(age0, age1, kids) {
     let num_adultos = 1;
     let numhijo1 = '';
@@ -61,15 +61,14 @@ exports.tipoAsociado = tipoAsociado;
 function productID(edad, tipoAsoc, gen, miembro, numHijos) {
     let edadId = '';
     let grupoSigla = '';
-    let tipo = tipoAsoc + gen;
+    let tipo = tipoAsoc;
     let edadID1 = '';
     let edadID2 = '';
     let hijoId = '';
     let hijo2Id = '';
-    if (gen == 'GEN' && numHijos > 0) {
-        grupoSigla = 'GF';
-    }
-    ;
+    // if (gen == 'GEN' && numHijos > 0) {
+    // 	grupoSigla = 'GF'
+    // };
     if (18 <= edad && edad <= 25) {
         edadId = 'sancor1' + tipo;
         hijoId = 'sancor1H' + tipo;
@@ -87,33 +86,33 @@ function productID(edad, tipoAsoc, gen, miembro, numHijos) {
     }
     else if (36 <= edad && edad <= 39) {
         edadId = 'sancor4' + tipo;
-        hijoId = 'sancor1H' + tipo;
-        hijo2Id = 'sancor2H' + tipo;
+        hijoId = 'sancor1HH' + tipo;
+        hijo2Id = 'sancor2HH' + tipo;
     }
     else if (40 <= edad && edad <= 45) {
         edadId = 'sancor5' + tipo;
-        hijoId = 'sancor1H' + tipo;
-        hijo2Id = 'sancor2H' + tipo;
+        hijoId = 'sancor1HH' + tipo;
+        hijo2Id = 'sancor2HH' + tipo;
     }
     else if (46 <= edad && edad <= 49) {
         edadId = 'sancor6' + tipo;
-        hijoId = 'sancor1H' + tipo;
-        hijo2Id = 'sancor2H' + tipo;
+        hijoId = 'sancor1HH' + tipo;
+        hijo2Id = 'sancor2HH' + tipo;
     }
     else if (50 <= edad && edad <= 59) {
         edadId = 'sancor7' + tipo;
-        hijoId = 'sancor1H' + tipo;
-        hijo2Id = 'sancor2H' + tipo;
+        hijoId = 'sancor1HH' + tipo;
+        hijo2Id = 'sancor2HH' + tipo;
     }
     else if (60 <= edad && edad <= 69) {
         edadId = 'sancor8' + tipo;
-        hijoId = 'sancor1H' + tipo;
-        hijo2Id = 'sancor2H' + tipo;
+        hijoId = 'sancor1HH' + tipo;
+        hijo2Id = 'sancor2HH' + tipo;
     }
     else if (70 <= edad) {
         edadId = 'sancor9' + tipo;
-        hijoId = 'sancor1H' + tipo;
-        hijo2Id = 'sancor2H' + tipo;
+        hijoId = 'sancor1HH' + tipo;
+        hijo2Id = 'sancor2HH' + tipo;
     }
     if (miembro === 'titular') {
         edadID1 = edadId + grupoSigla;
@@ -335,10 +334,10 @@ function valorSancorSalud(edad2, kids, precio1Hijo, precio2Hijo, precioTitular, 
         let arrPlan = [];
         let todosPrecios = [];
         let empresaPlan = [j][0];
-        let plan_id = empresaPlan.substring(0, 4);
-        let empresa = empresaPlan.substring(5, 11);
-        let plan_nombre = empresaPlan.substring(10);
-        let plan_gen = empresaPlan.substring(10, 13);
+        let plan_id = empresaPlan;
+        let sigla = empresaPlan.substring(0, 3);
+        let plan_nombre = empresaPlan.substring(3);
+        let plan_gen = empresaPlan.substring(3, 6);
         let bonInscr = parseInt(valor_plan_sancor[j]) * 0.1;
         let otrosBen = 0;
         let bonAfinidad = 0;
@@ -514,9 +513,9 @@ function valorPremedic(edad2, numHijo, valorAdultosPremedic, preciohm25, precioh
     for (let j in valor_plan_premedic) {
         // let precioPlan = parseInt(valor_plan_premedic[j]*1.1134);
         let empresaPlan = [j][0];
-        let plan_id = empresaPlan.substring(0, 4);
-        let empresa = empresaPlan.substring(4, 10);
-        let plan_nombre = empresaPlan.substring(10);
+        let plan_id = empresaPlan;
+        let sigla = empresaPlan.substring(0, 2);
+        let plan_nombre = empresaPlan.substring(3);
         let bonAfinidad = 0;
         let precio_final_a_pagar = 0;
         function adPlan(planName, valor_plan_premedic) {
@@ -659,9 +658,9 @@ function valorOmint(edad2, numHijos, numhijo_2, precio_titular, precio_conyuge, 
     //	<!-----------------------Calculo de Aportes OMINT end------------------------->
     for (let j in valor_plan_omint) {
         let empresaPlan = [j][0];
-        let plan_id = empresaPlan.substring(0, 4);
-        let empresa = empresaPlan.substring(4, 10);
-        let plan_nombre = empresaPlan.substring(10);
+        let plan_id = empresaPlan;
+        let sigla = empresaPlan.substring(0, 3);
+        let plan_nombre = empresaPlan.substring(3);
         let bonAfinidad = 0;
         let valor_total_plan = 0;
         let bonifAport = '';
@@ -717,18 +716,32 @@ exports.valorOmint = valorOmint;
 // export function addProp(array1,array2){
 // for ( let j in array1 ){
 // 	for ( let i=0; i<array2.length;i++){
-// 		console.log('Pasada numero ' + j + 'del array1'  );
+// 		// console.log('Pasada numero ' + j + 'del array1'  );
 // 		if ( array1[j].id == array2[i].id ){	
-// 			console.log('Pasada numero ' + j + ' sobre el array2');
-// 			console.log(array1[j]);
-// 			console.log(array2[i]);
+// 			// console.log('Pasada numero ' + j + ' sobre el array2');
+// 			// console.log(array1[j]);
+// 			// console.log(array2[i]);
 // 			  let precio = array2[i].precio;
 // 			 array1[j].precio = precio;
 // 			 array1[precio]
 // 					}
 // 				}
 // 			}
-// 			console.log(array1);
+// 			// console.log(array1);
 // return array1;
 // }
+function combinePlansWithPrices(planes, precios) {
+    const combinedArray = planes.map((plan) => {
+        const matchingPrecio = precios.find((precio) => precio.item_id === plan.item_id);
+        if (matchingPrecio) {
+            return {
+                ...plan,
+                precio: matchingPrecio.precio,
+            };
+        }
+        return plan;
+    });
+    return combinedArray;
+}
+exports.combinePlansWithPrices = combinePlansWithPrices;
 //# sourceMappingURL=funciones.js.map

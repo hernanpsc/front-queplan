@@ -45,6 +45,8 @@ async function connectToDatabase(uri) {
     exports.collections.clinicas = clinicasCollection;
     const preciosCollection = db2.collection("listasdeprecios");
     exports.collections.precios = preciosCollection;
+    // Agregar un console.log para imprimir la colección de precios
+    // console.log("Colección de Precios:", collections.precios);
     const postsCollection = db3.collection("posts");
     exports.collections.posts = postsCollection;
 }

@@ -6,10 +6,12 @@ import { Precios } from '../interfaces/precios';
 
 export const  calcularPrecio = async (req: Request, res: Response) => {
 
-    const formCotizar = req.body;
-    const preciosCollection = collections.precios;
- 
+    const formCotizar = req.body; // RECIBO DATA FORMULARIOS
+
     
+    const preciosCollection = collections.precios; // IMPORTO LISTA DE PRECIOS
+ 
+// <! -----------------------------DEFINO PROPIEDADES DATOS DE FORMULARIO DE COTIZACION----------------------------------------------------->
     console.log('Datos recibidos en el servidor del formulario:', formCotizar);
     const { edad_1 } = formCotizar; // edad1
     const { edad_2 } = formCotizar; // edad2
@@ -30,6 +32,7 @@ export const  calcularPrecio = async (req: Request, res: Response) => {
     const { segvida1 } = formCotizar; // segVida2
     const { region } = formCotizar;
     
+// <! -----------------------------RECIBO DATOS DE FORMULARIO DE CONTACTO----------------------------------------------------->
       // const { name } = formCotizar;
       // const { email } = formCotizar;
       // const { phone } = formCotizar;
@@ -38,6 +41,9 @@ export const  calcularPrecio = async (req: Request, res: Response) => {
       // const { email } = formCotizar;
       // const { phone } = formCotizar;
       // const { region } = formCotizar;
+    
+    
+// <! -----------------------------DEFINIR VARIABLES COMUNES----------------------------------------------------->
     let grupo = funciones.grupoFamiliar(edad_1, edad_2, numkids);
     let num_adultos = grupo[0]; //checked
     let numhijo1 = grupo[1]; //checked
@@ -45,19 +51,25 @@ export const  calcularPrecio = async (req: Request, res: Response) => {
     let numHijos = grupo[3]; //checked
     let gen = grupo[4]; //checked
     let grupoFam = grupo[5];
-
-    
     let tipoAsociadoSanCor = funciones.tipoAsociado(tipo,grupoFam,cantAport);
-    
+
+// <! -----------------------------DEFINIR DE VARIABLES SANCOR SALUD----------------------------------------------------->    
     let idSancor = funciones.productID(edad_1, tipo, gen, 'titular', numHijos);
-let edadID1 : Filter<Precios> = { _id:  'sancor'+ idSancor[0]}; 
-let edadID2 : Filter<Precios> = { _id:  'sancor'+ funciones.productID(edad_2, tipo, gen, 'conyuge', numHijos)[1]}; 
-let hijoId : Filter<Precios> = { _id:  'sancor' + idSancor[2]};
-let hijo2Id : Filter<Precios> = { _id: 'sancor' + idSancor[3]};
-let edadIdGaleno : Filter<Precios> = { _id: 'galeno'+ funciones.productIdGaleno(edad_1, edad_2, tipo, numHijos)};
+    let edadID1 : Filter<Precios> = { _id:  'sancor'+ idSancor[0]}; 
+    let edadID2 : Filter<Precios> = { _id:  'sancor'+ funciones.productID(edad_2, tipo, gen, 'conyuge', numHijos)[1]}; 
+    let hijoId : Filter<Precios> = { _id:  'sancor' + idSancor[2]};
+    let hijo2Id : Filter<Precios> = { _id: 'sancor' + idSancor[3]};
+
+// <! -----------------------------DEFINIR DE VARIABLES GALENO----------------------------------------------------->
+
+    let edadIdGaleno : Filter<Precios> = { _id: 'galeno'+ funciones.productIdGaleno(edad_1, edad_2, tipo, numHijos)};
+
+// <! -----------------------------DEFINIR DE VARIABLES PREMEDIC----------------------------------------------------->
 let edadIdPremedic : Filter<Precios> = { _id: 'premedic'+ funciones.productIdPremedic(edad_1, edad_2, tipo, numHijos)};
 let hijoIdmenor1preme : Filter<Precios> = { _id: 'premedic'+tipo + 'AD-1anio'};
 let hijoIdmenor25preme : Filter<Precios> = { _id: 'premedic'+tipo + 'AD-25'};
+
+// <! -----------------------------DEFINIR DE VARIABLES OMINT----------------------------------------------------->
 let idOmint : Filter<Precios> = { _id: funciones.productIdOmint(edad_1, tipo, 'titular')};
 let edadID1OMINT : Filter<Precios> = { _id: 'omint'+ idOmint[0]};
 let edadID2OMINT : Filter<Precios> = { _id: 'omint'+ funciones.productIdOmint(edad_2, tipo, 'conyuge')[1]};
@@ -78,6 +90,8 @@ if (edad_2 > 17) {
   precioConyuge = await preciosCollection.findOne(edadID2);
 }
 
+
+// <! -----------------------------LLAMO FUNCION PRECIO SANCOR START---------------------------------------------------->
 let valorSanCor = funciones.valorSancorSalud(
   edad_2, // dato del formulario - edad del conyuge
   numkids, // dato del formulario - cantidad total de hijos
@@ -100,10 +114,10 @@ let valorSanCor = funciones.valorSancorSalud(
 
   );
 console.log(valorSanCor);
-// <! -----------------------------VALOR PRECIO SANCOR START---------------------------------------------------->
-// <! -----------------------------VALOR PRECIO PREMEDIC START---------------------------------------------------->
+// <! -----------------------------LLAMO FUNCION PRECIO SANCOR END---------------------------------------------------->
 
 
+// <! -----------------------------LLAMO FUNCION PRECIO PREMEDIC START---------------------------------------------------->
 let valueAdultosPremedic : WithId<Precios> = await preciosCollection.findOne(edadIdPremedic);
 let valorAdultosPremedic = valueAdultosPremedic.precios;
 
@@ -126,16 +140,14 @@ tipo  // dato del formulario
 );
 console.log(valor_Premedic);
 
-// <! -----------------------------VALOR PRECIO PREMEDIC END----------------------------------------------------->
+// <! -----------------------------LLAMO FUNCION PRECIO PREMEDIC END----------------------------------------------------->
 
-// <! -----------------------------VALOR PRECIO GALENO START----------------------------------------------------->
-
+// <! -----------------------------LLAMO FUNCION PRECIO GALENO START----------------------------------------------------->
 // let valueGaleno : WithId<Precios> = await preciosCollection.findOne(edadIdGaleno);
 // let valorGaleno = valueGaleno.precios;
+// <! -----------------------------LLAMO FUNCION PRECIO GALENO END----------------------------------------------------->
 
-// <! -----------------------------VALOR PRECIO GALENO END----------------------------------------------------->
-
-// <! -----------------------------VALOR PRECIO OMINT START------------------------------------------------------>
+// <! -----------------------------LLAMO FUNCION PRECIO OMINT START------------------------------------------------------>
 let price_titular_Omint: WithId<Precios> = await preciosCollection.findOne(edadID1OMINT);
 let precio_titular_Omint= price_titular_Omint;
 
@@ -157,18 +169,17 @@ let valor_Omint = funciones.valorOmint(
   precio_hijo2_Omint,  // busqueda por _id en lista de precio
   edadID1OMINT // id Titular
   );
-
-  // <! -----------------------------VALOR PRECIO OMINT END---------------------------------------------------->
+  // <! -----------------------------LLAMO FUNCION PRECIO OMINT END---------------------------------------------------->
 
   let preciosDetodos =  [valorSanCor,valor_Omint];
 
-  // const preciosTodos = valorSanCor.concat(valor_Omint);
+  const preciosTodos = valorSanCor.concat(valor_Omint);
  
-  // console.log(preciosTodos);
+  console.log(preciosTodos);
 
 
-      // const precioCalculado = preciosTodos; 
-      // res.status(200).json({ precio: precioCalculado });
+      const precioCalculado = preciosTodos; 
+      res.status(200).json({ precio: precioCalculado });
     
 };
 

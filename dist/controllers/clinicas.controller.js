@@ -110,7 +110,11 @@ const deleteClinica = async (req, res) => {
 exports.deleteClinica = deleteClinica;
 const searchClinicas = async (req, res) => {
     try {
-        const clinicas = await database_1.collections.clinicas.find({}).toArray();
+        const query = req.query.textSearch; // Asegúrate de que query es una cadena
+        // Realiza la búsqueda en la base de datos, por ejemplo, por nombre
+        const clinicas = await database_1.collections.clinicas.find({
+            nombre: { $regex: query, $options: 'i' },
+        }).toArray();
         res.status(200).send(clinicas);
     }
     catch (error) {

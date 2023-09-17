@@ -30,6 +30,7 @@ exports.getEmployees2 = void 0;
 const dotenv = __importStar(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
+const body_parser_1 = __importDefault(require("body-parser"));
 const database_1 = require("./conection/database");
 const employees_routes_1 = require("./routes/employees.routes");
 const empresas_routes_1 = require("./routes/empresas.routes");
@@ -62,12 +63,54 @@ if (!ATLAS_URI) {
 (0, database_1.connectToDatabase)(ATLAS_URI)
     .then(() => {
     const app = (0, express_1.default)();
+    app.use(body_parser_1.default.json({ limit: '50mb' })); // Puedes ajustar el límite según tus necesidades
+    app.use(body_parser_1.default.urlencoded({ limit: '50mb', extended: true }));
     app.use((0, cors_1.default)({
         origin: whitelist,
         allowedHeaders: ['Authorization', 'Content-Type']
     }));
     app.get('/', (req, res) => {
         res.send('Hello World!');
+    });
+    app.get('/clinicas/search', (req, res) => {
+        // Obtén los parámetros de la consulta
+        const { q, offset, limit } = req.query;
+        // Simula una respuesta similar a la de MercadoLibre
+        const response = {
+            site_id: 'MLA',
+            query: q,
+            results: [
+                // Aquí deberías poner los resultados reales
+                { id: '1', title: 'Resultado 1' },
+                { id: '2', title: 'Resultado 2' },
+                // ...
+            ],
+            paging: {
+                total: 100,
+                offset: parseInt(offset) || 0,
+                limit: parseInt(limit) || 20,
+            },
+        };
+        res.json(response);
+    });
+    // Dentro del punto final para obtener la lista de precios
+    app.get('/precios', async (req, res) => {
+        try {
+            // Consulta la colección de precios y obtén todos los documentos
+            const preciosCollection = database_2.collections.precios;
+            const listaDePrecios = await preciosCollection.find({}).toArray();
+            // Imprime la lista de precios en la consola
+            // console.log('Lista de precios:');
+            listaDePrecios.forEach(precio => {
+                // console.log(precio);
+            });
+            // Devuelve la lista de precios como respuesta HTTP (opcional)
+            res.json(listaDePrecios);
+        }
+        catch (error) {
+            // console.error('Error al obtener la lista de precios:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
     });
     app.use(express_1.default.static('./uploads'));
     app.use("/employees", employees_routes_1.employeesRouter);
@@ -78,6 +121,7 @@ if (!ATLAS_URI) {
     app.use('/precios', listasdeprecios_routes_1.listasdepreciosRouter);
     app.use('/posts', posts_routes_1.postsRouter);
     app.use('/uploads', uploads_routes_1.uploadsRouter);
+    // ...
     app.listen(PORT, () => {
         console.log(`Server running at http://localhost:` + PORT + `...`);
     });

@@ -77,6 +77,27 @@ connectToDatabase(ATLAS_URI)
     
       res.json(response);
     });
+    // Dentro del punto final para obtener la lista de precios
+app.get('/precios', async (req, res) => {
+  try {
+    // Consulta la colección de precios y obtén todos los documentos
+    const preciosCollection = collections.precios;
+    const listaDePrecios = await preciosCollection.find({}).toArray();
+
+    // Imprime la lista de precios en la consola
+    // console.log('Lista de precios:');
+    listaDePrecios.forEach(precio => {
+      // console.log(precio);
+    });
+
+    // Devuelve la lista de precios como respuesta HTTP (opcional)
+    res.json(listaDePrecios);
+  } catch (error) {
+    // console.error('Error al obtener la lista de precios:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
     app.use(express.static('./uploads'));
     app.use("/employees", employeesRouter);
     app.use("/empresas", empresasRouter);

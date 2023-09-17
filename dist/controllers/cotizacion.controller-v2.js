@@ -27,8 +27,9 @@ exports.calcularPrecio = void 0;
 const funciones = __importStar(require("../funciones"));
 const database_1 = require("../conection/database");
 const calcularPrecio = async (req, res) => {
-    const formCotizar = req.body;
-    const preciosCollection = database_1.collections.precios;
+    const formCotizar = req.body; // RECIBO DATA FORMULARIOS
+    const preciosCollection = database_1.collections.precios; // IMPORTO LISTA DE PRECIOS
+    // <! -----------------------------DEFINO PROPIEDADES DATOS DE FORMULARIO DE COTIZACION----------------------------------------------------->
     console.log('Datos recibidos en el servidor del formulario:', formCotizar);
     const { edad_1 } = formCotizar; // edad1
     const { edad_2 } = formCotizar; // edad2
@@ -48,6 +49,7 @@ const calcularPrecio = async (req, res) => {
     const { segvida } = formCotizar; // segVida1
     const { segvida1 } = formCotizar; // segVida2
     const { region } = formCotizar;
+    // <! -----------------------------RECIBO DATOS DE FORMULARIO DE CONTACTO----------------------------------------------------->
     // const { name } = formCotizar;
     // const { email } = formCotizar;
     // const { phone } = formCotizar;
@@ -56,6 +58,7 @@ const calcularPrecio = async (req, res) => {
     // const { email } = formCotizar;
     // const { phone } = formCotizar;
     // const { region } = formCotizar;
+    // <! -----------------------------DEFINIR VARIABLES COMUNES----------------------------------------------------->
     let grupo = funciones.grupoFamiliar(edad_1, edad_2, numkids);
     let num_adultos = grupo[0]; //checked
     let numhijo1 = grupo[1]; //checked
@@ -64,15 +67,19 @@ const calcularPrecio = async (req, res) => {
     let gen = grupo[4]; //checked
     let grupoFam = grupo[5];
     let tipoAsociadoSanCor = funciones.tipoAsociado(tipo, grupoFam, cantAport);
+    // <! -----------------------------DEFINIR DE VARIABLES SANCOR SALUD----------------------------------------------------->    
     let idSancor = funciones.productID(edad_1, tipo, gen, 'titular', numHijos);
     let edadID1 = { _id: 'sancor' + idSancor[0] };
     let edadID2 = { _id: 'sancor' + funciones.productID(edad_2, tipo, gen, 'conyuge', numHijos)[1] };
     let hijoId = { _id: 'sancor' + idSancor[2] };
     let hijo2Id = { _id: 'sancor' + idSancor[3] };
+    // <! -----------------------------DEFINIR DE VARIABLES GALENO----------------------------------------------------->
     let edadIdGaleno = { _id: 'galeno' + funciones.productIdGaleno(edad_1, edad_2, tipo, numHijos) };
+    // <! -----------------------------DEFINIR DE VARIABLES PREMEDIC----------------------------------------------------->
     let edadIdPremedic = { _id: 'premedic' + funciones.productIdPremedic(edad_1, edad_2, tipo, numHijos) };
     let hijoIdmenor1preme = { _id: 'premedic' + tipo + 'AD-1anio' };
     let hijoIdmenor25preme = { _id: 'premedic' + tipo + 'AD-25' };
+    // <! -----------------------------DEFINIR DE VARIABLES OMINT----------------------------------------------------->
     let idOmint = { _id: funciones.productIdOmint(edad_1, tipo, 'titular') };
     let edadID1OMINT = { _id: 'omint' + idOmint[0] };
     let edadID2OMINT = { _id: 'omint' + funciones.productIdOmint(edad_2, tipo, 'conyuge')[1] };
@@ -89,6 +96,7 @@ const calcularPrecio = async (req, res) => {
     if (edad_2 > 17) {
         precioConyuge = await preciosCollection.findOne(edadID2);
     }
+    // <! -----------------------------LLAMO FUNCION PRECIO SANCOR START---------------------------------------------------->
     let valorSanCor = funciones.valorSancorSalud(edad_2, // dato del formulario - edad del conyuge
     numkids, // dato del formulario - cantidad total de hijos
     precio1Hijo, // busqueda por _id en lista de precio
@@ -109,8 +117,8 @@ const calcularPrecio = async (req, res) => {
     gen // respuesta funcion grupoFamiliars
     );
     console.log(valorSanCor);
-    // <! -----------------------------VALOR PRECIO SANCOR START---------------------------------------------------->
-    // <! -----------------------------VALOR PRECIO PREMEDIC START---------------------------------------------------->
+    // <! -----------------------------LLAMO FUNCION PRECIO SANCOR END---------------------------------------------------->
+    // <! -----------------------------LLAMO FUNCION PRECIO PREMEDIC START---------------------------------------------------->
     let valueAdultosPremedic = await preciosCollection.findOne(edadIdPremedic);
     let valorAdultosPremedic = valueAdultosPremedic.precios;
     let pricehm1 = await preciosCollection.findOne(hijoIdmenor1preme);
@@ -123,12 +131,12 @@ const calcularPrecio = async (req, res) => {
     tipo // dato del formulario
     );
     console.log(valor_Premedic);
-    // <! -----------------------------VALOR PRECIO PREMEDIC END----------------------------------------------------->
-    // <! -----------------------------VALOR PRECIO GALENO START----------------------------------------------------->
+    // <! -----------------------------LLAMO FUNCION PRECIO PREMEDIC END----------------------------------------------------->
+    // <! -----------------------------LLAMO FUNCION PRECIO GALENO START----------------------------------------------------->
     // let valueGaleno : WithId<Precios> = await preciosCollection.findOne(edadIdGaleno);
     // let valorGaleno = valueGaleno.precios;
-    // <! -----------------------------VALOR PRECIO GALENO END----------------------------------------------------->
-    // <! -----------------------------VALOR PRECIO OMINT START------------------------------------------------------>
+    // <! -----------------------------LLAMO FUNCION PRECIO GALENO END----------------------------------------------------->
+    // <! -----------------------------LLAMO FUNCION PRECIO OMINT START------------------------------------------------------>
     let price_titular_Omint = await preciosCollection.findOne(edadID1OMINT);
     let precio_titular_Omint = price_titular_Omint;
     let price_conyuge_Omint = await preciosCollection.findOne(edadID2OMINT);
@@ -145,12 +153,12 @@ const calcularPrecio = async (req, res) => {
     precio_hijo2_Omint, // busqueda por _id en lista de precio
     edadID1OMINT // id Titular
     );
-    // <! -----------------------------VALOR PRECIO OMINT END---------------------------------------------------->
+    // <! -----------------------------LLAMO FUNCION PRECIO OMINT END---------------------------------------------------->
     let preciosDetodos = [valorSanCor, valor_Omint];
-    // const preciosTodos = valorSanCor.concat(valor_Omint);
-    // console.log(preciosTodos);
-    // const precioCalculado = preciosTodos; 
-    // res.status(200).json({ precio: precioCalculado });
+    const preciosTodos = valorSanCor.concat(valor_Omint);
+    console.log(preciosTodos);
+    const precioCalculado = preciosTodos;
+    res.status(200).json({ precio: precioCalculado });
 };
 exports.calcularPrecio = calcularPrecio;
 //# sourceMappingURL=cotizacion.controller-v2.js.map
