@@ -1,41 +1,54 @@
 export function grupoFamiliar(age0, age1, kids) {
-	let num_adultos = 1;
-	let numhijo1 = '';
-	let numhijo2 = '';
-	let gen = '';
-	let grupoFam = ''; 
-	let numhijos = kids;
-	let numhijo = '';
-	if (age1 == 0 && kids == 0) {
+    let edad0 = age0;
+    let edad1 = age1;
+    let num_adultos = 1;
+    let numhijo1 = 0;
+    let numhijo2 = 0;
+    let gen = '';
+    let grupoFam = 0;
+    let numhijos = kids;
+    let numhijo = 0;
+
+    if (kids === null) {
+        numhijos = 0;
+    }
+    if (age1 === null) {
+        edad1 = 0;
+    }
+
+	if (edad1 == 0 && numhijos == 0) {
 		num_adultos = 1;
 		numhijo1 = 0;
 		numhijo2 = 0;
 		numhijos = 0;
-	} else if (age1 > 0 && kids == 0) {
+	} else if (edad1 > 0 && numhijos == 0) {
 		num_adultos = 2;
 		numhijo1 = 0;
 		numhijo2 = 0;
 		numhijos = 0;
-	} else if (age1 == 0 && kids >= 1) {
+	} else if (edad1 == 0 && numhijos >= 1) {
 		num_adultos = 1;
 		numhijo1 = 1;
-		numhijo2 = kids - 1;
-		numhijos = kids;
-	} else if (age1 > 0 && kids >= 1) {
+		numhijo2 = numhijos - 1;
+		numhijos = numhijos;
+	} else if (edad1 > 0 && numhijos >= 1) {
 		num_adultos = 2;
 		numhijo1 = 1;
-		numhijo2 = kids - 1;
-		numhijos = kids;
+		numhijo2 = numhijos - 1;
+		numhijos = numhijos;
 	}
-	grupoFam = parseInt(num_adultos) + parseInt(kids);
-	numhijo = parseInt(kids);
-	if (age0 <= 35 && age1 <= 35) {
-		gen = 'GEN'
-	} else {
-		gen = ''
-	}
-	return [num_adultos, numhijo1, numhijo2, numhijos, gen, grupoFam];
-};
+	grupoFam = parseInt(num_adultos) + parseInt(numhijos);
+    numhijo = parseInt(numhijos);
+    if (edad0 <= 35 && edad1 <= 35) {
+        gen = 'GEN';
+    } else {
+        gen = '';
+    }
+	console.log(grupoFam)
+    return [num_adultos, numhijo1, numhijo2, numhijos, gen, grupoFam];
+}
+
+
 export function tipoAsociado(tipo, grupo, cant) {
 	let tipoAsoc = '';
 	if (tipo === "M" && grupo == cant) {
@@ -133,13 +146,18 @@ export function productIdGaleno(anios_1, anios_2, tipoAsoc, numHijos) {
 };
 // // <!----------------------Funcion PRODUCT ID GALENO end---------------------------->
 // // <!----------------------Funcion PRODUCT ID PREMEDIC start----------------------------> 
-export function productIdPremedic(age_1, age_2, tipoAsoc, numHijos) {
+export function productIdPremedic(edad_1, edad_2, tipoAsoc, numHijos) {
+
 	let edadIdPremedic = '';
-	let age2 = age_2;
-	let age = age_1;
+	let age2 = edad_2;
+	let age = edad_1;
+	if (edad_2 === null) {
+        age2 = 0;
+    }
+
 	if (age2 > age) {
-		age2 = age_1;
-		age = age_2
+		age2 = age;
+		age = edad_2;
 	};
 	if (age2 >= 18) {
 		if (age <= 29) {
@@ -267,10 +285,12 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 	//	<!-----------------------Bucle SANCOR start------------------------>							
 	              
 	       for (let j in valor_plan_sancor) {
-					
-					let otrosBenPrecios = [{"col_1": 1,"SSPRO": 125,"SSOD": 283,"SSAC": 67,"SUF": 28,"CS": 600},{"col_1": 2,"SSPRO": 218,"SSOD": 566,"SSAC": 134,"SUF": 56,"CS": 1200},{"col_1": 3,"SSPRO": 333,"SSOD": 566,"SSAC": 201,"SUF": 84,"CS": 1800}, {"col_1": 4,"SSPRO": 442,"SSOD": 566,"SSAC": 268,"SUF": 112,"CS": 2400}, {"col_1": 5,"SSPRO": 553,"SSOD": 566,"SSAC": 335,"SUF": 140,"CS": 3000}, {"col_1": 6,"SSPRO": 661,"SSOD": 566,"SSAC": 402,"SUF": 168,"CS": 3600}];
-					let cuotaSocial = grupoFam * 600;
-					let segVidaPrecio = [{"col_1": '18 A 45',"col_2": 441},{"col_1": '46 A 54',"col_2": 686},{"col_1": '55 A 59',"col_2": 686}];
+			
+			        let otrosBenPrecios = [{"col_1": 1, "col_2": 2758, "col_3": 2528, "col_4": 1620, "SSPRO": 275, "SSOD": 633, "SSAC": 145, "SUF": 85, "CS": 1620},{"col_1": 2, "col_2": 5512, "col_3": 5052, "col_4": 3240, "SSPRO": 545, "SSOD": 1267, "SSAC": 290, "SUF": 170, "CS": 3240},{"col_1": 3, "col_2": 7658, "col_3": 6961, "col_4": 4860, "SSPRO": 834, "SSOD": 1267, "SSAC": 442, "SUF": 255, "CS": 4860},{"col_1": 4, "col_2": 9785, "col_3": 8855, "col_4": 6480, "SSPRO": 1108, "SSOD": 1267, "SSAC": 590, "SUF": 340, "CS": 6480},{"col_1": 5, "col_2": 11923, "col_3": 10756, "col_4": 8100, "SSPRO": 1389, "SSOD": 1267, "SSAC": 742, "SUF": 425, "CS": 8100},{"col_1": 6, "col_2": 14041, "col_3": 12645, "col_4": 9720, "SSPRO": 1658, "SSOD": 1267, "SSAC": 886, "SUF": 510, "CS": 9720}]
+
+					let cuotaSocial = grupoFam * 1620;
+					let segVidaPrecio = [{"col_1": '18 A 45', "col_2": 800},{"col_1": '46 A 54', "col_2": 1244},{"col_1": '55 A 59', "col_2": 1486}]
+
 					let segVidacheck = segvida_1;
 					let segVida2check = segvida_2;					    
 					let segVida = 0;
@@ -313,7 +333,7 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 				//	<!--------------------Bonificacion Afinidad SANCOR end--------------------------->
 	
 				//	<!--------------------Seguro SANCOR start---------------------------------------->
-
+                        console.log(grupoFam)
 						cuotaSocial = otrosBenPrecios[grupoFam - 1]['CS'];
 				
 				//	<!--------------------Seguro SANCOR end------------------------------------------>
@@ -429,7 +449,15 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 
 // <!----------------------Funcion VALOR DEL PLAN PREMEDIC start----------------------------> 
 	export function valorPremedic(edad2, numHijo, valorAdultosPremedic, preciohm25, preciohm1, edadIdPremedic,afiche,bonAf,tipoIngreso) {
-		  let valor_plan_premedic = {};
+		 
+
+		
+		
+		
+		
+		
+		
+		let valor_plan_premedic = {};
 		let valor_total_plan = 0;
 		let bonifAportPremedic ='';
 		let bonifAport = '';
@@ -440,11 +468,12 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 		var precioParse = JSON.parse(precioString);
 		let arrPlan = [];
 		let todosPrecios = [];
-		let empresaPlan = [j][0];
 		let aportMonPremedic = 1579;
 		
 		let array = [];
+
 		if (edadIdPremedic.includes('I') == true) {
+
 			valor_plan_premedic = Object.entries(preciohm25).reduce((acc, [key, value]) => // dis hijos o mas
 				({
 					...acc,
@@ -452,7 +481,7 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 				}), {
 					...valorAdultosPremedic
 				});
-		} else {
+		} else {console.log('precio strin ' + precioString)
 			valor_plan_premedic = valorAdultosPremedic;
 		}
 				//	<!-----------------------Calculo de Aportes PREMEDIC start------------------------->
@@ -470,14 +499,12 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 					bonifAportPremedic = '';
 				};
 		//	<!-----------------------Calculo de Aportes PREMEDIC end------------------------->
-
 		//	<!-----------------------Bucle PREMEDIC start------------------------>
 
-	
 		for ( let j in valor_plan_premedic) {
-			// let precioPlan = parseInt(valor_plan_premedic[j]*1.1134);
-			
+
 			let empresaPlan = [j][0];
+
 			let plan_id = empresaPlan;
 			let sigla = empresaPlan.substring(0, 2);
 			let plan_nombre = empresaPlan.substring(3);
@@ -485,18 +512,20 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 			let precio_final_a_pagar = 0;
 
 			function adPlan(planName, valor_plan_premedic) {
+
 				arrPlan.push(planName);
 				todosPrecios.push(valor_plan_premedic);					 
 			}
-
 		//	<!--------------------Bonificacion Afinidad PREMEDIC start--------------------------->
 					
 			if (afiche == true) {
 				bonAfinidad = parseInt(valor_plan_premedic[j]) * bonAf;
 				bonAfinidadMonto = '-' + parseInt(bonAfinidad.toFixed());
 				valor_total_plan = parseInt(valor_plan_premedic[j]) - parseInt(bonAfinidad.toFixed());
-				} else {
+			} else {
 				bonAf = '';
+				valor_total_plan = valor_plan_premedic[j]
+
 			}
 
 		//	<!--------------------Bonificacion Afinidad PREMEDIC end--------------------------->
@@ -514,10 +543,8 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 		//	<!--------------------Bonificacion Aportes PREMEDIC end--------------------------->		
 
 				
-		// precioPlan = parseInt(valor_plan_premedic[j]*1.1134);
-		// valor_total_plan = parseInt(valor_plan_premedic[j]*1.1134);
-
-		adPlan('Premedic Plan '+plan_nombre, precio_final_a_pagar);
+	
+		adPlan(plan_nombre, precio_final_a_pagar);
 
 		var plan = new Object();
 		                    plan.item_id = plan_id;
@@ -539,7 +566,6 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 							returnArray(arrayLength, precioLength, array);
 						}
 		//	<!-----------------------Bucle PREMEDIC end------------------------>								
-		console.log(array);
 
 				return array
 	}				
@@ -650,7 +676,7 @@ for ( let j in valor_plan_omint) {
 				arrPlan.push(planName);
 				todosPrecios.push(valor_plan_omint);					 
 			}
-//	<!--------------------Bonificacion Afinidad PREMEDIC start--------------------------->
+//	<!--------------------Bonificacion Afinidad OMINT start--------------------------->
 					
 if (afiche == true) {
 	bonAfinidad = parseInt(valor_plan_omint[j]) * bonAf;
@@ -660,7 +686,7 @@ if (afiche == true) {
 	bonAf = '';
 }
 
-//	<!--------------------Bonificacion Afinidad PREMEDIC end--------------------------->
+//	<!--------------------Bonificacion Afinidad OMINT end--------------------------->
 valor_total_plan = parseInt(valor_plan_omint[j]) - parseInt(bonAfinidad.toFixed());
 
 
@@ -742,6 +768,41 @@ export function combinePlansWithPrices(planes, precios) {
 	});
   
 	return combinedArray;
+  }
+  
+
+ // Función para agrupar y transformar elementos de omintPlanes
+ export function agruparYTransformarPlanes(omintPlanes) {
+	// Crear un objeto para agrupar los elementos por los primeros 7 caracteres de item_id
+	const grupos = {};
+  
+	omintPlanes.forEach((plan) => {
+	  const item_idPrefix = plan.item_id.substring(0, 7);
+  
+	  if (!grupos[item_idPrefix]) {
+		// Si el grupo no existe, crearlo con un elemento inicial
+		grupos[item_idPrefix] = {
+		  item_id: item_idPrefix,
+		  name: plan.name.substring(0, 4),
+		  precio: [{ name: plan.item_id.split('_')[2], precio: plan.precio }],
+		};
+	  } else {
+		// Si el grupo ya existe, agregar el precio al array de precios
+		grupos[item_idPrefix].precio.push({ name: plan.item_id.split('_')[2], precio: plan.precio });
+	  }
+  
+	  // Copiar todas las propiedades del plan original al grupo
+	  for (const prop in plan) {
+		if (plan.hasOwnProperty(prop) && !grupos[item_idPrefix].hasOwnProperty(prop)) {
+		  grupos[item_idPrefix][prop] = plan[prop];
+		}
+	  }
+	});
+  
+	// Obtener los elementos agrupados como un array
+	const planesAgrupados = Object.values(grupos);
+  
+	return planesAgrupados;
   }
   
 
