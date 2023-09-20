@@ -66,9 +66,14 @@ let idSancor1 = functions.productID(edad_2, tipo, gen, 'conyuge', numHijos);
 let edadID2 : Filter<Precios> = { _id: idSancor1[1]};  // console.log(edadID2);
 
 // <! -----------------------------ID GALENO START---------------------------------------------------->
-let edadIdGaleno = functions.productIdGaleno(edad_1, edad_2, tipo, numHijos);
+let idGaleno = functions.productIdGaleno(edad_1, edad_2, tipo, numHijos);
+let edadIdGaleno : Filter<Precios> = { _id: 'galeno'+ idGaleno};
 
-console.log('edad ID agaleno  ' + edadIdGaleno)
+let priceGrupoGaleno : WithId<Precios> = await preciosCollection.findOne(edadIdGaleno);
+let precioGrupoGaleno = priceGrupoGaleno.precios
+console.log('edad ID galeno  ' + idGaleno);
+console.log(precioGrupoGaleno);
+
 // <! -----------------------------ID GALENO END---------------------------------------------------->
 
 
@@ -98,8 +103,10 @@ numkids, // dato del formulario - cantidad total de hijos
  afinidad, // dato del formulario ( check = true/false )
  bonAfinidad, // dato del formulario 
  tipoAsociadoSanCor, // funcion sobro condicion de ingreso
+ cantAport, // dato del formulario - cantidad de aportantes al monotributo
+
  )
-console.log('Estos son los precios de Premedic' + valorpREMEDIC)
+console.log(valorpREMEDIC)
 
 
 // <! -----------------------------ID PREMEDIC END---------------------------------------------------->
@@ -145,6 +152,7 @@ if (edad_2 > 17) {
 }else {}
 
 let valorSanCor = functions.valorSancorSalud(
+  edad_1, // dato del formulario - edad del titular
   edad_2, // dato del formulario - edad del conyuge
   numkids, // dato del formulario - cantidad total de hijos
   precio1Hijo, // busqueda por _id en lista de precio
@@ -166,7 +174,7 @@ let valorSanCor = functions.valorSancorSalud(
 
   );
 // // console.log( ' Valor SanCor ')
-// // console.log( valorSanCor);
+console.log( valorSanCor);
 // <! -----------------------------VALOR PRECIO SANCOR START---------------------------------------------------->
 
 // <! -----------------------------VALOR PRECIO OMINT START------------------------------------------------------>
@@ -209,12 +217,27 @@ let valor_Omint = functions.valorOmint(
 
   );
   // // console.log(' Valor OMINT  :')
-  // // console.log(valor_Omint);
+  console.log(valor_Omint);
 
   // <! -----------------------------VALOR PRECIO OMINT END---------------------------------------------------->
-  let preciosDetodos =  [valorSanCor,valor_Omint,valorpREMEDIC];
+  // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
+  let valorGaleno = functions.valorGaleno(
+    edad_1, // dato del formulario - edad del titular
+    edad_2, // dato del formulario - edad del conyuge
+    numkids, // dato del formulario - cantidad total de hijos
+    precioGrupoGaleno,
+    aporteOS, // dato del formulario - tipo de dato, si es el aporte del recibo o el sueldo bruto
+    sueldo, // dato del formulario - El monto
+    tipo,   // dato del formulario
+    cantAport  // dato del formulario - cantidad de aportantes al monotributo
+    );
+    console.log(valorGaleno)
+// <! -----------------------------VALOR PRECIO GALENO END---------------------------------------------------->
+  
+  
+  let preciosDetodos =  [valorSanCor,valor_Omint,valorpREMEDIC,valorGaleno];
 
-  const preciosTodos = valorSanCor.concat(valor_Omint, valorpREMEDIC);
+  const preciosTodos = valorSanCor.concat(valor_Omint, valorpREMEDIC,valorGaleno);
   // console.log('precios de todos : ');
   // console.log(preciosTodos);
 
@@ -236,22 +259,62 @@ obtenerPlanes()
 .then((planes: any[]) => { // Asume que planes es un array de cualquier tipo
 
    // Combinar los planes con precioCalculado
-   const combinedPlans = combinePlansWithPrices(planes, precioCalculado);
-    
+   const planesFiltradosOmint = planes.filter((plan) => {return plan.empresa === 'OMINT';});
+   const planesFiltradosGaleno = planes.filter((plan) => {return plan.empresa === 'Galeno';});
+   const planesFiltradosPremedic = planes.filter((plan) => {return plan.empresa === 'Premedic';});
+   const planesFiltradosSancor = planes.filter((plan) => {return plan.empresa === 'SanCor Salud';});
+console.log(valorGaleno)
+
+   const combinedPlansOmint = combinePlansWithPrices(planesFiltradosOmint, valor_Omint);
+   const combinedPlansSancor = combinePlansWithPrices(planesFiltradosSancor, valorSanCor);
+   const combinedPlansPremedic = combinePlansWithPrices(planesFiltradosPremedic, valorpREMEDIC);
+   const combinedPlansGaleno = combinePlansWithPrices(planesFiltradosGaleno, valorGaleno);
+
+  //  const filteredPlansGaleno = combinedPlans.filter((plan: { precio: number; }) => plan.precio > 0);    
+
   // Filtrar los planes con precioCalculado mayor que 0
-  const filteredPlans = combinedPlans.filter((plan: { precio: number; }) => plan.precio > 0);    
+  // const galenoPlanes = combinedPlans.filter((plan: { empresa: string; }) => plan.empresa !== 'GALENO');
+
+
+  // const filteredPlans = combinedPlans.filter((plan: { precio: number; }) => plan.precio > 0);    
  // Separar en dos arrays: uno para OMINT y otro para las otras empresas
-const omintPlanes = filteredPlans.filter((plan: { empresa: string; }) => plan.empresa === 'OMINT');
-const otrasEmpresasPlanes = filteredPlans.filter((plan: { empresa: string; }) => plan.empresa !== 'OMINT');
-let planesOmintAgrupados  = functions.agruparYTransformarPlanes(omintPlanes);
-// console.log(planesOmintAgrupados)
-const resultadoFinal = otrasEmpresasPlanes.concat(planesOmintAgrupados);
+ const combinedPlansOmintMayora0 = combinedPlansOmint.filter((plan: { precio: number; }) => plan.precio > 0);
+ const combinedPlansOmintFiltrados = combinedPlansOmintMayora0.filter((plan: { item_id: string; }) => {
+  if (tipo === 'P'){
+if(plan.item_id.endsWith('20') || plan.item_id.endsWith('1500_22') || plan.item_id.endsWith('24') || plan.item_id.endsWith('21') ){
+  return false;
+}
+return true;
+}
+if (tipo === 'D'){
+  if(plan.item_id.endsWith('1500_21') ){
+    return false;
+  }}
+  if (tipo === 'D'){
+    if(plan.item_id.endsWith('S') ){
+      return true;
+    }}
+
+return false;
+});
+
+// let planesOmintAgrupados  = functions.agruparYTransformarPlanes(combinedPlansOmintFiltrados);
+// const resultadoFinal = otrasEmpresasPlanes.concat(planesOmintAgrupados);
     // console.log('este es omintPlanes: ' + omintPlanes)
     // console.log('este es otrasEmpresasPlanes: ' + otrasEmpresasPlanes)
     // console.log('este es planesOmintAgrupados: ' + planesOmintAgrupados)
     // console.log('este es resultadoFinal: ' + resultadoFinal)
+    const concatenarPlanes = combinedPlansOmintFiltrados.concat(combinedPlansSancor, combinedPlansPremedic,combinedPlansGaleno);
 
-    res.status(200).json({ planes: resultadoFinal });  })
+    const resultado_final = concatenarPlanes.filter((plan: { precio: number; }) => {
+      
+      if (tipo === 'P' && plan.precio === 0){
+        return false;
+        }
+        return true;
+        });
+    res.status(200).json({ planes: resultado_final })})
+    
   .catch((error) => {
     // Manejar cualquier error que ocurra durante la obtención de los planes
     // console.error(error);

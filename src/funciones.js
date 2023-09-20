@@ -142,7 +142,7 @@ export function productIdGaleno(anios_1, anios_2, tipoAsoc, numHijos) {
 	} else if (anios <= 65) {
 		edadIdGaleno = tipoGaleno + grupoSiglaGaleno + 65 + '+' + numHijos + 'h';
 	};
-	return 'galeno' + edadIdGaleno;
+	return edadIdGaleno;
 };
 // // <!----------------------Funcion PRODUCT ID GALENO end---------------------------->
 // // <!----------------------Funcion PRODUCT ID PREMEDIC start----------------------------> 
@@ -219,14 +219,16 @@ export function productIdOmint(anios, tipoAsoc, miembro) {
 // <!----------------------Funcion PRODUCT ID OMINT end---------------------------->
 // <!----------------------Funcion VALOR DEL PLAN SANCOR start----------------------------> 
 	 
-export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitular,preciosConyuge,numhijo2,tipoIngreso,tipoDeDato,sueldo,aportantes,grupoFam,segvida_1,segvida_2,supra,aficheq,bonAfinidadporcentaje,gen ){
-		   
+export	function valorSancorSalud(edad_1,edad_2,kids, precio1Hijo,precio2Hijo,precioTitular,preciosConyuge,numhijo2,tipoIngreso,tipoDeDato,sueldo,aportantes,grupoFam,segvida_1,segvida_2,supra,aficheq,bonAfinidadporcentaje,gen ){
+    let edad1= edad_1;
+	let edad2 = edad_2;
 	let precio_adultos_Sancor = {};
 	let valor_plan_sancor = {};
 	let bonifAportSancor ='';
 	let bonifAport = '';
 	let aportMonSancor = 1482.63;
 	let array = [];
+	let cantAport = aportantes; 
 
 		if (edad2 > 17) {
 			precio_adultos_Sancor = Object.entries(preciosConyuge).reduce((acc, [key, value]) => // matrimonio
@@ -271,11 +273,11 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 							bonifAportSancor = sueldo * 0.071;
 						} else if (tipoDeDato.includes('Aporte')) {
 							bonifAportSancor = sueldo * 2.3666666666666666;
-						} else if (document.getElementById("monoadic").checked == true) {
-							bonifAportSancor = bonifAportSancor + (aportantes * aportMonSancor);
+						} else if (cantAport > 0 ) {
+							bonifAportSancor = bonifAportSancor + (cantAport * aportMonSancor);
 						};
 					} else if (tipoIngreso === "M") {
-						bonifAport = aportantes * aportMon;
+						bonifAport = cantAport * aportMon;
 					} else {
 						bonifAportSancor = '';
 					};
@@ -417,17 +419,12 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 							
 							} else {
 								plan.name = 'SanCor ' + plan_nombre;
-							}
-							
-
-													 
-                            
-							
+							}					
+							plan.seguroVidaPlus = segVida;		
 							plan.precio = precio_final_a_pagar;
-							// plan.empresa = empresa;
-							// plan.precio = precioPlan;
-							// plan.boniafi = bonAfinidadMonto;
-							// plan.boniaport = bonifAport;
+							plan.precio = precioPlan;
+							plan.boniafi = bonAfinidadMonto;
+							plan.boniaport = bonifAport;
 							array.push(plan);
 							let arrayLength = arrPlan.length;
 							let precioLength = Object.keys(valor_plan_sancor).length;
@@ -448,15 +445,8 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 // <!----------------------Funcion VALOR DEL PLAN SANCOR end----------------------------> 
 
 // <!----------------------Funcion VALOR DEL PLAN PREMEDIC start----------------------------> 
-	export function valorPremedic(edad2, numHijo, valorAdultosPremedic, preciohm25, preciohm1, edadIdPremedic,afiche,bonAf,tipoIngreso) {
-		 
-
-		
-		
-		
-		
-		
-		
+	export function valorPremedic(edad2, numHijo, valorAdultosPremedic, preciohm25, preciohm1, edadIdPremedic,afiche,bonAf,tipoIngreso,aportantes) {	
+		let cantAport = aportantes;
 		let valor_plan_premedic = {};
 		let valor_total_plan = 0;
 		let bonifAportPremedic ='';
@@ -490,11 +480,11 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 						bonifAportPremedic = sueldo * 0.0765;
 					} else if (tipoDeDato.includes('Aporte')) {
 						bonifAportPremedic = sueldo * 2.55;
-					} else if (document.getElementById("monoadic").checked == true) {
-						bonifAportPremedic = bonifAportPremedic + (aportantes * aportMonPremedic);
+					} else if (cantAport > 0) {
+						bonifAportPremedic = bonifAportPremedic + (cantAport * aportMonPremedic);
 					};
 				} else if (tipoIngreso === "M") {
-					bonifAportPremedic = aportantes * aportMonPremedic;
+					bonifAportPremedic = cantAport * aportMonPremedic;
 				} else {
 					bonifAportPremedic = '';
 				};
@@ -552,8 +542,9 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 							plan.precio = precio_final_a_pagar;
 							// plan.empresa = empresa;
 							// plan.precio = precioPlan;
-							// plan.boniafi = bonAfinidadMonto;
-							// plan.boniaport = bonifAport;
+							plan.afinidadPorcentaje = bonAfinidad;
+							plan.boniafi = bonAfinidadMonto;
+							plan.boniaport = bonifAport;
 							array.push(plan);
 							let arrayLength = arrPlan.length;
 							let precioLength = Object.keys(valor_plan_premedic).length;
@@ -578,8 +569,8 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 		console.log(edadID1OMINT)
 		let valor_plan_omint = {};
 		let precio_adultos_Omint = {};
-		let bonifAportOmint ='';
-		
+		let bonifAportOmint =0;
+		let cantAport = aportantes; // cuantos aportantes al monotributo hay
 		let aportMonOmint = 1579;
 		let tipoIngreso = tipo_Ingreso;
 		let array = [];
@@ -652,11 +643,11 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 						bonifAportOmint = sueldo * 0.0638;
 					} else if (tipoDeDato.includes('Aporte')) {
 						bonifAportOmint = sueldo * 2.1266666666666667;
-					} else if (document.getElementById("monoadic").checked == true) {
+					} else if (cantAport > 0) {
 						bonifAportOmint = bonifAportOmint + (aportantes * aportMonOmint);
 					};
 				} else if (tipoIngreso === "M") {
-					bonifAportOmint = aportantes * aportMonOmint;
+					bonifAportOmint = cantAport * aportMonOmint;
 				} else {
 					bonifAportOmint = '';
 				};		
@@ -666,12 +657,14 @@ export	function valorSancorSalud(edad2,kids, precio1Hijo,precio2Hijo,precioTitul
 for ( let j in valor_plan_omint) {
          	let empresaPlan = [j][0];
 			let plan_id = empresaPlan;
+			console.log(plan_id)
+			let empresa = "OMINT";
 			let sigla = empresaPlan.substring(0, 3);
 			let plan_nombre = empresaPlan.substring(3);
 			let bonAfinidad = 0;
 			let valor_total_plan = 0;
-			let bonifAport = '';
-
+			let bonifAport = 0;
+            let bonAfinidadMonto = 0;
 			function adPlan(planName, valor_plan_omint) {
 				arrPlan.push(planName);
 				todosPrecios.push(valor_plan_omint);					 
@@ -681,7 +674,7 @@ for ( let j in valor_plan_omint) {
 if (afiche == true) {
 	bonAfinidad = parseInt(valor_plan_omint[j]) * bonAf;
 	bonAfinidadMonto = '-' + parseInt(bonAfinidad.toFixed());
-	valor_total_plan = parseInt(valor_plan_omint[j]*1.1134) - parseInt(bonAfinidad.toFixed());
+	valor_total_plan = parseInt(valor_plan_omint[j]) - parseInt(bonAfinidad.toFixed());
 	} else {
 	bonAf = '';
 }
@@ -708,10 +701,10 @@ var plan = new Object();
 					plan.item_id = plan_id;
 					plan.name = 'OMINT  ' + plan_nombre;
 					plan.precio = precio_final_a_pagar;
-					// plan.empresa = empresa;
+					plan.afinidadPorcentaje = bonAfinidad;
+					plan.aginidadDescuento = bonAfinidadMonto;
 					// plan.precio = precioPlan;
-					// plan.boniafi = bonAfinidadMonto;
-					// plan.boniaport = bonifAport;
+					plan.boniaport = bonifAport;
 					array.push(plan);
 					let arrayLength = arrPlan.length;
 					let precioLength = Object.keys(valor_plan_omint).length;
@@ -730,28 +723,93 @@ var plan = new Object();
 					
 			}
 			
-// export function addProp(array1,array2){
+
+// <!----------------------Funcion VALOR DEL PLAN GALENO start----------------------------> 
+export function valorGaleno(edad_1,edad_2,numkids,precioGaleno,aporte_OS,haberesODescOS, tipoAsoc,cantAport) {
+	let catApMono = cantAport;
+	var precioString = JSON.stringify(precioGaleno);
+	var precioParse = JSON.parse(precioString);
+	let valor_plan_galeno = precioGaleno;
+	let sueldo = haberesODescOS;
 	
-// for ( let j in array1 ){
+	let bonifAportGaleno =0;
+	let aportMonGaleno = 1579;
+	let tipoIngreso = tipoAsoc;
+	let array = [];
+	let arrPlan = [];
+	let precio_final_a_pagar = 0;
+	let todosPrecios = [];
+	let tipoDeDato = aporte_OS; // dato del formulario - tipo de dato, si es el aporte del recibo o el sueldo bruto
 
+		//	<!-----------------------Calculo de Aportes GALENO start------------------------->
+		if (tipoIngreso == "D") {
+			if (tipoDeDato.includes('Sueldo')) {
+				bonifAportGaleno = sueldo * 0.0702;
+			} else if (tipoDeDato.includes('Aporte')) {
+				bonifAportGaleno = sueldo * 2.1266666666666667;
+			} else if (catApMono > 0 ) {
+				bonifAportGaleno = bonifAportGaleno + (aportantes * aportMonGaleno);
+			};
+		} else if (tipoIngreso === "M") {
+			bonifAportGaleno = aportantes * aportMonGaleno;
+		} else {
+			bonifAportGaleno = '';
+		};		
 	
+//	<!-----------------------Calculo de Aportes GALENO end------------------------->
+for ( let j in valor_plan_galeno) {
+   let empresaPlan = [j][0];
+   
+   let plan_id = empresaPlan;
 
-// 	for ( let i=0; i<array2.length;i++){
-// 		// console.log('Pasada numero ' + j + 'del array1'  );
-// 		if ( array1[j].id == array2[i].id ){	
-// 			// console.log('Pasada numero ' + j + ' sobre el array2');
-// 			// console.log(array1[j]);
-// 			// console.log(array2[i]);
+   let sigla = empresaPlan.substring(0, 3);
+   let plan_nombre = empresaPlan.substring(3);
+   let valor_total_plan = 0;
+   let bonifAport = 0;
+   valor_total_plan = valor_plan_galeno[j]
 
-// 			  let precio = array2[i].precio;
-// 			 array1[j].precio = precio;
-// 			 array1[precio]
-// 					}
-// 				}
-// 			}
-// 			// console.log(array1);
-// return array1;
-// }
+   function adPlan(planName, valor_plan_galeno) {
+	   arrPlan.push(planName);
+	   todosPrecios.push(valor_plan_galeno);					 
+   }
+if (tipoIngreso === "M" || tipoIngreso === "D") {
+	bonifAport = '-' + parseInt(bonifAportGaleno);
+	precio_final_a_pagar = parseInt(valor_total_plan) - parseInt(bonifAportGaleno);
+} else {
+	valor_total_plan = parseInt(valor_plan_galeno[j])
+	precio_final_a_pagar = valor_total_plan;
+}
+
+
+//	<!--------------------Bonificacion Aportes GALENO end--------------------------->
+	adPlan('Galeno Plan '+plan_nombre, precio_final_a_pagar);
+
+	var plan = new Object();
+						plan.item_id = plan_id;
+						plan.name = 'Galeno  ' + plan_nombre;
+						plan.precio = precio_final_a_pagar;
+						plan.boniaport = bonifAport;
+						array.push(plan);
+						let arrayLength = arrPlan.length;
+						let precioLength = Object.keys(valor_plan_galeno).length;
+			
+						function returnArray(array, precio, arrayPlanes) {
+							if (array == precio) {
+								return (arrayPlanes)
+							}
+						}
+						returnArray(arrayLength, precioLength, array);
+					}
+	//	<!-----------------------Bucle GALENO end------------------------>	
+	// console.log(array)							
+			return array
+				
+						
+				}
+// <!----------------------Funcion VALOR DEL PLAN GALENO end----------------------------> 
+
+
+
 
 
 
