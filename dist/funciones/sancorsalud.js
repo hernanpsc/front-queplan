@@ -1,0 +1,138 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.valorSancorSalud = void 0;
+const functions = __importStar(require("../funciones/"));
+function valorSancorSalud(aportesOS, coeficienteSanCorSalud, edad_1, edad_2, hijos, precio_1Hijo, precio_2Hijo, precio_Titular, precios_Conyuge, numhijo_2, grupo_Fam, segvida1, segvida2, supra_salud, con_afinidad, bonAfinidad_porcentaje, genSanCor) {
+    let tipo_IngresoPDMI = aportesOS[0];
+    let beneficiariosF184 = aportesOS[1];
+    let eleccionSueldoOAporte = aportesOS[2];
+    let sueldoSueldoOAporte = aportesOS[3];
+    let categoria_Mono = aportesOS[4];
+    let arrayValorMonotXCategoria = aportesOS[5];
+    let porporsentajeDeAPorte = coeficienteSanCorSalud;
+    let edad1 = edad_1;
+    let edad2 = edad_2;
+    let kids = hijos;
+    let precio1Hijo = precio_1Hijo;
+    let precio2Hijo = precio_2Hijo;
+    let precioTitular = precio_Titular;
+    let preciosConyuge = precios_Conyuge;
+    let numhijo2 = numhijo_2;
+    let grupoFam = grupo_Fam;
+    let precio_adultos_Sancor = {};
+    let valor_plan_sancor = {};
+    //Funcion para el calculo de aportes
+    let deduccionAportesObraSocial = functions.calculoDescuentoPorAportes(tipo_IngresoPDMI, eleccionSueldoOAporte, sueldoSueldoOAporte, porporsentajeDeAPorte, categoria_Mono, arrayValorMonotXCategoria, beneficiariosF184);
+    let array = [];
+    if (edad2 > 17) {
+        precio_adultos_Sancor = Object.entries(preciosConyuge).reduce((acc, [key, value]) => // matrimonio
+         ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value)
+        }), {
+            ...precioTitular
+        });
+    }
+    else {
+        precio_adultos_Sancor = precioTitular;
+    }
+    if (kids == 1) {
+        valor_plan_sancor = Object.entries(precio1Hijo).reduce((acc, [key, value]) => ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value)
+        }), {
+            ...precio_adultos_Sancor
+        });
+    }
+    else if (kids > 1) {
+        let precio_hijos = Object.entries(precio2Hijo).reduce((acc, [key, value]) => // dis hijos o mas
+         ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value * numhijo2)
+        }), {
+            ...precio1Hijo
+        });
+        valor_plan_sancor = Object.entries(precio_hijos).reduce((acc, [key, value]) => ({
+            ...acc,
+            [key]: parseInt((acc[key]) || 0) + parseInt(value)
+        }), {
+            ...precio_adultos_Sancor
+        });
+    }
+    else {
+        valor_plan_sancor = precio_adultos_Sancor;
+    }
+    //	<!-----------------------Bucle SANCOR start------------------------>							
+    for (let j in valor_plan_sancor) {
+        let otrosBenPrecios = [{ "col_1": 1, "col_2": 2758, "col_3": 2528, "col_4": 1620, "SSPRO": 275, "SSOD": 633, "SSAC": 145, "SUF": 85, "CS": 1620 }, { "col_1": 2, "col_2": 5512, "col_3": 5052, "col_4": 3240, "SSPRO": 545, "SSOD": 1267, "SSAC": 290, "SUF": 170, "CS": 3240 }, { "col_1": 3, "col_2": 7658, "col_3": 6961, "col_4": 4860, "SSPRO": 834, "SSOD": 1267, "SSAC": 442, "SUF": 255, "CS": 4860 }, { "col_1": 4, "col_2": 9785, "col_3": 8855, "col_4": 6480, "SSPRO": 1108, "SSOD": 1267, "SSAC": 590, "SUF": 340, "CS": 6480 }, { "col_1": 5, "col_2": 11923, "col_3": 10756, "col_4": 8100, "SSPRO": 1389, "SSOD": 1267, "SSAC": 742, "SUF": 425, "CS": 8100 }, { "col_1": 6, "col_2": 14041, "col_3": 12645, "col_4": 9720, "SSPRO": 1658, "SSOD": 1267, "SSAC": 886, "SUF": 510, "CS": 9720 }];
+        let segVidaPrecio = [{ "col_1": '18 A 45', "col_2": 800 }, { "col_1": '46 A 54', "col_2": 1244 }, { "col_1": '55 A 59', "col_2": 1486 }];
+        let segVidacheck = segvida1;
+        let segVida2check = segvida2;
+        let segVidaTotal = functions.segVidaPlus(segVidacheck, segVida2check, edad1, edad2, segVidaPrecio);
+        let afiche = con_afinidad;
+        let empresaPlan = [j][0];
+        let plan_id = empresaPlan;
+        let gen = genSanCor;
+        let plan_gen = empresaPlan.substring(3, 6);
+        let plan_nombre = functions.planNombre(gen, plan_gen, empresaPlan.substring(3));
+        let bonInscr = parseInt(valor_plan_sancor[j]) * 0.1;
+        let otrosBen = functions.suprasSalud(supra_salud, gen, plan_nombre, otrosBenPrecios, grupoFam);
+        let bonAfinidadporcentaje = functions.promoDescuento(valor_plan_sancor[j], bonAfinidad_porcentaje, afiche)[2];
+        let bonAfinidad = functions.promoDescuento(valor_plan_sancor[j], bonAfinidadporcentaje, afiche)[1];
+        let valor_total_plan = functions.promoDescuento(valor_plan_sancor[j], bonAfinidadporcentaje, afiche)[0];
+        let cuotaSocial = otrosBenPrecios[grupoFam - 1]['CS'];
+        valor_total_plan = valor_total_plan + parseInt(cuotaSocial) + parseInt(otrosBen) + parseInt(segVidaTotal);
+        let precio_final_a_pagar = functions.final(tipo_IngresoPDMI, deduccionAportesObraSocial, valor_total_plan);
+        if (tipo_IngresoPDMI === "I") {
+            precio_final_a_pagar = parseInt(valor_total_plan) - parseInt(bonInscr);
+            deduccionAportesObraSocial = bonInscr;
+            textoAportesOS = 'Bonif. RI :';
+        }
+        //	<!--------------------Crear Objeto SANCOR end------------------------------>																            
+        var plan = new Object();
+        plan.item_id = plan_id;
+        if (plan_nombre.includes(5000) || plan_nombre.includes(6000)) {
+            plan.name = 'Exclusive ' + plan_nombre;
+        }
+        else {
+            plan.name = 'SanCor ' + plan_nombre;
+        }
+        plan.seguroVidaPlus = segVidaTotal;
+        plan.precio = precio_final_a_pagar;
+        plan.promoPorcentaje = bonAfinidadporcentaje;
+        plan.promoDescuento = bonAfinidad;
+        plan.valorLista = valor_plan_sancor[j];
+        plan.aporteOS = deduccionAportesObraSocial;
+        array.push(plan);
+    }
+    //	<!-----------------------Bucle SANCOR end------------------------>											
+    console.log('array SANCOR');
+    console.log(array);
+    return array;
+}
+exports.valorSancorSalud = valorSancorSalud;
+// <!----------------------Funcion VALOR DEL PLAN SANCOR end----------------------------> 
+//# sourceMappingURL=sancorsalud.js.map

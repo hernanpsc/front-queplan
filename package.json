@@ -4,6 +4,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "node dist/server.js",
+    "go": "node src/server.ts",
     "dev": "nodemon src/server.ts",
     "build": "tsc",
     "test": "eslint ."

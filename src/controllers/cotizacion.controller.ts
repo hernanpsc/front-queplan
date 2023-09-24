@@ -2,18 +2,25 @@ import { Request, Response } from 'express';
 import { collections } from "../conection/database";
 import { WithId, Filter } from 'mongodb';
 import { Precios } from '../interfaces/precios';
-import { combinePlansWithPrices } from '../funciones'; // Reemplaza './combineArrays' con la ruta real al archivo
-
+import { MongoClient } from 'mongodb';
+import { Empresa } from '../interfaces/empresas'
 // import { productIdOmint, grupoFamiliar, tipoAsociado, productID,valorSancorSalud,valorOmint } from '../funciones';
-import * as functions from '../funciones';
+import * as functions from '../funciones/funciones';
+import * as ids from '../funciones/ids';
+import * as precioSancorSalud from '../funciones/sancorsalud';
+import * as precioPremedic from '../funciones/premedic';
+import * as precioGaleno from '../funciones/galeno';
+import * as precioOmint from '../funciones/omint';
 
+// Puedes acceder a cada función por su nombre
 export const  calcularPrecio = async (req: Request, res: Response) => {
 
     const formCotizar = req.body;
     const preciosCollection = collections.precios;
-    const planesCollection = collections.todoslosplanes;    
+    const planesCollection = collections.todoslosplanes;
+    const empresasCollection = collections.empresas;   
     
-    // console.log('Datos recibidos en el servidor del formulario:', formCotizar);
+    console.log('Datos recibidos en el servidor del formulario:', formCotizar);
     const { edad_1 } = formCotizar; // edad1
     const { edad_2 } = formCotizar; // edad2
     const { numkids } = formCotizar; // kids
@@ -32,6 +39,7 @@ export const  calcularPrecio = async (req: Request, res: Response) => {
     const { segvida } = formCotizar; // segVida1
     const { segvida1 } = formCotizar; // segVida2
     const { region } = formCotizar;
+    const { coeficientes } = formCotizar;
     
       // const { name } = formCotizar;
       // const { email } = formCotizar;
@@ -41,12 +49,39 @@ export const  calcularPrecio = async (req: Request, res: Response) => {
       // const { email } = formCotizar;
       // const { phone } = formCotizar;
       // const { region } = formCotizar;
-    let grupo = functions.grupoFamiliar(edad_1, edad_2, numkids);
-    console.log("edad_1" + edad_1);
-    console.log("edad_2" + edad_2);
-    console.log("numkids" + numkids);
+    let grupo = ids.grupoFamiliar(edad_1, edad_2, numkids);
+    // console.log("edad_1" + edad_1);
+    // console.log("edad_2" + edad_2);
+    // console.log("numkids" + numkids);
 
-    console.log(grupo)
+    // console.log(grupo)
+    const coeficientesConComillas: { [nombreEmpresa: string]: number } = {};
+
+for (const nombreEmpresa in coeficientes) {
+  if (Object.prototype.hasOwnProperty.call(coeficientes, nombreEmpresa)) {
+    coeficientesConComillas[nombreEmpresa] = coeficientes[nombreEmpresa];
+  }
+}
+const beneficiariosF184 = cantAport;
+const eleccionSueldoOAporte = aporteOS;
+const sueldoSueldoOAporte = sueldo;
+const categoria_Mono = "";
+const arrayValorMonotXCategoria: any[] = [];
+// console.log(coeficientesConComillas)
+const coeficienteSwissMedical = coeficientesConComillas['Swiss Medical']
+const coeficienteOMINT = coeficientesConComillas['OMINT']
+const coeficienteAvalian = coeficientesConComillas['Avalian']
+const coeficienteMedife = coeficientesConComillas['Medife']
+const coeficienteGaleno = coeficientesConComillas['Galeno']
+const coeficientePremedic = coeficientesConComillas['Premedic']
+const coeficienteOSDE = coeficientesConComillas['OSDE']
+const coeficienteBayresPlan = coeficientesConComillas['Bayres Plan']
+const coeficienteSaludCentral = coeficientesConComillas['Salud Central']
+const coeficienteSanCorSalud = coeficientesConComillas['SanCor Salud']
+const coeficienteDoctored = coeficientesConComillas['Doctored']
+const coeficientePrevencionSalud = coeficientesConComillas['Prevencion Salud']
+
+
     let num_adultos = grupo[0]; //checked
     let numhijo1 = grupo[1]; //checked
     let numhijo2 = grupo[2]; //checked
@@ -54,31 +89,58 @@ export const  calcularPrecio = async (req: Request, res: Response) => {
     let gen = grupo[4]; //checked
     let grupoFam = grupo[5];
 
-    
-    let tipoAsociadoSanCor = functions.tipoAsociado(tipo,grupoFam,cantAport);
-    
-    let idSancor = functions.productID(edad_1, tipo, gen, 'titular', numHijos);
-let edadID1 : Filter<Precios> = { _id: idSancor[0]};  // console.log(edadID1)
-let hijoId : Filter<Precios> = { _id: idSancor[2]}; // console.log(hijoId)
-let hijo2Id : Filter<Precios> = { _id: idSancor[3]}; // console.log(hijo2Id)
-// console.log(edad_2)
-let idSancor1 = functions.productID(edad_2, tipo, gen, 'conyuge', numHijos);
-let edadID2 : Filter<Precios> = { _id: idSancor1[1]};  // console.log(edadID2);
+    const objetoResultadoConComillasSimples: { [nombreEmpresa: string]: number } = {};
+    empresasCollection.find({}).toArray()
+    .then(empresas => {
+      // Crear el objeto con las propiedades deseadas
+      const objetoResultado: { [nombreEmpresa: string]: number } = {};  
+      empresas.forEach(empresa => {
+        if (empresa.name && empresa.factores && empresa.factores.coeficiente !== undefined) {
+          objetoResultado[empresa.name] = empresa.factores.coeficiente;
+        }
+      });
+      for (const nombreEmpresa in objetoResultado) {
+        if (Object.prototype.hasOwnProperty.call(objetoResultado, nombreEmpresa)) {
+          objetoResultadoConComillasSimples[nombreEmpresa] = objetoResultado[nombreEmpresa];
+        }
+      }
+  
+      // El objeto resultado contiene { name: coeficiente } para cada empresa válida
+      // console.log(objetoResultadoConComillasSimples);
+    })
+    .catch(err => {
+      // console.error('Error al obtener los documentos de la colección:', err);
+    });
+   
+
+
+let tipo_IngresoPDMI = ids.tipoAsociado(tipo);
+const aporte_OS = [tipo_IngresoPDMI,beneficiariosF184,eleccionSueldoOAporte,sueldoSueldoOAporte,categoria_Mono,arrayValorMonotXCategoria]
+let idSancor = ids.productID(edad_1, tipo, gen, 'titular', numHijos);
+let edadID1 : Filter<Precios> = { _id: idSancor[0]};  // // console.log(edadID1)
+let hijoId : Filter<Precios> = { _id: idSancor[2]}; // // console.log(hijoId)
+let hijo2Id : Filter<Precios> = { _id: idSancor[3]}; // // console.log(hijo2Id)
+// // console.log(edad_2)
+let idSancor1 = ids.productID(edad_2, tipo, gen, 'conyuge', numHijos);
+let edadID2 : Filter<Precios> = { _id: idSancor1[1]};  // // console.log(edadID2);
 
 // <! -----------------------------ID GALENO START---------------------------------------------------->
-let idGaleno = functions.productIdGaleno(edad_1, edad_2, tipo, numHijos);
+let idGaleno = ids.productIdGaleno(edad_1, edad_2, tipo, numHijos);
 let edadIdGaleno : Filter<Precios> = { _id: 'galeno'+ idGaleno};
 
 let priceGrupoGaleno : WithId<Precios> = await preciosCollection.findOne(edadIdGaleno);
+console.log('edad ID galeno  ');
+
+console.log(edadIdGaleno);
+
 let precioGrupoGaleno = priceGrupoGaleno.precios
-console.log('edad ID galeno  ' + idGaleno);
-console.log(precioGrupoGaleno);
+// console.log(precioGrupoGaleno);
 
 // <! -----------------------------ID GALENO END---------------------------------------------------->
 
 
 // <! -----------------------------ID PREMEDIC START---------------------------------------------------->
-let edadIdPremedic = functions.productIdPremedic(edad_1, edad_2, tipo, numHijos);
+let edadIdPremedic = ids.productIdPremedic(edad_1, edad_2, tipo, numHijos);
 let edadAdultos : Filter<Precios> = { _id: 'premedic'+ edadIdPremedic};
 
 let hijoIdmenor1preme : Filter<Precios> = { _id: 'premedic'+tipo + 'AD-1anio'};
@@ -88,39 +150,38 @@ let hijoIdmenor25preme : Filter<Precios> = { _id: 'premedic'+tipo + 'AD-25'};
 let priceAdultosPr : WithId<Precios> = await preciosCollection.findOne(edadAdultos);
 let pricePrHijoMenir1 : WithId<Precios> = await preciosCollection.findOne(hijoIdmenor1preme);
 let pricePrHijoMenir25 : WithId<Precios> = await preciosCollection.findOne(hijoIdmenor25preme);
-console.log(priceAdultosPr)
+// console.log(priceAdultosPr)
 
 let precioAdultosPr = priceAdultosPr.precios
 let precioPrHijoMenir1 = pricePrHijoMenir1.precios
 let precioPrHijoMenir25 = pricePrHijoMenir25.precios
-let valorpREMEDIC = functions.valorPremedic(
-edad_2, // dato del formulario - edad del conyuge
-numkids, // dato del formulario - cantidad total de hijos 
+let valorpREMEDIC = precioPremedic.valorPremedic(
+  aporte_OS,
+ coeficienteSanCorSalud,
+ edad_2,
+ numkids,
  precioAdultosPr, 
  precioPrHijoMenir25, 
- precioPrHijoMenir1, 
- edadIdPremedic,
- afinidad, // dato del formulario ( check = true/false )
- bonAfinidad, // dato del formulario 
- tipoAsociadoSanCor, // funcion sobro condicion de ingreso
- cantAport, // dato del formulario - cantidad de aportantes al monotributo
-
- )
-console.log(valorpREMEDIC)
+precioPrHijoMenir1, 
+edadIdPremedic,
+afinidad, 
+bonAfinidad
+)
+// console.log(valorpREMEDIC)
 
 
 // <! -----------------------------ID PREMEDIC END---------------------------------------------------->
 
 
 // <! -----------------------------ID OMINT START---------------------------------------------------->
-let idOmint =  functions.productIdOmint(edad_1, tipo, 'titular');
-// // console.log("este es el del componente 1 :" + idOmint[0]);
-// // console.log("este es el del componente 2:" + idOmint[1]);
-// // console.log("este es el del componente 3:" + idOmint[2]);
-// // console.log("este es el del componente 4:" + idOmint[3]);
+let idOmint =  ids.productIdOmint(edad_1, tipo, 'titular');
+// // // console.log("este es el del componente 1 :" + idOmint[0]);
+// // // console.log("este es el del componente 2:" + idOmint[1]);
+// // // console.log("este es el del componente 3:" + idOmint[2]);
+// // // console.log("este es el del componente 4:" + idOmint[3]);
 
 let edadID1OMINT : Filter<Precios> = { _id: idOmint[0]};
-let edadID2OMINT : Filter<Precios> = {_id: functions.productIdOmint(edad_2, tipo, 'conyuge')[1]};
+let edadID2OMINT : Filter<Precios> = {_id: ids.productIdOmint(edad_2, tipo, 'conyuge')[1]};
 let hijoIdOMINT : Filter<Precios> = { _id: idOmint[2]};
 let hijo2IdOMINT : Filter<Precios> = { _id: idOmint[3]};
 // <! -----------------------------ID OMINT END---------------------------------------------------->
@@ -128,30 +189,32 @@ let hijo2IdOMINT : Filter<Precios> = { _id: idOmint[3]};
 // <! -----------------------------VALOR PRECIO SANCOR START---------------------------------------------------->
 let price1Hijo : WithId<Precios> = await preciosCollection.findOne(hijoId);
 let precio1Hijo = price1Hijo.precios;
-// // console.log('precio hijo1 Sancor : ');
-// // console.log(precio1Hijo);
+// // // console.log('precio hijo1 Sancor : ');
+// // // console.log(precio1Hijo);
 
 let price2Hijo : WithId<Precios> = await preciosCollection.findOne(hijo2Id);    
 let precio2Hijo = price2Hijo.precios;
-// // console.log('precio hijo2 Sancor : ');
-// // console.log(precio2Hijo);
+// // // console.log('precio hijo2 Sancor : ');
+// // // console.log(precio2Hijo);
 
 let priceTitular : WithId<Precios> = await preciosCollection.findOne(edadID1);
 let precioTitular = priceTitular.precios;
-// // console.log('precio Titular Sancor : ');
-// // console.log(precioTitular);
-// // console.log(edadID2);
+// // // console.log('precio Titular Sancor : ');
+// // // console.log(precioTitular);
+// // // console.log(edadID2);
 
 let precioConyuge
 if (edad_2 > 17) {
   let priceConyuge : WithId<Precios> = await preciosCollection.findOne(edadID2);
-  // // console.log(priceConyuge.precios)
+  // // // console.log(priceConyuge.precios)
   precioConyuge = priceConyuge.precios;
-  // // console.log('precio Conyuge Sancor : ');
-  // // console.log(precioConyuge);
+  // // // console.log('precio Conyuge Sancor : ');
+  // // // console.log(precioConyuge);
 }else {}
 
-let valorSanCor = functions.valorSancorSalud(
+let valorSanCor = precioSancorSalud.valorSancorSalud(
+  aporte_OS,
+  coeficienteSanCorSalud,
   edad_1, // dato del formulario - edad del titular
   edad_2, // dato del formulario - edad del conyuge
   numkids, // dato del formulario - cantidad total de hijos
@@ -160,10 +223,6 @@ let valorSanCor = functions.valorSancorSalud(
   precioTitular, // busqueda por _id en lista de precio
   precioConyuge, // busqueda por _id en lista de precio
   numhijo2, // respuesta funcion grupoFamiliar
-  tipoAsociadoSanCor, // funcion sobro condicion de ingreso
-  aporteOS, // dato del formulario - tipo de dato, si es el aporte del recibo o el sueldo bruto
-  sueldo, // dato del formulario - El monto
-  cantAport, // dato del formulario - cantidad de aportantes al monotributo
   grupoFam, // respuesta funcion grupoFamiliar
   segvida, // dato del formulario ( check = true/false )
   segvida1, // dato del formulario ( check = true/false )
@@ -171,35 +230,35 @@ let valorSanCor = functions.valorSancorSalud(
   afinidad, // dato del formulario ( check = true/false )
   bonAfinidad, // dato del formulario 
   gen  // respuesta funcion grupoFamiliars
-
   );
-// // console.log( ' Valor SanCor ')
-console.log( valorSanCor);
+// // // console.log( ' Valor SanCor ')
+// console.log( valorSanCor);
 // <! -----------------------------VALOR PRECIO SANCOR START---------------------------------------------------->
 
 // <! -----------------------------VALOR PRECIO OMINT START------------------------------------------------------>
 let price_titular_Omint: WithId<Precios> = await preciosCollection.findOne(edadID1OMINT);
 let precio_titular_Omint= price_titular_Omint.precios;
-// // console.log('Precio titular OMINT :');
-// // console.log(precio_titular_Omint);
+// // // console.log('Precio titular OMINT :');
+// // // console.log(precio_titular_Omint);
 
 let price_conyuge_Omint: WithId<Precios> = await preciosCollection.findOne(edadID2OMINT);
 let precio_conyuge_Omint = price_conyuge_Omint.precios;
-// // console.log('Precio Conyuge OMINT :');
-// // console.log(precio_conyuge_Omint);
+// // // console.log('Precio Conyuge OMINT :');
+// // // console.log(precio_conyuge_Omint);
 
 let price_hijo1_Omint: WithId<Precios> = await preciosCollection.findOne(hijoIdOMINT);
 let precio_hijo1_Omint = price_hijo1_Omint.precios;
-// // console.log('Precio Hijo 1 OMINT :'  );
-// // console.log(precio_hijo1_Omint);
+// // // console.log('Precio Hijo 1 OMINT :'  );
+// // // console.log(precio_hijo1_Omint);
 
 
 let price_hijo2_Omint: WithId<Precios> = await preciosCollection.findOne(hijo2IdOMINT);
 let precio_hijo2_Omint = price_hijo2_Omint.precios;
-// // console.log('Precio Hijo 2 OMINT :');
-// // console.log(precio_hijo2_Omint);
+// // // console.log('Precio Hijo 2 OMINT :');
+// // // console.log(precio_hijo2_Omint);
 
-let valor_Omint = functions.valorOmint(
+let valor_Omint = precioOmint.valorOmint(
+  aporte_OS,
   edad_2, // dato del formulario - edad del conyuge
   numHijos,  // respuesta funcion grupoFamiliar
   numhijo2, // hijos a partir del segundo 
@@ -210,36 +269,28 @@ let valor_Omint = functions.valorOmint(
   edadID1OMINT, // id Titular
   afinidad, // dato del formulario ( check = true/false )
   bonAfinidad, // dato del formulario % de descuento
-  tipo,  // dato del formulario
-  aporteOS, // dato del formulario - tipo de dato, si es el aporte del recibo o el sueldo bruto
-  sueldo, // dato del formulario - El monto
-  cantAport // dato del formulario - cantidad de aportantes al monotributo
-
+  coeficienteOMINT
   );
-  // // console.log(' Valor OMINT  :')
-  console.log(valor_Omint);
+  // // // console.log(' Valor OMINT  :')
+  // console.log(valor_Omint);
 
   // <! -----------------------------VALOR PRECIO OMINT END---------------------------------------------------->
   // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
-  let valorGaleno = functions.valorGaleno(
-    edad_1, // dato del formulario - edad del titular
-    edad_2, // dato del formulario - edad del conyuge
-    numkids, // dato del formulario - cantidad total de hijos
+  let valorGaleno = precioGaleno.valorGaleno(
+    aporte_OS,
     precioGrupoGaleno,
-    aporteOS, // dato del formulario - tipo de dato, si es el aporte del recibo o el sueldo bruto
-    sueldo, // dato del formulario - El monto
-    tipo,   // dato del formulario
-    cantAport  // dato del formulario - cantidad de aportantes al monotributo
+coeficienteGaleno
+    
     );
-    console.log(valorGaleno)
+    // console.log(valorGaleno)
 // <! -----------------------------VALOR PRECIO GALENO END---------------------------------------------------->
   
   
   let preciosDetodos =  [valorSanCor,valor_Omint,valorpREMEDIC,valorGaleno];
 
   const preciosTodos = valorSanCor.concat(valor_Omint, valorpREMEDIC,valorGaleno);
-  // console.log('precios de todos : ');
-  // console.log(preciosTodos);
+  // // console.log('precios de todos : ');
+  // // console.log(preciosTodos);
 
       const precioCalculado = preciosTodos; 
 
@@ -263,12 +314,12 @@ obtenerPlanes()
    const planesFiltradosGaleno = planes.filter((plan) => {return plan.empresa === 'Galeno';});
    const planesFiltradosPremedic = planes.filter((plan) => {return plan.empresa === 'Premedic';});
    const planesFiltradosSancor = planes.filter((plan) => {return plan.empresa === 'SanCor Salud';});
-console.log(valorGaleno)
+// console.log(valorGaleno)
 
-   const combinedPlansOmint = combinePlansWithPrices(planesFiltradosOmint, valor_Omint);
-   const combinedPlansSancor = combinePlansWithPrices(planesFiltradosSancor, valorSanCor);
-   const combinedPlansPremedic = combinePlansWithPrices(planesFiltradosPremedic, valorpREMEDIC);
-   const combinedPlansGaleno = combinePlansWithPrices(planesFiltradosGaleno, valorGaleno);
+   const combinedPlansOmint = functions.combinePlansWithPrices(planesFiltradosOmint, valor_Omint);
+   const combinedPlansSancor = functions.combinePlansWithPrices(planesFiltradosSancor, valorSanCor);
+   const combinedPlansPremedic = functions.combinePlansWithPrices(planesFiltradosPremedic, valorpREMEDIC);
+   const combinedPlansGaleno = functions.combinePlansWithPrices(planesFiltradosGaleno, valorGaleno);
 
   //  const filteredPlansGaleno = combinedPlans.filter((plan: { precio: number; }) => plan.precio > 0);    
 
@@ -300,10 +351,10 @@ return false;
 
 // let planesOmintAgrupados  = functions.agruparYTransformarPlanes(combinedPlansOmintFiltrados);
 // const resultadoFinal = otrasEmpresasPlanes.concat(planesOmintAgrupados);
-    // console.log('este es omintPlanes: ' + omintPlanes)
-    // console.log('este es otrasEmpresasPlanes: ' + otrasEmpresasPlanes)
-    // console.log('este es planesOmintAgrupados: ' + planesOmintAgrupados)
-    // console.log('este es resultadoFinal: ' + resultadoFinal)
+    // // console.log('este es omintPlanes: ' + omintPlanes)
+    // // console.log('este es otrasEmpresasPlanes: ' + otrasEmpresasPlanes)
+    // // console.log('este es planesOmintAgrupados: ' + planesOmintAgrupados)
+    // // console.log('este es resultadoFinal: ' + resultadoFinal)
     const concatenarPlanes = combinedPlansOmintFiltrados.concat(combinedPlansSancor, combinedPlansPremedic,combinedPlansGaleno);
 
     const resultado_final = concatenarPlanes.filter((plan: { precio: number; }) => {
@@ -313,11 +364,12 @@ return false;
         }
         return true;
         });
+        // console.log(resultado_final)
     res.status(200).json({ planes: resultado_final })})
     
   .catch((error) => {
     // Manejar cualquier error que ocurra durante la obtención de los planes
-    // console.error(error);
+    // // console.error(error);
     res.status(500).json({ error: 'Error al obtener los planes' });
   });
 };
