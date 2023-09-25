@@ -54,7 +54,7 @@ export function tipoAsociado(_tipo) {
 	let tipo = _tipo;
 	if (tipo === "M" || tipo === "D") {
 		tipoAsoc = "D";
-	} else if (tipo === "I") {
+	} else if (tipo === "I" || tipo === "P") {
 		tipoAsoc = "P"
 	};
 	return tipoAsoc
@@ -227,6 +227,7 @@ export function productIdSwiss(anios, tipoAsoc) {
 	let tipo = tipoAsoc;
 	let edad = anios;
 
+
 	if (edad >= 18 && edad <= 25) {
 		edadID = tipo + 25;
 	} else if (edad >= 26 && edad <= 35) {
@@ -245,11 +246,7 @@ export function productIdSwiss(anios, tipoAsoc) {
 		edadID = tipo + 63;
 	} else {
 		edadID = tipo + 60;
- 
 	}
 return edadID
-
-
-
 }
 // <!----------------------Funcion PRODUCT ID END start---------------------------->        

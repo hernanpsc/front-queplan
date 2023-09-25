@@ -112,6 +112,9 @@ const coeficientePrevencionSalud = coeficientesConComillas['Prevencion Salud']
 
 
 let tipo_IngresoPDMI = functions.tipoAsociado(tipo);
+console.log('tipo_IngresoPDMI')
+
+console.log(tipo_IngresoPDMI)
 const aporte_OS = [tipo_IngresoPDMI,beneficiariosF184,eleccionSueldoOAporte,sueldoSueldoOAporte,categoria_Mono,arrayValorMonotXCategoria]
 let idSancor = functions.productID(edad_1, tipo, gen, 'titular', numHijos);
 let edadID1 : Filter<Precios> = { _id: idSancor[0]};  // // console.log(edadID1)
@@ -163,7 +166,9 @@ edadIdPremedic,
 afinidad, 
 bonAfinidad
 )
-// console.log(valorpREMEDIC)
+console.log( ' Valor PREMEDIC ')
+
+console.log(valorpREMEDIC)
 
 
 // <! -----------------------------ID PREMEDIC END---------------------------------------------------->
@@ -227,8 +232,8 @@ let valorSanCor = functions.valorSancorSalud(
   bonAfinidad, // dato del formulario 
   gen  // respuesta funcion grupoFamiliars
   );
-// // // console.log( ' Valor SanCor ')
-// console.log( valorSanCor);
+console.log( ' Valor SanCor ')
+console.log( valorSanCor);
 // <! -----------------------------VALOR PRECIO SANCOR START---------------------------------------------------->
 
 // <! -----------------------------VALOR PRECIO OMINT START------------------------------------------------------>
@@ -278,25 +283,44 @@ let valor_Omint = functions.valorOmint(
 coeficienteGaleno
     
     );
-    // console.log(valorGaleno)
+    console.log( ' Valor GALENO ')
+
+    console.log(valorGaleno)
 // <! -----------------------------VALOR PRECIO GALENO END---------------------------------------------------->
   // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
 
 
 let idTitularSwiss = functions.productIdSwiss(edad_1, tipo_IngresoPDMI);
+console.log('edad_2 SWISS ')
+console.log(edad_2)
 let idConyugeSwiss = functions.productIdSwiss(edad_2, tipo_IngresoPDMI);
-let idHijo1Swiss = 'swiss' + tipo_IngresoPDMI+'1h';
-let idHijo2Swiss =  'swiss' +tipo_IngresoPDMI +'2h';;
+let idHijo1Swiss = tipo_IngresoPDMI+'1h';
+let idHijo2Swiss =  tipo_IngresoPDMI +'2h';;
 
-let titular_Swiss : Filter<Precios> = { _id: idTitularSwiss};
-let conyuge_Swiss : Filter<Precios> = { _id: idConyugeSwiss};
-let hijo1Swiss : Filter<Precios> = { _id: idHijo1Swiss};
-let hijo2Swiss : Filter<Precios> = { _id: idHijo2Swiss};
+let titular_Swiss : Filter<Precios> = { _id: 'swiss' + idTitularSwiss};
+let conyuge_Swiss : Filter<Precios> = { _id: 'swiss' +  idConyugeSwiss};
+let hijo1Swiss : Filter<Precios> = { _id:'swiss' + idHijo1Swiss};
+let hijo2Swiss : Filter<Precios> = { _id: 'swiss' +idHijo2Swiss};
+console.log(idTitularSwiss);
+console.log(idConyugeSwiss);
+console.log(idHijo1Swiss);
+console.log(idHijo2Swiss);
+console.log(titular_Swiss);
+console.log(conyuge_Swiss);
+console.log(hijo1Swiss);
+console.log(hijo2Swiss);
+
 
 let priceTitularSwiss : WithId<Precios> = await preciosCollection.findOne(titular_Swiss);
 let priceConyugeSwiss : WithId<Precios> = await preciosCollection.findOne(conyuge_Swiss);
 let priceHijo1Swiss : WithId<Precios> = await preciosCollection.findOne(hijo1Swiss);
 let priceHijo2Swiss : WithId<Precios> = await preciosCollection.findOne(hijo2Swiss);
+
+let precioTitularSwiss = priceTitularSwiss.precios
+let precioConyugeSwiss = priceConyugeSwiss.precios
+
+let precioHijo1Swiss = priceHijo1Swiss.precios
+let precioHijo2Swiss = priceHijo2Swiss.precios
 
 let valorSwiss = functions.valorSwiss(
   aporte_OS,
@@ -304,12 +328,15 @@ let valorSwiss = functions.valorSwiss(
   edad_2, 
   numkids,
   numhijo2,
-  priceTitularSwiss,
-  priceConyugeSwiss,
-  priceHijo1Swiss,
-  priceHijo2Swiss,
+  precioTitularSwiss,
+  precioConyugeSwiss,
+  precioHijo1Swiss,
+  precioHijo2Swiss,
   coeficienteSwissMedical
   )
+  console.log( ' Valor SWISS ')
+
+console.log(valorSwiss)
 
 
   let preciosDetodos =  [valorSanCor,valor_Omint,valorpREMEDIC,valorGaleno,valorSwiss];
@@ -348,7 +375,7 @@ obtenerPlanes()
    const combinedPlansSancor = functions.combinePlansWithPrices(planesFiltradosSancor, valorSanCor);
    const combinedPlansPremedic = functions.combinePlansWithPrices(planesFiltradosPremedic, valorpREMEDIC);
    const combinedPlansGaleno = functions.combinePlansWithPrices(planesFiltradosGaleno, valorGaleno);
-   const combinedPlansGaleno = functions.combinePlansWithPrices(planesFiltradosSwiss, valorSwiss);
+   const combinedPlansSwiss = functions.combinePlansWithPrices(planesFiltradosSwiss, valorSwiss);
 
   //  const filteredPlansGaleno = combinedPlans.filter((plan: { precio: number; }) => plan.precio > 0);    
 
@@ -384,7 +411,7 @@ return false;
     // // console.log('este es otrasEmpresasPlanes: ' + otrasEmpresasPlanes)
     // // console.log('este es planesOmintAgrupados: ' + planesOmintAgrupados)
     // // console.log('este es resultadoFinal: ' + resultadoFinal)
-    const concatenarPlanes = combinedPlansOmintFiltrados.concat(combinedPlansSancor, combinedPlansPremedic,combinedPlansGaleno);
+    const concatenarPlanes = combinedPlansOmintFiltrados.concat(combinedPlansSancor, combinedPlansPremedic,combinedPlansGaleno,combinedPlansSwiss);
 
     const resultado_final = concatenarPlanes.filter((plan: { precio: number; }) => {
       

@@ -27,12 +27,6 @@ exports.calcularPrecio = void 0;
 const database_1 = require("../conection/database");
 // import { productIdOmint, grupoFamiliar, tipoAsociado, productID,valorSancorSalud,valorOmint } from '../funciones';
 const functions = __importStar(require("../funciones"));
-// import * as functions from '../funciones/functions';
-const ids = __importStar(require("../funciones/ids"));
-// import * as functions from '../funciones/sancorsalud';
-// import * as functions from '../funciones/premedic';
-// import * as functions from '../funciones/galeno';
-// import * as functions from '../funciones/omint';
 // Puedes acceder a cada función por su nombre
 const calcularPrecio = async (req, res) => {
     const formCotizar = req.body;
@@ -67,7 +61,7 @@ const calcularPrecio = async (req, res) => {
     // const { email } = formCotizar;
     // const { phone } = formCotizar;
     // const { region } = formCotizar;
-    let grupo = ids.grupoFamiliar(edad_1, edad_2, numkids);
+    let grupo = functions.grupoFamiliar(edad_1, edad_2, numkids);
     // console.log("edad_1" + edad_1);
     // console.log("edad_2" + edad_2);
     // console.log("numkids" + numkids);
@@ -125,17 +119,19 @@ const calcularPrecio = async (req, res) => {
         .catch(err => {
         // console.error('Error al obtener los documentos de la colección:', err);
     });
-    let tipo_IngresoPDMI = ids.tipoAsociado(tipo);
+    let tipo_IngresoPDMI = functions.tipoAsociado(tipo);
+    console.log('tipo_IngresoPDMI');
+    console.log(tipo_IngresoPDMI);
     const aporte_OS = [tipo_IngresoPDMI, beneficiariosF184, eleccionSueldoOAporte, sueldoSueldoOAporte, categoria_Mono, arrayValorMonotXCategoria];
-    let idSancor = ids.productID(edad_1, tipo, gen, 'titular', numHijos);
+    let idSancor = functions.productID(edad_1, tipo, gen, 'titular', numHijos);
     let edadID1 = { _id: idSancor[0] }; // // console.log(edadID1)
     let hijoId = { _id: idSancor[2] }; // // console.log(hijoId)
     let hijo2Id = { _id: idSancor[3] }; // // console.log(hijo2Id)
     // // console.log(edad_2)
-    let idSancor1 = ids.productID(edad_2, tipo, gen, 'conyuge', numHijos);
+    let idSancor1 = functions.productID(edad_2, tipo, gen, 'conyuge', numHijos);
     let edadID2 = { _id: idSancor1[1] }; // // console.log(edadID2);
     // <! -----------------------------ID GALENO START---------------------------------------------------->
-    let idGaleno = ids.productIdGaleno(edad_1, edad_2, tipo, numHijos);
+    let idGaleno = functions.productIdGaleno(edad_1, edad_2, tipo, numHijos);
     let edadIdGaleno = { _id: 'galeno' + idGaleno };
     let priceGrupoGaleno = await preciosCollection.findOne(edadIdGaleno);
     console.log('edad ID galeno  ');
@@ -144,7 +140,7 @@ const calcularPrecio = async (req, res) => {
     // console.log(precioGrupoGaleno);
     // <! -----------------------------ID GALENO END---------------------------------------------------->
     // <! -----------------------------ID PREMEDIC START---------------------------------------------------->
-    let edadIdPremedic = ids.productIdPremedic(edad_1, edad_2, tipo, numHijos);
+    let edadIdPremedic = functions.productIdPremedic(edad_1, edad_2, tipo, numHijos);
     let edadAdultos = { _id: 'premedic' + edadIdPremedic };
     let hijoIdmenor1preme = { _id: 'premedic' + tipo + 'AD-1anio' };
     let hijoIdmenor25preme = { _id: 'premedic' + tipo + 'AD-25' };
@@ -156,16 +152,17 @@ const calcularPrecio = async (req, res) => {
     let precioPrHijoMenir1 = pricePrHijoMenir1.precios;
     let precioPrHijoMenir25 = pricePrHijoMenir25.precios;
     let valorpREMEDIC = functions.valorPremedic(aporte_OS, coeficienteSanCorSalud, numkids, precioAdultosPr, precioPrHijoMenir25, precioPrHijoMenir1, edadIdPremedic, afinidad, bonAfinidad);
-    // console.log(valorpREMEDIC)
+    console.log(' Valor PREMEDIC ');
+    console.log(valorpREMEDIC);
     // <! -----------------------------ID PREMEDIC END---------------------------------------------------->
     // <! -----------------------------ID OMINT START---------------------------------------------------->
-    let idOmint = ids.productIdOmint(edad_1, tipo, 'titular');
+    let idOmint = functions.productIdOmint(edad_1, tipo, 'titular');
     // // // console.log("este es el del componente 1 :" + idOmint[0]);
     // // // console.log("este es el del componente 2:" + idOmint[1]);
     // // // console.log("este es el del componente 3:" + idOmint[2]);
     // // // console.log("este es el del componente 4:" + idOmint[3]);
     let edadID1OMINT = { _id: idOmint[0] };
-    let edadID2OMINT = { _id: ids.productIdOmint(edad_2, tipo, 'conyuge')[1] };
+    let edadID2OMINT = { _id: functions.productIdOmint(edad_2, tipo, 'conyuge')[1] };
     let hijoIdOMINT = { _id: idOmint[2] };
     let hijo2IdOMINT = { _id: idOmint[3] };
     // <! -----------------------------ID OMINT END---------------------------------------------------->
@@ -208,8 +205,8 @@ const calcularPrecio = async (req, res) => {
     bonAfinidad, // dato del formulario 
     gen // respuesta funcion grupoFamiliars
     );
-    // // // console.log( ' Valor SanCor ')
-    // console.log( valorSanCor);
+    console.log(' Valor SanCor ');
+    console.log(valorSanCor);
     // <! -----------------------------VALOR PRECIO SANCOR START---------------------------------------------------->
     // <! -----------------------------VALOR PRECIO OMINT START------------------------------------------------------>
     let price_titular_Omint = await preciosCollection.findOne(edadID1OMINT);
@@ -244,10 +241,42 @@ const calcularPrecio = async (req, res) => {
     // <! -----------------------------VALOR PRECIO OMINT END---------------------------------------------------->
     // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
     let valorGaleno = functions.valorGaleno(aporte_OS, precioGrupoGaleno, coeficienteGaleno);
-    // console.log(valorGaleno)
+    console.log(' Valor GALENO ');
+    console.log(valorGaleno);
     // <! -----------------------------VALOR PRECIO GALENO END---------------------------------------------------->
-    let preciosDetodos = [valorSanCor, valor_Omint, valorpREMEDIC, valorGaleno];
-    const preciosTodos = valorSanCor.concat(valor_Omint, valorpREMEDIC, valorGaleno);
+    // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
+    let idTitularSwiss = functions.productIdSwiss(edad_1, tipo_IngresoPDMI);
+    console.log('edad_2 SWISS ');
+    console.log(edad_2);
+    let idConyugeSwiss = functions.productIdSwiss(edad_2, tipo_IngresoPDMI);
+    let idHijo1Swiss = tipo_IngresoPDMI + '1h';
+    let idHijo2Swiss = tipo_IngresoPDMI + '2h';
+    ;
+    let titular_Swiss = { _id: 'swiss' + idTitularSwiss };
+    let conyuge_Swiss = { _id: 'swiss' + idConyugeSwiss };
+    let hijo1Swiss = { _id: 'swiss' + idHijo1Swiss };
+    let hijo2Swiss = { _id: 'swiss' + idHijo2Swiss };
+    console.log(idTitularSwiss);
+    console.log(idConyugeSwiss);
+    console.log(idHijo1Swiss);
+    console.log(idHijo2Swiss);
+    console.log(titular_Swiss);
+    console.log(conyuge_Swiss);
+    console.log(hijo1Swiss);
+    console.log(hijo2Swiss);
+    let priceTitularSwiss = await preciosCollection.findOne(titular_Swiss);
+    let priceConyugeSwiss = await preciosCollection.findOne(conyuge_Swiss);
+    let priceHijo1Swiss = await preciosCollection.findOne(hijo1Swiss);
+    let priceHijo2Swiss = await preciosCollection.findOne(hijo2Swiss);
+    let precioTitularSwiss = priceTitularSwiss.precios;
+    let precioConyugeSwiss = priceConyugeSwiss.precios;
+    let precioHijo1Swiss = priceHijo1Swiss.precios;
+    let precioHijo2Swiss = priceHijo2Swiss.precios;
+    let valorSwiss = functions.valorSwiss(aporte_OS, edad_1, edad_2, numkids, numhijo2, precioTitularSwiss, precioConyugeSwiss, precioHijo1Swiss, precioHijo2Swiss, coeficienteSwissMedical);
+    console.log(' Valor SWISS ');
+    console.log(valorSwiss);
+    let preciosDetodos = [valorSanCor, valor_Omint, valorpREMEDIC, valorGaleno, valorSwiss];
+    const preciosTodos = valorSanCor.concat(valor_Omint, valorpREMEDIC, valorGaleno, valorSwiss);
     // // console.log('precios de todos : ');
     // // console.log(preciosTodos);
     const precioCalculado = preciosTodos;
@@ -270,11 +299,13 @@ const calcularPrecio = async (req, res) => {
         const planesFiltradosGaleno = planes.filter((plan) => { return plan.empresa === 'Galeno'; });
         const planesFiltradosPremedic = planes.filter((plan) => { return plan.empresa === 'Premedic'; });
         const planesFiltradosSancor = planes.filter((plan) => { return plan.empresa === 'SanCor Salud'; });
+        const planesFiltradosSwiss = planes.filter((plan) => { return plan.empresa === 'Swiss Medical'; });
         // console.log(valorGaleno)
         const combinedPlansOmint = functions.combinePlansWithPrices(planesFiltradosOmint, valor_Omint);
         const combinedPlansSancor = functions.combinePlansWithPrices(planesFiltradosSancor, valorSanCor);
         const combinedPlansPremedic = functions.combinePlansWithPrices(planesFiltradosPremedic, valorpREMEDIC);
         const combinedPlansGaleno = functions.combinePlansWithPrices(planesFiltradosGaleno, valorGaleno);
+        const combinedPlansSwiss = functions.combinePlansWithPrices(planesFiltradosSwiss, valorSwiss);
         //  const filteredPlansGaleno = combinedPlans.filter((plan: { precio: number; }) => plan.precio > 0);    
         // Filtrar los planes con precioCalculado mayor que 0
         // const galenoPlanes = combinedPlans.filter((plan: { empresa: string; }) => plan.empresa !== 'GALENO');
@@ -306,7 +337,7 @@ const calcularPrecio = async (req, res) => {
         // // console.log('este es otrasEmpresasPlanes: ' + otrasEmpresasPlanes)
         // // console.log('este es planesOmintAgrupados: ' + planesOmintAgrupados)
         // // console.log('este es resultadoFinal: ' + resultadoFinal)
-        const concatenarPlanes = combinedPlansOmintFiltrados.concat(combinedPlansSancor, combinedPlansPremedic, combinedPlansGaleno);
+        const concatenarPlanes = combinedPlansOmintFiltrados.concat(combinedPlansSancor, combinedPlansPremedic, combinedPlansGaleno, combinedPlansSwiss);
         const resultado_final = concatenarPlanes.filter((plan) => {
             if (tipo === 'P' && plan.precio === 0) {
                 return false;

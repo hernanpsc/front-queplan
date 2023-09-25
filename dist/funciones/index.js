@@ -18,5 +18,7 @@ __exportStar(require("./galeno"), exports);
 __exportStar(require("./sancorsalud"), exports);
 __exportStar(require("./omint"), exports);
 __exportStar(require("./premedic"), exports);
+__exportStar(require("./swissmedical"), exports);
 __exportStar(require("./functions"), exports);
+__exportStar(require("./ids"), exports);
 //# sourceMappingURL=index.js.map

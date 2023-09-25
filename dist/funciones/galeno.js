@@ -31,6 +31,7 @@ function valorGaleno(aportesOS, precios, coeficiente) {
     console.log(aportesOS[0]);
     console.log(aportesOS[2]);
     console.log(aportesOS[3]);
+    console.log("coeficiente");
     console.log(coeficiente);
     console.log(aportesOS[4]);
     console.log(aportesOS[5]);

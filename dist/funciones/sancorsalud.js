@@ -78,8 +78,12 @@ function valorSancorSalud(aportesOS, coeficiente, edad_1, edad_2, numHijos, prec
     else {
         precios = precio_adultos_Sancor;
     }
+    console.log('precios 58');
+    console.log(precios);
     //	<!-----------------------Bucle SANCOR start------------------------>							
     for (let j in precios) {
+        console.log('imprimir j');
+        console.log(j);
         let otrosBenPrecios = [{ "col_1": 1, "col_2": 2758, "col_3": 2528, "col_4": 1620, "SSPRO": 275, "SSOD": 633, "SSAC": 145, "SUF": 85, "CS": 1620 }, { "col_1": 2, "col_2": 5512, "col_3": 5052, "col_4": 3240, "SSPRO": 545, "SSOD": 1267, "SSAC": 290, "SUF": 170, "CS": 3240 }, { "col_1": 3, "col_2": 7658, "col_3": 6961, "col_4": 4860, "SSPRO": 834, "SSOD": 1267, "SSAC": 442, "SUF": 255, "CS": 4860 }, { "col_1": 4, "col_2": 9785, "col_3": 8855, "col_4": 6480, "SSPRO": 1108, "SSOD": 1267, "SSAC": 590, "SUF": 340, "CS": 6480 }, { "col_1": 5, "col_2": 11923, "col_3": 10756, "col_4": 8100, "SSPRO": 1389, "SSOD": 1267, "SSAC": 742, "SUF": 425, "CS": 8100 }, { "col_1": 6, "col_2": 14041, "col_3": 12645, "col_4": 9720, "SSPRO": 1658, "SSOD": 1267, "SSAC": 886, "SUF": 510, "CS": 9720 }];
         let segVidaPrecio = [{ "col_1": '18 A 45', "col_2": 800 }, { "col_1": '46 A 54', "col_2": 1244 }, { "col_1": '55 A 59', "col_2": 1486 }];
         let segVidacheck = segvida1;
@@ -87,6 +91,8 @@ function valorSancorSalud(aportesOS, coeficiente, edad_1, edad_2, numHijos, prec
         let segVidaTotal = functions.segVidaPlus(segVidacheck, segVida2check, edad1, edad2, segVidaPrecio);
         let conPromo = con_afinidad;
         let empresaPlan = [j][0];
+        console.log('empresaPlan ');
+        console.log(empresaPlan);
         let _id = empresaPlan;
         let gen = genSanCor;
         let plan_gen = empresaPlan.substring(3, 6);
@@ -99,6 +105,8 @@ function valorSancorSalud(aportesOS, coeficiente, edad_1, edad_2, numHijos, prec
         let cuotaSocial = otrosBenPrecios[grupoFam - 1]['CS'];
         precioTotal = precioTotal + parseInt(cuotaSocial) + parseInt(otrosBen) + parseInt(segVidaTotal);
         let precio = functions.final(aportesOS[0], descOS, precioTotal);
+        console.log('precio ');
+        console.log(precio);
         if (aportesOS[0] === "I") {
             precio = parseInt(precioTotal) - parseInt(bonInscr);
             descOS = bonInscr;
