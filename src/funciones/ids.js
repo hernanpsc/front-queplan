@@ -191,19 +191,19 @@ export function productIdOmint(anios, tipoAsoc, miembro) {
 	// console.log("variable anios : " + anios + "- variable tipoAsoc : " + tipoAsoc + " - variable miembro : " + miembro) 
 	let edadID = '';
 	let tipo = tipoAsoc;
-	let agnos = anios;
+	let edad = anios;
 	let edadID1OMINT = '';
 	let edadID2OMINT = '';
 	let hijoIdOMINT = 'omint' + tipo + 'H1';
 	let hijo2IdOMINT =  'omint' + tipo + 'H2';
-	if (agnos >= 18 && agnos <= 25) {
+	if (edad >= 18 && edad <= 25) {
 		edadID = tipo + 25;
-	} else if (agnos >= 26 && agnos <= 35) {
+	} else if (edad >= 26 && edad <= 35) {
 		edadID = tipo + 35;
-	} else if (agnos >= 36 && agnos <= 54) {
+	} else if (edad >= 36 && edad <= 54) {
 		edadID = tipo + 54;
  
-	} else if (agnos >= 55 && agnos <= 59) {
+	} else if (edad >= 55 && edad <= 59) {
 		edadID = tipo + 59;
  
 	} else {
@@ -219,3 +219,37 @@ export function productIdOmint(anios, tipoAsoc, miembro) {
 	return [edadID1OMINT, edadID2OMINT, hijoIdOMINT, hijo2IdOMINT]
 };
 // <!----------------------Funcion PRODUCT ID OMINT end---------------------------->
+
+
+// <!----------------------Funcion PRODUCT ID SWISS start---------------------------->        
+export function productIdSwiss(anios, tipoAsoc) {
+	let edadID = '';
+	let tipo = tipoAsoc;
+	let edad = anios;
+
+	if (edad >= 18 && edad <= 25) {
+		edadID = tipo + 25;
+	} else if (edad >= 26 && edad <= 35) {
+		edadID = tipo + 35;
+	} else if (edad >= 36 && edad <= 40) {
+		edadID = tipo + 40;
+	} else if (edad >= 41 && edad <= 45) {
+		edadID = tipo + 45;
+	} else if (edad >= 46 && edad <= 50) {
+		edadID = tipo + 50;
+	} else if (edad >= 51 && edad <= 55) {
+		edadID = tipo + 55;
+	} else if (edad >= 56 && edad <= 60) {
+		edadID = tipo + 60;
+	} else if (edad >= 61 && edad <= 63) {
+		edadID = tipo + 63;
+	} else {
+		edadID = tipo + 60;
+ 
+	}
+return edadID
+
+
+
+}
+// <!----------------------Funcion PRODUCT ID END start---------------------------->        

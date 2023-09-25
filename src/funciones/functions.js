@@ -65,7 +65,7 @@ export function combinePlansWithPrices(planes, precios) {
 
 	//	<!-----------------------FUNVIONES QUE SE USAN EN LOS ARCHIVOS DE ESTA MISMA CARPETA PARA EL CALCULO DELOS PRECIOS------------------------>							
 
- function calculoDescuentoPorAportes(
+ export function calculodescOS(
 	tipo_IngresoPDMI,
 	eleccionSueldoOAporte,
 	sueldoSueldoOAporte,
@@ -100,7 +100,7 @@ if (tipo_IngresoPDMI == "D") {
 }
 
 
-function promoDescuento(valor_plan,promo_Porcentaje, afiche){
+export function promoDescuento(valor_plan,promo_Porcentaje, afiche){
 	let bonAfinidad = 0;
 	let valor_total_plan = 0;
 	let bonAfinidadporcentaje = promo_Porcentaje;
@@ -115,7 +115,7 @@ function promoDescuento(valor_plan,promo_Porcentaje, afiche){
 }
 
 
-function final(tipo_IngresoPDMI,deduccionAportesObraSocial,valor_total_plan){
+export function final(tipo_IngresoPDMI,deduccionAportesObraSocial,valor_total_plan){
 	let tipoIngresoPDMI = tipo_IngresoPDMI;
 	let deduccion_AportesObraSocial = deduccionAportesObraSocial;
 	let valortotal_plan = valor_total_plan;
@@ -136,8 +136,10 @@ function final(tipo_IngresoPDMI,deduccionAportesObraSocial,valor_total_plan){
 
 	//	<!-----------------------ESTAS FUNCIONES LAS USA SOLO SANCOR SALUD------------------------>							
 
-	function segVidaPlus(segVidacheck,segVida2check,edad1,edad2,segVidaPrecio){
+	export function segVidaPlus(segVidacheck,segVida2check,edad1,edad2,segVidaPrecio){
 		let segVidaTotal = 0;
+		let segVida = 0;
+		let segVida1 = 0;
 		if (segVidacheck == true) {
 			if (edad1 >= 18 && edad1 <= 45) {
 				segVida = segVidaPrecio[0]['col_2']
@@ -165,7 +167,7 @@ function final(tipo_IngresoPDMI,deduccionAportesObraSocial,valor_total_plan){
 
 
 
-function planNombre(gen,plan_gen,plan_nombre){
+export function planNombre(gen,plan_gen,plan_nombre){
 	if (gen === 'GEN' && plan_gen >= 100 && plan_gen <= 450) {
 		plan_nombre = 'GEN' + plan_nombre;
 	} else {
@@ -174,7 +176,7 @@ function planNombre(gen,plan_gen,plan_nombre){
 	return plan_nombre
 }
 	
-function suprasSalud(supras,gen,plan_nombre,otrosBenPrecios,grupoFam){
+export function suprasSalud(supras,gen,plan_nombre,otrosBenPrecios,grupoFam){
 	let otrosBen = 0;
 	if (supras === true && gen === '') {
 		otrosBen = 0;

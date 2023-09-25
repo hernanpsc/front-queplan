@@ -1,19 +1,22 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = require("fs");
-const path_1 = require("path");
-// Obtén la ruta absoluta de la carpeta "funciones"
-const funcionesFolder = (0, path_1.join)(__dirname, 'funciones');
-// Lee los nombres de los archivos en la carpeta "funciones"
-const archivosFunciones = (0, fs_1.readdirSync)(funcionesFolder);
-// Crea un objeto para almacenar todas las funciones exportadas
-const todasLasFunciones = {};
-// Importa cada archivo de la carpeta "funciones"
-archivosFunciones.forEach((archivo) => {
-    if (archivo.endsWith('.js')) {
-        const nombreFuncion = (0, path_1.parse)(archivo).name;
-        todasLasFunciones[nombreFuncion] = require((0, path_1.join)(funcionesFolder, archivo));
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
     }
-});
-exports.default = todasLasFunciones;
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./galeno"), exports);
+__exportStar(require("./sancorsalud"), exports);
+__exportStar(require("./omint"), exports);
+__exportStar(require("./premedic"), exports);
+__exportStar(require("./functions"), exports);
 //# sourceMappingURL=index.js.map

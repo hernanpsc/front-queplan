@@ -26,12 +26,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.calcularPrecio = void 0;
 const database_1 = require("../conection/database");
 // import { productIdOmint, grupoFamiliar, tipoAsociado, productID,valorSancorSalud,valorOmint } from '../funciones';
-const functions = __importStar(require("../funciones/funciones"));
+const functions = __importStar(require("../funciones"));
+// import * as functions from '../funciones/functions';
 const ids = __importStar(require("../funciones/ids"));
-const precioSancorSalud = __importStar(require("../funciones/sancorsalud"));
-const precioPremedic = __importStar(require("../funciones/premedic"));
-const precioGaleno = __importStar(require("../funciones/galeno"));
-const precioOmint = __importStar(require("../funciones/omint"));
+// import * as functions from '../funciones/sancorsalud';
+// import * as functions from '../funciones/premedic';
+// import * as functions from '../funciones/galeno';
+// import * as functions from '../funciones/omint';
 // Puedes acceder a cada función por su nombre
 const calcularPrecio = async (req, res) => {
     const formCotizar = req.body;
@@ -70,6 +71,8 @@ const calcularPrecio = async (req, res) => {
     // console.log("edad_1" + edad_1);
     // console.log("edad_2" + edad_2);
     // console.log("numkids" + numkids);
+    console.log("coeficientes");
+    console.log(coeficientes);
     // console.log(grupo)
     const coeficientesConComillas = {};
     for (const nombreEmpresa in coeficientes) {
@@ -152,7 +155,7 @@ const calcularPrecio = async (req, res) => {
     let precioAdultosPr = priceAdultosPr.precios;
     let precioPrHijoMenir1 = pricePrHijoMenir1.precios;
     let precioPrHijoMenir25 = pricePrHijoMenir25.precios;
-    let valorpREMEDIC = precioPremedic.valorPremedic(aporte_OS, coeficienteSanCorSalud, edad_2, numkids, precioAdultosPr, precioPrHijoMenir25, precioPrHijoMenir1, edadIdPremedic, afinidad, bonAfinidad);
+    let valorpREMEDIC = functions.valorPremedic(aporte_OS, coeficienteSanCorSalud, numkids, precioAdultosPr, precioPrHijoMenir25, precioPrHijoMenir1, edadIdPremedic, afinidad, bonAfinidad);
     // console.log(valorpREMEDIC)
     // <! -----------------------------ID PREMEDIC END---------------------------------------------------->
     // <! -----------------------------ID OMINT START---------------------------------------------------->
@@ -189,7 +192,7 @@ const calcularPrecio = async (req, res) => {
         // // // console.log(precioConyuge);
     }
     else { }
-    let valorSanCor = precioSancorSalud.valorSancorSalud(aporte_OS, coeficienteSanCorSalud, edad_1, // dato del formulario - edad del titular
+    let valorSanCor = functions.valorSancorSalud(aporte_OS, coeficienteSanCorSalud, edad_1, // dato del formulario - edad del titular
     edad_2, // dato del formulario - edad del conyuge
     numkids, // dato del formulario - cantidad total de hijos
     precio1Hijo, // busqueda por _id en lista de precio
@@ -225,7 +228,7 @@ const calcularPrecio = async (req, res) => {
     let precio_hijo2_Omint = price_hijo2_Omint.precios;
     // // // console.log('Precio Hijo 2 OMINT :');
     // // // console.log(precio_hijo2_Omint);
-    let valor_Omint = precioOmint.valorOmint(aporte_OS, edad_2, // dato del formulario - edad del conyuge
+    let valor_Omint = functions.valorOmint(aporte_OS, edad_2, // dato del formulario - edad del conyuge
     numHijos, // respuesta funcion grupoFamiliar
     numhijo2, // hijos a partir del segundo 
     precio_titular_Omint, // busqueda por _id en lista de precio
@@ -240,7 +243,7 @@ const calcularPrecio = async (req, res) => {
     // console.log(valor_Omint);
     // <! -----------------------------VALOR PRECIO OMINT END---------------------------------------------------->
     // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
-    let valorGaleno = precioGaleno.valorGaleno(aporte_OS, precioGrupoGaleno, coeficienteGaleno);
+    let valorGaleno = functions.valorGaleno(aporte_OS, precioGrupoGaleno, coeficienteGaleno);
     // console.log(valorGaleno)
     // <! -----------------------------VALOR PRECIO GALENO END---------------------------------------------------->
     let preciosDetodos = [valorSanCor, valor_Omint, valorpREMEDIC, valorGaleno];

@@ -24,31 +24,34 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.valorGaleno = void 0;
-const functions = __importStar(require("../funciones/"));
-function valorGaleno(aportesOS, valor_plan_galeno, coeficiente) {
-    let tipo_IngresoPDMI = aportesOS[0];
-    let beneficiariosF184 = aportesOS[1];
-    let eleccionSueldoOAporte = aportesOS[2];
-    let sueldoSueldoOAporte = aportesOS[3];
-    let categoria_Mono = aportesOS[4];
-    let arrayValorMonotXCategoria = aportesOS[5];
-    let porporsentajeDeAPorte = coeficiente;
+const functions = __importStar(require("./functions"));
+function valorGaleno(aportesOS, precios, coeficiente) {
     let array = [];
     //Funcion para el calculo de aportes
-    let deduccionAportesObraSocial = functions.calculoDescuentoPorAportes(tipo_IngresoPDMI, eleccionSueldoOAporte, sueldoSueldoOAporte, porporsentajeDeAPorte, categoria_Mono, arrayValorMonotXCategoria, beneficiariosF184);
-    for (let j in valor_plan_galeno) {
+    console.log(aportesOS[0]);
+    console.log(aportesOS[2]);
+    console.log(aportesOS[3]);
+    console.log(coeficiente);
+    console.log(aportesOS[4]);
+    console.log(aportesOS[5]);
+    console.log(aportesOS[1]);
+    let descOS = functions.calculodescOS(aportesOS[0], aportesOS[2], aportesOS[3], coeficiente, aportesOS[4], aportesOS[5], aportesOS[1]);
+    for (let j in precios) {
         let empresaPlan = [j][0];
-        let plan_id = empresaPlan;
-        let plan_nombre = empresaPlan.substring(3);
-        let valor_total_plan = valor_plan_galeno[j];
+        let _id = empresaPlan;
+        let nombre = empresaPlan.substring(3);
+        let precioTotal = precios[j];
+        console.log(aportesOS[0]);
+        console.log(descOS);
+        console.log(precioTotal);
         //funcion para que impacten los descuentos y bonificaciones
-        let precio_final_a_pagar = functions.final(tipo_IngresoPDMI, deduccionAportesObraSocial, valor_total_plan);
+        let precio = functions.final(aportesOS[0], descOS, precioTotal);
         var plan = new Object();
-        plan.item_id = plan_id;
-        plan.name = 'Galeno  ' + plan_nombre;
-        plan.precio = precio_final_a_pagar;
-        plan.valorLista = valor_plan_galeno[j];
-        plan.aporteOS = deduccionAportesObraSocial;
+        plan.item_id = _id;
+        plan.name = 'Galeno  ' + nombre;
+        plan.precio = precio;
+        plan.valorLista = precios[j];
+        plan.aporteOS = descOS;
         array.push(plan);
     }
     //	<!-----------------------Bucle GALENO end------------------------>	

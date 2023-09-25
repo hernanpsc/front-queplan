@@ -1,7 +1,7 @@
 "use strict";
 //	<!-----------------------FUNCIONES QUE SE USAN EL CONTROLADOR CORIZACION ANTES DE ENTREGAR EL RESULTADO------------------------>							
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.agruparYTransformarPlanes = exports.combinePlansWithPrices = void 0;
+exports.suprasSalud = exports.planNombre = exports.segVidaPlus = exports.final = exports.promoDescuento = exports.calculodescOS = exports.agruparYTransformarPlanes = exports.combinePlansWithPrices = void 0;
 function combinePlansWithPrices(planes, precios) {
     const combinedArray = [];
     planes.forEach((plan) => {
@@ -50,7 +50,7 @@ function agruparYTransformarPlanes(omintPlanes) {
 }
 exports.agruparYTransformarPlanes = agruparYTransformarPlanes;
 //	<!-----------------------FUNVIONES QUE SE USAN EN LOS ARCHIVOS DE ESTA MISMA CARPETA PARA EL CALCULO DELOS PRECIOS------------------------>							
-function calculoDescuentoPorAportes(tipo_IngresoPDMI, eleccionSueldoOAporte, sueldoSueldoOAporte, porporsentajeDeAPorte, categoria_Mono, arrayValorMonotXCategoria, beneficiariosF184) {
+function calculodescOS(tipo_IngresoPDMI, eleccionSueldoOAporte, sueldoSueldoOAporte, porporsentajeDeAPorte, categoria_Mono, arrayValorMonotXCategoria, beneficiariosF184) {
     let descXCapita = arrayValorMonotXCategoria[categoria_Mono];
     let deduccionAportesObraSocial = 0;
     if (tipo_IngresoPDMI == "D") {
@@ -76,6 +76,7 @@ function calculoDescuentoPorAportes(tipo_IngresoPDMI, eleccionSueldoOAporte, sue
     }
     return deduccionAportesObraSocial;
 }
+exports.calculodescOS = calculodescOS;
 function promoDescuento(valor_plan, promo_Porcentaje, afiche) {
     let bonAfinidad = 0;
     let valor_total_plan = 0;
@@ -90,6 +91,7 @@ function promoDescuento(valor_plan, promo_Porcentaje, afiche) {
     }
     return [valor_total_plan, bonAfinidad, bonAfinidadporcentaje];
 }
+exports.promoDescuento = promoDescuento;
 function final(tipo_IngresoPDMI, deduccionAportesObraSocial, valor_total_plan) {
     let tipoIngresoPDMI = tipo_IngresoPDMI;
     let deduccion_AportesObraSocial = deduccionAportesObraSocial;
@@ -107,9 +109,12 @@ function final(tipo_IngresoPDMI, deduccionAportesObraSocial, valor_total_plan) {
     }
     return precio_final_a_pagar;
 }
+exports.final = final;
 //	<!-----------------------ESTAS FUNCIONES LAS USA SOLO SANCOR SALUD------------------------>							
 function segVidaPlus(segVidacheck, segVida2check, edad1, edad2, segVidaPrecio) {
     let segVidaTotal = 0;
+    let segVida = 0;
+    let segVida1 = 0;
     if (segVidacheck == true) {
         if (edad1 >= 18 && edad1 <= 45) {
             segVida = segVidaPrecio[0]['col_2'];
@@ -141,6 +146,7 @@ function segVidaPlus(segVidacheck, segVida2check, edad1, edad2, segVidaPrecio) {
     segVidaTotal = segVida + segVida1;
     return segVidaTotal;
 }
+exports.segVidaPlus = segVidaPlus;
 function planNombre(gen, plan_gen, plan_nombre) {
     if (gen === 'GEN' && plan_gen >= 100 && plan_gen <= 450) {
         plan_nombre = 'GEN' + plan_nombre;
@@ -151,6 +157,7 @@ function planNombre(gen, plan_gen, plan_nombre) {
     ;
     return plan_nombre;
 }
+exports.planNombre = planNombre;
 function suprasSalud(supras, gen, plan_nombre, otrosBenPrecios, grupoFam) {
     let otrosBen = 0;
     if (supras === true && gen === '') {
@@ -168,4 +175,5 @@ function suprasSalud(supras, gen, plan_nombre, otrosBenPrecios, grupoFam) {
         ;
     }
 }
-//# sourceMappingURL=funciones.js.map
+exports.suprasSalud = suprasSalud;
+//# sourceMappingURL=functions.js.map
