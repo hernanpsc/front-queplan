@@ -8,7 +8,7 @@ export function valorSwiss(
     numhijo2,
     titular,
     conyuge,
-    hijo1,
+    hijo_1,
     hijo2,
     coeficiente
     ){
@@ -16,38 +16,38 @@ export function valorSwiss(
         let edad1 = edad_1;
         let edad2  = edad_2;
         let hijos  = numHijos;
-
+        let hijo1 = hijo_1;
        let adultos = {};
        let precios = {};
-       console.log('aportesOS ')
-       console.log(aportesOS)
+    //    console.log('aportesOS ')
+    //    console.log(aportesOS)
 
-       console.log('edad1 ');
-       console.log(edad1)
+    //    console.log('edad1 ');
+    //    console.log(edad1)
 
-       console.log('edad2 ')
-       console.log(edad2)
+    //    console.log('edad2 ')
+    //    console.log(edad2)
 
-       console.log('hijos ')
-       console.log(hijos)
+    //    console.log('hijos ')
+    //    console.log(hijos)
 
-       console.log('numhijo2 ')
-       console.log(numhijo2)
+    //    console.log('numhijo2 ')
+    //    console.log(numhijo2)
 
-       console.log('titular ')
-       console.log(titular)
+    //    console.log('titular ')
+    //    console.log(titular)
 
-       console.log('conyuge ')
-       console.log(conyuge)
+    //    console.log('conyuge ')
+    //    console.log(conyuge)
 
-       console.log('hijo1 ')
-       console.log(hijo1)
+    //    console.log('hijo1 ')
+    //    console.log(hijo1)
 
-       console.log('hijo2 ')
-       console.log(hijo2)
+    //    console.log('hijo2 ')
+    //    console.log(hijo2)
 
-       console.log('coeficiente ')
-       console.log(coeficiente)
+    //    console.log('coeficiente ')
+    //    console.log(coeficiente)
 
     let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])
 	let array = [];
@@ -77,7 +77,7 @@ export function valorSwiss(
             ...adultos
         });
     } else if (hijos > 1) {
-        let hijo1 = Object.entries(hijo2).reduce((acc, [key, value]) => // dis hijos o mas
+            hijo1 = Object.entries(hijo2).reduce((acc, [key, value]) => // dis hijos o mas
             ({
                 ...acc,
                 [key]: parseInt((acc[key]) || 0) + parseInt(value * numhijo2)
