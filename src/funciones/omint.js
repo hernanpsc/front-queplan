@@ -75,8 +75,8 @@ var plan = new Object();
                 array.push(plan);		
             }
 //	<!-----------------------Bucle OMINT end------------------------>								
-console.log( 'array OMINT')
-console.log(array)													
+// console.log( 'array OMINT')
+// console.log(array)													
         return array					
         }
 // <!----------------------Funcion VALOR DEL PLAN OMINT end---------------------------->

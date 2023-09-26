@@ -102,8 +102,8 @@ function valorOmint(aportesOS, edad_2, numHijos, numhijo_2, precio_titular, prec
         array.push(plan);
     }
     //	<!-----------------------Bucle OMINT end------------------------>								
-    console.log('array OMINT');
-    console.log(array);
+    // console.log( 'array OMINT')
+    // console.log(array)													
     return array;
 }
 exports.valorOmint = valorOmint;

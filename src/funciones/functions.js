@@ -177,17 +177,33 @@ export function planNombre(gen,plan_gen,plan_nombre){
 }
 	
 export function suprasSalud(supras,gen,plan_nombre,otrosBenPrecios,grupoFam){
+	// console.log('supras');
+	// console.log(supras);
+	// console.log('gen');
+	// console.log(gen);
+	// console.log('plan_nombre');
+	// console.log(plan_nombre);
+	// console.log('otrosBenPrecios');
+	// console.log(otrosBenPrecios);
+	// console.log('grupoFam');
+	// console.log(grupoFam);
+
 	let otrosBen = 0;
 	if (supras === true && gen === '') {
 		otrosBen = 0;
 		if (plan_nombre.includes('B')) {
 			otrosBen = otrosBen + otrosBenPrecios[grupoFam - 1]['SSPRO'];
+			// console.log('SSPRO');
+	// console.log(SSPRO);
 			otrosBen = otrosBen + otrosBenPrecios[grupoFam - 1]['SSOD'];
+			// console.log('SSOD');
+	// console.log(SSOD);
 		} else {
 			otrosBen = otrosBen + otrosBenPrecios[grupoFam - 1]['SSPRO'];
+
 			otrosBen = otrosBen + otrosBenPrecios[grupoFam - 1]['SSOD'];
 			otrosBen = otrosBen + otrosBenPrecios[grupoFam - 1]['SSAC'];
 			otrosBen = otrosBen + otrosBenPrecios[grupoFam - 1]['SUF'];
 		};
-	}
+	}return otrosBen
 }

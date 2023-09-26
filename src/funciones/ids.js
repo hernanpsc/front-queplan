@@ -44,7 +44,7 @@ export function grupoFamiliar(age0, age1, kids) {
     } else {
         gen = '';
     }
-	// console.log(grupoFam)
+	// // console.log(grupoFam)
     return [num_adultos, numhijo1, numhijo2, numhijos, gen, grupoFam];
 }
 
@@ -188,7 +188,7 @@ export function productIdPremedic(edad_1, edad_2, tipoAsoc, numHijos) {
 // <!----------------------Funcion PRODUCT ID PREMEDIC END---------------------------->    
 // <!----------------------Funcion PRODUCT ID OMINT start---------------------------->        
 export function productIdOmint(anios, tipoAsoc, miembro) {
-	// console.log("variable anios : " + anios + "- variable tipoAsoc : " + tipoAsoc + " - variable miembro : " + miembro) 
+	// // console.log("variable anios : " + anios + "- variable tipoAsoc : " + tipoAsoc + " - variable miembro : " + miembro) 
 	let edadID = '';
 	let tipo = tipoAsoc;
 	let edad = anios;
@@ -215,7 +215,7 @@ export function productIdOmint(anios, tipoAsoc, miembro) {
 	} else {
 		edadID2OMINT =  'omint' + edadID
 	};
-	// console.log("edadID1OMINT=" + edadID1OMINT + "; edadID2OMINT =" + edadID2OMINT + "; hijoIdOMINT ="+ hijoIdOMINT + "; hijo2IdOMINT =" + hijo2IdOMINT)
+	// // console.log("edadID1OMINT=" + edadID1OMINT + "; edadID2OMINT =" + edadID2OMINT + "; hijoIdOMINT ="+ hijoIdOMINT + "; hijo2IdOMINT =" + hijo2IdOMINT)
 	return [edadID1OMINT, edadID2OMINT, hijoIdOMINT, hijo2IdOMINT]
 };
 // <!----------------------Funcion PRODUCT ID OMINT end---------------------------->

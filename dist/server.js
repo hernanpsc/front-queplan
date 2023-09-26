@@ -51,7 +51,6 @@ const whitelist = [
     'http://localhost:4500',
     'https://sakai-ng-front.vercel.app',
     'https://soloclinic.vercel.app',
-    'https://brokersalud.vercel.app',
     'https://front-prepagas.vercel.app'
 ];
 const portRegex = /^http:\/\/localhost(?::\d+)?$/;
@@ -66,7 +65,7 @@ if (!ATLAS_URI) {
     app.use(body_parser_1.default.json({ limit: '50mb' })); // Puedes ajustar el límite según tus necesidades
     app.use(body_parser_1.default.urlencoded({ limit: '50mb', extended: true }));
     app.use((0, cors_1.default)({
-        origin: whitelist,
+        origin: filteredWhitelist,
         allowedHeaders: ['Authorization', 'Content-Type']
     }));
     app.get('/', (req, res) => {

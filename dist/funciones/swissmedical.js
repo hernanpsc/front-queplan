@@ -25,35 +25,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.valorSwiss = void 0;
 const functions = __importStar(require("./functions"));
-function valorSwiss(aportesOS, edad_1, edad_2, numHijos, numhijo2, titular, conyuge, hijo1, hijo2, coeficiente) {
+function valorSwiss(aportesOS, edad_1, edad_2, numHijos, numhijo2, titular, conyuge, hijo_1, hijo2, coeficiente) {
     let edad1 = edad_1;
     let edad2 = edad_2;
     let hijos = numHijos;
+    let hijo1 = hijo_1;
     let adultos = {};
     let precios = {};
-    console.log('aportesOS ');
-    console.log(aportesOS);
-    console.log('edad1 ');
-    console.log(edad1);
-    console.log('edad2 ');
-    console.log(edad2);
-    console.log('hijos ');
-    console.log(hijos);
-    console.log('numhijo2 ');
-    console.log(numhijo2);
-    console.log('titular ');
-    console.log(titular);
-    console.log('conyuge ');
-    console.log(conyuge);
-    console.log('hijo1 ');
-    console.log(hijo1);
-    console.log('hijo2 ');
-    console.log(hijo2);
-    console.log('coeficiente ');
-    console.log(coeficiente);
+    //    // console.log(coeficiente)
     let descOS = functions.calculodescOS(aportesOS[0], aportesOS[2], aportesOS[3], coeficiente, aportesOS[4], aportesOS[5], aportesOS[1]);
     let array = [];
-    console.log('descuentos por aportes ' + descOS);
+    // console.log('descuentos por aportes '+descOS)
     if (edad2 > 17) {
         adultos = Object.entries(conyuge).reduce((acc, [key, value]) => // matrimonio
          ({
@@ -65,8 +47,8 @@ function valorSwiss(aportesOS, edad_1, edad_2, numHijos, numhijo2, titular, cony
     }
     else {
         adultos = titular;
-        console.log('adultos');
-        console.log(adultos);
+        // console.log('adultos')
+        // console.log(adultos)
     }
     if (hijos == 1) {
         precios = Object.entries(hijo1).reduce((acc, [key, value]) => ({
@@ -77,12 +59,12 @@ function valorSwiss(aportesOS, edad_1, edad_2, numHijos, numhijo2, titular, cony
         });
     }
     else if (hijos > 1) {
-        let hijo1 = Object.entries(hijo2).reduce((acc, [key, value]) => // dis hijos o mas
+        hijo1 = Object.entries(hijo2).reduce((acc, [key, value]) => // dis hijos o mas
          ({
             ...acc,
             [key]: parseInt((acc[key]) || 0) + parseInt(value * numhijo2)
         }), {
-            ...hijo1
+            ...hijo1 // caca me dice que hijo uno no esta inicilizado
         });
         precios = Object.entries(hijo1).reduce((acc, [key, value]) => ({
             ...acc,
@@ -93,29 +75,29 @@ function valorSwiss(aportesOS, edad_1, edad_2, numHijos, numhijo2, titular, cony
     }
     else {
         precios = adultos;
-        console.log('adultos');
-        console.log(adultos);
-        console.log('precios 74');
-        console.log(precios);
+        // console.log('adultos')
+        // console.log(adultos)
+        // console.log('precios 74')
+        // console.log(precios)
     }
     //	<!-----------------------Bucle SANCOR start------------------------>							
     for (let j in precios) {
-        console.log('imprimir j');
-        console.log(j);
+        // console.log('imprimir j')
+        // console.log(j)
         let conPromo = false;
         let promocion = 0;
         let empresaPlan = [j][0];
-        console.log(empresaPlan);
+        // console.log(empresaPlan)
         let _id = empresaPlan;
-        console.log(_id);
+        // console.log(_id)
         let nombre = empresaPlan.substring(3);
-        console.log(nombre);
+        // console.log(nombre)
         let promo = functions.promoDescuento(precios[j], promocion, conPromo)[2];
         let descPromo = functions.promoDescuento(precios[j], promo, conPromo)[1];
         let precioTotal = functions.promoDescuento(precios[j], promo, conPromo)[0];
         let precio = functions.final(aportesOS[0], descOS, precioTotal);
-        console.log('precio ');
-        console.log(precio);
+        // console.log('precio ')
+        // console.log(precio)
         //	<!--------------------Crear Objeto SWISS end------------------------------>																            			
         var plan = new Object();
         plan.item_id = _id;
@@ -128,8 +110,8 @@ function valorSwiss(aportesOS, edad_1, edad_2, numHijos, numhijo2, titular, cony
         array.push(plan);
     }
     //	<!-----------------------Bucle SANCOR end------------------------>											
-    console.log('array SWISS');
-    console.log(array);
+    // console.log( 'array SWISS')							
+    // console.log(array)							
     return array;
 }
 exports.valorSwiss = valorSwiss;

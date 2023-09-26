@@ -71,8 +71,8 @@ function valorPremedic(aportesOS, coeficiente, numHijos, precioAdultos, preciohm
         array.push(plan);
     }
     //	<!-----------------------Bucle PREMEDIC end------------------------>								
-    console.log('array PREMEDIC');
-    console.log(array);
+    // // console.log( 'array PREMEDIC')	
+    // // console.log(array)							
     return array;
 }
 exports.valorPremedic = valorPremedic;
