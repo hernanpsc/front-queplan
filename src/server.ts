@@ -46,8 +46,8 @@ connectToDatabase(ATLAS_URI)
     app.use(bodyParser.json({ limit: '50mb' })); // Puedes ajustar el límite según tus necesidades
     app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
     app.use(cors({
-      origin: filteredWhitelist,
-      allowedHeaders: ['Authorization', 'Content-Type']
+      // origin: filteredWhitelist,
+      // allowedHeaders: ['Authorization', 'Content-Type']
     }));
 
     app.get('/', (req, res) => {
