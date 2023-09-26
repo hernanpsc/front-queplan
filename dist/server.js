@@ -65,8 +65,8 @@ if (!ATLAS_URI) {
     app.use(body_parser_1.default.json({ limit: '50mb' })); // Puedes ajustar el límite según tus necesidades
     app.use(body_parser_1.default.urlencoded({ limit: '50mb', extended: true }));
     app.use((0, cors_1.default)({
-        origin: filteredWhitelist,
-        allowedHeaders: ['Authorization', 'Content-Type']
+    // origin: filteredWhitelist,
+    // allowedHeaders: ['Authorization', 'Content-Type']
     }));
     app.get('/', (req, res) => {
         res.send('Hello World!');
