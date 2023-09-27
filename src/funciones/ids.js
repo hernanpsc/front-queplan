@@ -249,4 +249,56 @@ export function productIdSwiss(anios, tipoAsoc) {
 	}
 return edadID
 }
-// <!----------------------Funcion PRODUCT ID END start---------------------------->        
+// <!----------------------Funcion PRODUCT ID END start----------------------------> 
+
+// <!----------------------Funcion PRODUCT ID MEDIFE start----------------------------> 
+
+
+export function productIdMedife(edad_1, edad_2, tipoAsoc) {
+
+	let edadIdPremedic = '';
+	let age2 = edad_2;
+	let age = edad_1;
+	if (edad_2 === null) {
+        age2 = 0;
+    }
+
+	if (age2 > age) {
+		age2 = age;
+		age = edad_2;
+	};
+	if (age2 >= 18) {
+		if (age <= 25) {
+			edadIdMedife = tipoAsoc + 'MAT-JOV' + 0.25;
+		} else if (age <= 35 && age >= 26) {
+			edadIdMedife = tipoAsoc + 'MAT-JOV' + 26.35;
+		} else if (age <= 40 && age >= 36) {
+			edadIdMedife = tipoAsoc + 'MAT' + 36.40;
+		} else if (age <= 50 && age >= 41) {
+			edadIdMedife = tipoAsoc + 'MAT' + 41-50;
+		} else if (age <= 60 && age >= 51) {
+			EdadIdMedife = tipoAsoc + 'MAT' + 51.60;
+		} else if (age <= 65 && age >= 61) {
+			EdadIdMedife = tipoAsoc + 'MAT' + 61.65;
+		}
+	} else if (age2 == 0) {
+		if (age <= 25) {
+			edadIdMedife = tipoAsoc + 'IND-JOV' + 0.25;
+		} else if (age <= 35 && age >= 26) {
+			edadIdMedife = tipoAsoc + 'IND-JOV' + 26.35;
+		} else if (age <= 40 && age >= 36) {
+			edadIdMedife = tipoAsoc + 'IND' + 36.40;
+		} else if (age <= 45 && age >= 41) {
+			edadIdMedife = tipoAsoc + 'IND' + 42.45;
+		}else if (age <= 50 && age >= 46) {
+			edadIdMedife = tipoAsoc + 'IND' + 46.50;
+		} else if (age <= 60 && age >= 51) {
+			edadIdMedife = tipoAsoc + 'IND' + 51.60;
+		}  else if (age <= 60 && age >= 51) {
+			edadIdMedife = tipoAsoc + 'IND' + 61.65;
+	}else {
+			edadIdMedife = '';
+		}
+	}
+	return edadIdMedife;
+}

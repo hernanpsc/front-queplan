@@ -337,7 +337,57 @@ let valorSwiss = functions.valorSwiss(
   // console.log( ' Valor SWISS ')
 
 // console.log(valorSwiss)
+  // <! -----------------------------VALOR PRECIO MEDIFE START---------------------------------------------------->
+  let idAdultosMedife = functions.productIdMedife(edad_1,edad_1, tipo_IngresoPDMI);
+let idHIjo0a1 = tipo_IngresoPDMI + 'Hijo1';
+let idHIjo0a20 = tipo_IngresoPDMI + 'Hijo20';
+let idHIjo0a25 = tipo_IngresoPDMI + 'Hijo25';
 
+let id_AdultosMedife : Filter<Precios> = { _id: 'medife' + idAdultosMedife};
+let id_HIjo0a1 : Filter<Precios> = { _id: 'medife' +  idHIjo0a1};
+let id_HIjo0a20 : Filter<Precios> = { _id:'medife' + idHIjo0a20};
+let id_HIjo0a25 : Filter<Precios> = { _id: 'medife' +idHIjo0a25};
+
+let priceTitularMedife : WithId<Precios> = await preciosCollection.findOne(id_AdultosMedife);
+let priceConyugeMedife : WithId<Precios> = await preciosCollection.findOne(id_HIjo0a1);
+let priceHijo1Medife : WithId<Precios> = await preciosCollection.findOne(id_HIjo0a20);
+let priceHijo2Medife : WithId<Precios> = await preciosCollection.findOne(id_HIjo0a25);
+
+let precioTitularMedife = priceTitularMedife.precios;
+let precioHijo1Medife = priceConyugeMedife.precios;
+
+let precioHijo20Medife = priceHijo1Medife.precios;
+let precioHijo25Medife = priceHijo2Medife;
+
+console.log('precioTitularMedife');
+
+console.log(precioTitularMedife);
+console.log('precioHijo1Medife');
+
+console.log(precioHijo1Medife);
+console.log('precioHijo20Medife');
+
+console.log(precioHijo20Medife);
+console.log('precioHijo25Medife');
+
+console.log(precioHijo25Medife);
+
+
+// let valorMedife = functions.valorMedife(
+//   aporte_OS,
+//   edad_1, 
+//   edad_2, 
+//   numkids,
+//   numhijo2,
+//   precioTitularMedife,
+//   precioHijo1Medife,
+//   precioHijo20Medife,
+//   precioHijo25Medife,
+//   coeficienteMedife
+// )
+
+
+  // <! -----------------------------VALOR PRECIO MEDIFE END---------------------------------------------------->
 
   let preciosDetodos =  [valorSanCor,valor_Omint,valorpREMEDIC,valorGaleno,valorSwiss];
 
