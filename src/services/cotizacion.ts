@@ -182,10 +182,10 @@ let idAdultosMedife = functions.productIdMedife(edad_1,edad_1, tipo_IngresoPDMI)
 let idPrevencion = functions.productIdPrevencion(edad_1,edad_1, numkids, tipo_IngresoPDMI);
     let schema = "precios";
 
-async function fetchProductPrice(id: string) {
-  console.log( ' funcion en linea 183 : id: ', id)
- return await getProduct(id);
-}
+// async function fetchProductPrice(id: string) {
+//   console.log( ' funcion en linea 183 : id: ', id)
+//  return await getProduct(id);
+// }
 
 const companies = await EmpresaModel.find({});
   
@@ -258,8 +258,8 @@ let priceAdultosPr  = await getProduct('premedic' + functions.productIdPremedic(
    let pricePrHijoMenir25  = await getProduct('premedic' + tipo + 'AD-25');
    let precioTitularSwiss  = await getProduct('swiss' + idTitularSwiss);
    let precioConyugeSwiss  = await getProduct('swiss' + idConyugeSwiss);
-   let precioHijo1Swiss  = await getProduct('swiss' + tipo_IngresoPDMI+'1h');
-   let precioHijo2Swiss  = await getProduct('swiss' + tipo_IngresoPDMI +'2h');
+   let precioHijo1Swiss  = await getProduct('swiss' + idHijo1Swiss);
+   let precioHijo2Swiss  = await getProduct('swiss' + idHijo2Swiss);
    let precio_titular_Omint  = await getProduct(idOmint[0]);
    let precio_conyuge_Omint  = await getProduct(functions.productIdOmint(edad_2, tipo, 'conyuge',group)[1]);
    let precio_hijo1_Omint  = await getProduct(idOmint[2]);
@@ -294,6 +294,8 @@ let priceAdultosPr  = await getProduct('premedic' + functions.productIdPremedic(
       bonAfinidad,
       group
     )
+    console.log('valor_Premedic')
+
 console.log(valor_Premedic)
 
 // <! -----------------------------ID PREMEDIC END---------------------------------------------------->
@@ -340,6 +342,8 @@ let valor_SanCor = functions.valor_SanCor(
   bonAfinidad, // dato del formulario 
   gen// respuesta funcion grupoFamiliars
   );
+  console.log('valor_SanCor')
+
 console.log(valor_SanCor)
 // <! -----------------------------VALOR PRECIO SANCOR END---------------------------------------------------->
 
@@ -369,6 +373,7 @@ let valor_OMINT = functions.valorOmint(
   bonAfinidad, // dato del formulario % de descuento
   buscar_mi_coeficiente('OMINT')
   );
+  console.log('valor_OMINT')
 
   console.log(valor_OMINT)
 
@@ -385,6 +390,8 @@ let valor_Galeno = functions.valor_Galeno(
     buscar_mi_coeficiente('Galeno')
     
     );
+        console.log('valor_Galeno')
+
     console.log(valor_Galeno)
 
 // <! -----------------------------VALOR PRECIO GALENO END----------------------------------prices------------------>
@@ -412,6 +419,7 @@ let valor_Swiss = functions.valor_Swiss(
   buscar_mi_coeficiente('Swiss Medical'),
   group
   )
+console.log('valor_Swiss')
 
 console.log(valor_Swiss)
 

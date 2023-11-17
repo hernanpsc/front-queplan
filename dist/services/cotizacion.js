@@ -140,10 +140,10 @@ const calcularPrecio = async (req, res) => {
         // <! ----------PREVENCION---------------------------------------------------->
         let idPrevencion = functions.productIdPrevencion(edad_1, edad_1, numkids, tipo_IngresoPDMI);
         let schema = "precios";
-        async function fetchProductPrice(id) {
-            console.log(' funcion en linea 183 : id: ', id);
-            return await (0, precios_1.getProduct)(id);
-        }
+        // async function fetchProductPrice(id: string) {
+        //   console.log( ' funcion en linea 183 : id: ', id)
+        //  return await getProduct(id);
+        // }
         const companies = await empresas_1.default.find({});
         const empresasConCoeficientes = companies.map(empresa => {
             return { [empresa.name]: empresa.factores.coeficiente };
@@ -159,43 +159,43 @@ const calcularPrecio = async (req, res) => {
                 console.log(`No se encontró la empresa ${type}.`);
             }
         }
-        async function fetchPrices() {
-            const prices = {};
-            console.log(idSancor);
-            console.log(idSancor1);
-            const productQueries = [
-                { variable: 'priceAdultosPr', id: 'premedic' + functions.productIdPremedic(edad_1, edad_2, tipo, numHijos, group) },
-                { variable: 'pricePrHijoMenir1', id: 'premedic' + tipo + 'AD-1anio' },
-                { variable: 'pricePrHijoMenir25', id: 'premedic' + tipo + 'AD-25' },
-                { variable: 'precioTitularSwiss', id: 'swiss' + idTitularSwiss },
-                { variable: 'precioConyugeSwiss', id: 'swiss' + idConyugeSwiss },
-                { variable: 'precioHijo1Swiss', id: 'swiss' + tipo_IngresoPDMI + '1h' },
-                { variable: 'precioHijo2Swiss', id: 'swiss' + tipo_IngresoPDMI + '2h' },
-                { variable: 'precio_titular_Omint', id: idOmint[0] },
-                { variable: 'precio_conyuge_Omint', id: functions.productIdOmint(edad_2, tipo, 'conyuge', group)[1] },
-                { variable: 'precio_hijo1_Omint', id: idOmint[2] },
-                { variable: 'precio_hijo2_Omint', id: idOmint[3] },
-                { variable: 'precio1Hijo', id: idSancor[2] },
-                { variable: 'precio2Hijo', id: idSancor[3] },
-                { variable: 'precioTitular', id: idSancor[0] },
-                { variable: 'precioConyuge', id: idSancorConyuge },
-                { variable: 'priceGrupoGaleno', id: 'galeno' + idGaleno }
-                //  { variable: 'idAdultosMedife', id: idAdultosMedife},
-                //  { variable: 'idHIjo0a1', id: tipo_IngresoPDMI + 'HIJO0a1'},
-                //  { variable: 'idHIjo0a20', id: tipo_IngresoPDMI + 'HIJO2a20'},
-                //  { variable: 'idHIjo0a25', id: tipo_IngresoPDMI + 'HIJO25'}
-                // { variable: 'idPrevencion', id: idPrevencion}
-            ];
-            for (const query of productQueries) {
-                console.log(query.id);
-                const result = await fetchProductPrice(query.id);
-                console.log(result);
-                prices[query.variable] = result;
-            }
-            return prices;
-        }
-        const prices = await fetchPrices();
-        console.log(' prices ', prices);
+        // async function fetchPrices() {
+        //  const prices: { [key: string]: any } = {};
+        // console.log(idSancor)
+        // console.log(idSancor1)
+        //  const productQueries = [
+        //    { variable: 'priceAdultosPr', id: 'premedic' + functions.productIdPremedic(edad_1, edad_2, tipo, numHijos,group)},
+        //    { variable: 'pricePrHijoMenir1', id: 'premedic' + tipo + 'AD-1anio'},
+        //    { variable: 'pricePrHijoMenir25', id: 'premedic' + tipo + 'AD-25'},
+        //    { variable: 'precioTitularSwiss', id: 'swiss' + idTitularSwiss},
+        //    { variable: 'precioConyugeSwiss', id: 'swiss' + idConyugeSwiss},
+        //    { variable: 'precioHijo1Swiss', id: 'swiss' + tipo_IngresoPDMI+'1h'},
+        //    { variable: 'precioHijo2Swiss', id: 'swiss' + tipo_IngresoPDMI +'2h'},
+        //    { variable: 'precio_titular_Omint', id: idOmint[0]},
+        //    { variable: 'precio_conyuge_Omint', id: functions.productIdOmint(edad_2, tipo, 'conyuge',group)[1]},
+        //    { variable: 'precio_hijo1_Omint', id: idOmint[2]},
+        //    { variable: 'precio_hijo2_Omint', id: idOmint[3]},
+        //    { variable: 'precio1Hijo', id: idSancor[2]},
+        //    { variable: 'precio2Hijo', id: idSancor[3]},
+        //    { variable: 'precioTitular', id: idSancor[0]},
+        //    { variable: 'precioConyuge', id: idSancorConyuge},
+        //    { variable: 'priceGrupoGaleno', id: 'galeno' + idGaleno}
+        //   //  { variable: 'idAdultosMedife', id: idAdultosMedife},
+        //   //  { variable: 'idHIjo0a1', id: tipo_IngresoPDMI + 'HIJO0a1'},
+        //   //  { variable: 'idHIjo0a20', id: tipo_IngresoPDMI + 'HIJO2a20'},
+        //   //  { variable: 'idHIjo0a25', id: tipo_IngresoPDMI + 'HIJO25'}
+        // // { variable: 'idPrevencion', id: idPrevencion}
+        //  ];  
+        //  for (const query of productQueries) {
+        // console.log(query.id)
+        //    const result = await fetchProductPrice(query.id);
+        // console.log(result)
+        //    prices[query.variable] = result;
+        //  }
+        //  return prices;
+        // }
+        //    const prices = await fetchPrices();
+        // console.log(' prices ' ,prices)
         // <! -----------------------------ID GALENO START---------------------------------------------------->
         // <! -----------------------------ID GALENO END---------------------------------------------------->
         // <! -----------------------------ID PREMEDIC START---------------------------------------------------->
@@ -204,8 +204,8 @@ const calcularPrecio = async (req, res) => {
         let pricePrHijoMenir25 = await (0, precios_1.getProduct)('premedic' + tipo + 'AD-25');
         let precioTitularSwiss = await (0, precios_1.getProduct)('swiss' + idTitularSwiss);
         let precioConyugeSwiss = await (0, precios_1.getProduct)('swiss' + idConyugeSwiss);
-        let precioHijo1Swiss = await (0, precios_1.getProduct)('swiss' + tipo_IngresoPDMI + '1h');
-        let precioHijo2Swiss = await (0, precios_1.getProduct)('swiss' + tipo_IngresoPDMI + '2h');
+        let precioHijo1Swiss = await (0, precios_1.getProduct)('swiss' + idHijo1Swiss);
+        let precioHijo2Swiss = await (0, precios_1.getProduct)('swiss' + idHijo2Swiss);
         let precio_titular_Omint = await (0, precios_1.getProduct)(idOmint[0]);
         let precio_conyuge_Omint = await (0, precios_1.getProduct)(functions.productIdOmint(edad_2, tipo, 'conyuge', group)[1]);
         let precio_hijo1_Omint = await (0, precios_1.getProduct)(idOmint[2]);
@@ -215,7 +215,14 @@ const calcularPrecio = async (req, res) => {
         let precioTitular = await (0, precios_1.getProduct)(idSancor[0]);
         let precioConyuge = await (0, precios_1.getProduct)(idSancorConyuge);
         let priceGrupoGaleno = await (0, precios_1.getProduct)('galeno' + idGaleno);
+        priceAdultosPr = priceAdultosPr.toObjet();
+        pricePrHijoMenir25 = pricePrHijoMenir25.toObjet();
+        pricePrHijoMenir1 = pricePrHijoMenir1.toObjet();
+        console.log('priceAdultosPr  ', priceAdultosPr.precios);
+        console.log('pricePrHijoMenir25  ', pricePrHijoMenir25.precios);
+        console.log('pricePrHijoMenir1  ', pricePrHijoMenir1.precios);
         let valor_Premedic = functions.valor_Premedic(aporte_OS, buscar_mi_coeficiente('Premedic'), numkids, priceAdultosPr.precios, pricePrHijoMenir25.precios, pricePrHijoMenir1.precios, edadIdPremedic, afinidad, bonAfinidad, group);
+        console.log('valor_Premedic');
         console.log(valor_Premedic);
         // <! -----------------------------ID PREMEDIC END---------------------------------------------------->
         // <! -----------------------------ID OMINT START---------------------------------------------------->
@@ -246,9 +253,18 @@ const calcularPrecio = async (req, res) => {
         bonAfinidad, // dato del formulario 
         gen // respuesta funcion grupoFamiliars
         );
+        console.log('valor_SanCor');
         console.log(valor_SanCor);
         // <! -----------------------------VALOR PRECIO SANCOR END---------------------------------------------------->
         // <! -----------------------------VALOR PRECIO OMINT START------------------------------------------------------>
+        precio_titular_Omint = precio_titular_Omint.toObject();
+        precio_conyuge_Omint = precio_conyuge_Omint.toObject();
+        precio_hijo1_Omint = precio_hijo1_Omint.toObject();
+        precio_hijo2_Omint = precio_hijo2_Omint.toObject();
+        console.log('precio_titular_Omint', precio_titular_Omint.precios);
+        console.log('precio_conyuge_Omint', precio_conyuge_Omint.precios);
+        console.log('precio_hijo1_Omint', precio_hijo1_Omint.precios);
+        console.log('precio_hijo2_Omint', precio_hijo2_Omint.precios);
         let valor_OMINT = functions.valorOmint(aporte_OS, edad_2, // dato del formulario - edad del conyuge
         numHijos, // respuesta funcion grupoFamiliar
         numhijo2, // hijos a partir del segundo 
@@ -260,14 +276,27 @@ const calcularPrecio = async (req, res) => {
         afinidad, // dato del formulario ( check = true/false )
         bonAfinidad, // dato del formulario % de descuento
         buscar_mi_coeficiente('OMINT'));
+        console.log('valor_OMINT');
         console.log(valor_OMINT);
         // <! -----------------------------VALOR PRECIO OMINT END---------------------------------------------------->
         // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
+        priceGrupoGaleno = priceGrupoGaleno.toObjet();
+        console.log('priceGrupoGaleno  ', priceGrupoGaleno.precios);
         let valor_Galeno = functions.valor_Galeno(aporte_OS, priceGrupoGaleno.precios, buscar_mi_coeficiente('Galeno'));
+        console.log('valor_Galeno');
         console.log(valor_Galeno);
         // <! -----------------------------VALOR PRECIO GALENO END----------------------------------prices------------------>
         // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
+        precioTitularSwiss = precioTitularSwiss.toObjet();
+        precioConyugeSwiss = precioConyugeSwiss.toObjet();
+        precioHijo1Swiss = precioHijo1Swiss.toObjet();
+        precioHijo2Swiss = precioHijo2Swiss.toObjet();
+        console.log('precioTitularSwiss  ', precioTitularSwiss.precios);
+        console.log('precioConyugeSwiss  ', precioConyugeSwiss.precios);
+        console.log('precioHijo1Swiss  ', precioHijo1Swiss.precios);
+        console.log('precioHijo2Swiss  ', precioHijo2Swiss.precios);
         let valor_Swiss = functions.valor_Swiss(aporte_OS, edad_1, edad_2, numkids, numhijo2, precioTitularSwiss.precios, precioConyugeSwiss.precios, precioHijo1Swiss.precios, precioHijo2Swiss.precios, buscar_mi_coeficiente('Swiss Medical'), group);
+        console.log('valor_Swiss');
         console.log(valor_Swiss);
         // for ( let i=0 ; i < prices.length ; i++){
         // console.log(prices[i])
