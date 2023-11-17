@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.productIdSwiss = exports.productIdOmint = exports.productIdPremedic = exports.productIdGaleno = exports.productID = exports.tipoAsociado = exports.grupoFamiliar = void 0;
+exports.productIdPrevencion = exports.productIdMedife = exports.productIdSwiss = exports.productIdOmint = exports.productIdPremedic = exports.productIdGaleno = exports.productID = exports.tipoAsociado = exports.grupoFamiliar = void 0;
 function grupoFamiliar(age0, age1, kids) {
     let edad0 = age0;
     let edad1 = age1;
@@ -291,5 +291,122 @@ function productIdSwiss(anios, tipoAsoc) {
     return edadID;
 }
 exports.productIdSwiss = productIdSwiss;
-// <!----------------------Funcion PRODUCT ID END start---------------------------->        
+// <!----------------------Funcion PRODUCT ID END start----------------------------> 
+// <!----------------------Funcion PRODUCT ID MEDIFE start----------------------------> 
+function productIdMedife(edad_1, edad_2, tipoAsoc) {
+    let edadIdMedife = '';
+    let age2 = edad_2;
+    let age = edad_1;
+    if (edad_2 === null) {
+        age2 = 0;
+    }
+    if (age2 > age) {
+        age2 = age;
+        age = edad_2;
+    }
+    ;
+    if (age2 >= 18) {
+        if (age <= 25) {
+            edadIdMedife = tipoAsoc + 'MAT-JOV' + 0.25;
+        }
+        else if (age <= 35 && age >= 26) {
+            edadIdMedife = tipoAsoc + 'MAT-JOV' + 26.35;
+        }
+        else if (age <= 40 && age >= 36) {
+            edadIdMedife = tipoAsoc + 'MAT' + 36.40;
+        }
+        else if (age <= 50 && age >= 41) {
+            edadIdMedife = tipoAsoc + 'MAT' + 41 - 50;
+        }
+        else if (age <= 60 && age >= 51) {
+            edadIdMedife = tipoAsoc + 'MAT' + 51.60;
+        }
+        else if (age <= 65 && age >= 61) {
+            edadIdMedife = tipoAsoc + 'MAT' + 61.65;
+        }
+    }
+    else if (age2 == 0) {
+        if (age <= 25) {
+            edadIdMedife = tipoAsoc + 'IND-JOV' + 0.25;
+        }
+        else if (age <= 35 && age >= 26) {
+            edadIdMedife = tipoAsoc + 'IND-JOV' + 26.35;
+        }
+        else if (age <= 40 && age >= 36) {
+            edadIdMedife = tipoAsoc + 'IND' + 36.40;
+        }
+        else if (age <= 45 && age >= 41) {
+            edadIdMedife = tipoAsoc + 'IND' + 42.45;
+        }
+        else if (age <= 50 && age >= 46) {
+            edadIdMedife = tipoAsoc + 'IND' + 46.50;
+        }
+        else if (age <= 60 && age >= 51) {
+            edadIdMedife = tipoAsoc + 'IND' + 51.60;
+        }
+        else if (age <= 60 && age >= 51) {
+            edadIdMedife = tipoAsoc + 'IND' + 61.65;
+        }
+        else {
+            edadIdMedife = '';
+        }
+    }
+    return edadIdMedife;
+}
+exports.productIdMedife = productIdMedife;
+// <!----------------------Funcion PRODUCT ID MEDIFE end----------------------------> 
+// <!----------------------Funcion PRODUCT ID PREVENCION SALUD start----------------------------> 
+function productIdPrevencion(edad_1, edad_2, hijos, tipoAsoc) {
+    let edadIdPrevencion = '';
+    let age2 = edad_2;
+    let age = edad_1;
+    let kids = '+' + hijos + 'H';
+    let tipo = tipoAsoc;
+    let grupoSiglaPrevencion = '';
+    let zona = 'Z4';
+    if (edad_2 === null) {
+        age2 = 0;
+    }
+    if (hijos === null || hijos === 0) {
+        kids = '';
+    }
+    if (age2 > age) {
+        age2 = age;
+        age = edad_2;
+    }
+    ;
+    if (age2 >= 18) {
+        grupoSiglaPrevencion = 'MAT';
+    }
+    else {
+        grupoSiglaPrevencion = 'IND';
+    }
+    if (age <= 25) {
+        edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '_0-25';
+    }
+    else if (age <= 30 && age >= 26) {
+        edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '_26.30';
+    }
+    else if (age <= 35 && age >= 31) {
+        edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '_31.35';
+    }
+    else if (age <= 40 && age >= 36) {
+        edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '_36.40';
+    }
+    else if (age <= 45 && age >= 41) {
+        edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '_41-45';
+    }
+    else if (age <= 50 && age >= 46) {
+        edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '_46-50';
+    }
+    else if (age <= 55 && age >= 51) {
+        edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '_51-55';
+    }
+    else if (age <= 60 && age >= 56) {
+        edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '_56-60';
+    }
+    return edadIdPrevencion;
+}
+exports.productIdPrevencion = productIdPrevencion;
+// <!----------------------Funcion PRODUCT ID PREVENCION SALUD end----------------------------> 
 //# sourceMappingURL=ids.js.map

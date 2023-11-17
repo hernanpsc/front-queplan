@@ -4,7 +4,7 @@ import * as mongodb from "mongodb";
 
 export interface Empresa {
 _id?: mongodb.ObjectId;
-item_id?:number,
+item_id?:string,
 name?: string;
 planes?:[],
 lineas?:[],

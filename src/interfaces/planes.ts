@@ -13,6 +13,17 @@ export interface Planes {
     hijosSolos?: string;
     name?: string;
     images?:string[];
+    attributes?:string[];
+    Cirugia_Estetica: Boolean,
+    Cobertura_Nacional: Boolean,
+    Habitacion_Individual: Boolean,
+    Ortodoncia_Adultos: Boolean,
+    PMO_Solo_por_Aportes: Boolean,
+    Sin_Copagos: Boolean,
+    raiting: Number, 
+    valueSlide3: Number,
+    valueSlide4: Number,
+    aporteOS: Number,
     imagenes?: string[] | undefined;
     folletos?:string[];
     beneficios?:string[];

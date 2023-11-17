@@ -1,4 +1,5 @@
 
+export * from './avalian';
 export * from './medife';
 export * from './galeno';
 export * from './sancorsalud';
