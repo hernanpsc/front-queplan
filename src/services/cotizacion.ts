@@ -271,6 +271,17 @@ let priceAdultosPr  = await getProduct('premedic' + functions.productIdPremedic(
    let priceGrupoGaleno  = await getProduct('galeno' + idGaleno);
 
 
+   priceAdultosPr =  priceAdultosPr.toObjet();
+   pricePrHijoMenir25 = pricePrHijoMenir25.toObjet();
+   pricePrHijoMenir1 =  pricePrHijoMenir1.toObjet();
+
+   console.log('priceAdultosPr  ', priceAdultosPr.precios);
+   console.log('pricePrHijoMenir25  ', pricePrHijoMenir25.precios);
+   console.log('pricePrHijoMenir1  ', pricePrHijoMenir1.precios);
+
+
+
+
     let valor_Premedic = functions.valor_Premedic(
       aporte_OS,
       buscar_mi_coeficiente('Premedic'),
@@ -334,6 +345,16 @@ console.log(valor_SanCor)
 
 // <! -----------------------------VALOR PRECIO OMINT START------------------------------------------------------>
 
+precio_titular_Omint = precio_titular_Omint.toObject();
+precio_conyuge_Omint = precio_conyuge_Omint.toObject();
+precio_hijo1_Omint = precio_hijo1_Omint.toObject();
+precio_hijo2_Omint = precio_hijo2_Omint.toObject();
+
+console.log('precio_titular_Omint',precio_titular_Omint.precios);
+console.log('precio_conyuge_Omint',precio_conyuge_Omint.precios);
+console.log('precio_hijo1_Omint',precio_hijo1_Omint.precios);
+console.log('precio_hijo2_Omint',precio_hijo2_Omint.precios);
+
 let valor_OMINT = functions.valorOmint(
   aporte_OS,
   edad_2, // dato del formulario - edad del conyuge
@@ -354,7 +375,11 @@ let valor_OMINT = functions.valorOmint(
 
 // <! -----------------------------VALOR PRECIO OMINT END---------------------------------------------------->
 // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
-  let valor_Galeno = functions.valor_Galeno(
+priceGrupoGaleno = priceGrupoGaleno.toObjet();
+console.log('priceGrupoGaleno  ',priceGrupoGaleno.precios )
+
+
+let valor_Galeno = functions.valor_Galeno(
     aporte_OS,
     priceGrupoGaleno.precios,
     buscar_mi_coeficiente('Galeno')
@@ -364,8 +389,15 @@ let valor_OMINT = functions.valorOmint(
 
 // <! -----------------------------VALOR PRECIO GALENO END----------------------------------prices------------------>
 // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
+precioTitularSwiss = precioTitularSwiss.toObjet();
+precioConyugeSwiss = precioConyugeSwiss.toObjet();
+precioHijo1Swiss = precioHijo1Swiss.toObjet();
+precioHijo2Swiss = precioHijo2Swiss.toObjet();
 
-
+console.log('precioTitularSwiss  ',precioTitularSwiss.precios);
+console.log('precioConyugeSwiss  ',precioConyugeSwiss.precios);
+console.log('precioHijo1Swiss  ',precioHijo1Swiss.precios);
+console.log('precioHijo2Swiss  ',precioHijo2Swiss.precios);
 
 let valor_Swiss = functions.valor_Swiss(
   aporte_OS,
