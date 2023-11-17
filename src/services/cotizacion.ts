@@ -206,47 +206,47 @@ console.log(`No se encontró la empresa ${type}.`);
 
 }
 
-async function fetchPrices() {
- const prices: { [key: string]: any } = {};
-console.log(idSancor)
-console.log(idSancor1)
+// async function fetchPrices() {
+//  const prices: { [key: string]: any } = {};
+// console.log(idSancor)
+// console.log(idSancor1)
 
- const productQueries = [
-   { variable: 'priceAdultosPr', id: 'premedic' + functions.productIdPremedic(edad_1, edad_2, tipo, numHijos,group)},
-   { variable: 'pricePrHijoMenir1', id: 'premedic' + tipo + 'AD-1anio'},
-   { variable: 'pricePrHijoMenir25', id: 'premedic' + tipo + 'AD-25'},
-   { variable: 'precioTitularSwiss', id: 'swiss' + idTitularSwiss},
-   { variable: 'precioConyugeSwiss', id: 'swiss' + idConyugeSwiss},
-   { variable: 'precioHijo1Swiss', id: 'swiss' + tipo_IngresoPDMI+'1h'},
-   { variable: 'precioHijo2Swiss', id: 'swiss' + tipo_IngresoPDMI +'2h'},
-   { variable: 'precio_titular_Omint', id: idOmint[0]},
-   { variable: 'precio_conyuge_Omint', id: functions.productIdOmint(edad_2, tipo, 'conyuge',group)[1]},
-   { variable: 'precio_hijo1_Omint', id: idOmint[2]},
-   { variable: 'precio_hijo2_Omint', id: idOmint[3]},
-   { variable: 'precio1Hijo', id: idSancor[2]},
-   { variable: 'precio2Hijo', id: idSancor[3]},
-   { variable: 'precioTitular', id: idSancor[0]},
-   { variable: 'precioConyuge', id: idSancorConyuge},
-   { variable: 'priceGrupoGaleno', id: 'galeno' + idGaleno}
-  //  { variable: 'idAdultosMedife', id: idAdultosMedife},
-  //  { variable: 'idHIjo0a1', id: tipo_IngresoPDMI + 'HIJO0a1'},
-  //  { variable: 'idHIjo0a20', id: tipo_IngresoPDMI + 'HIJO2a20'},
-  //  { variable: 'idHIjo0a25', id: tipo_IngresoPDMI + 'HIJO25'}
-// { variable: 'idPrevencion', id: idPrevencion}
- ];  
- for (const query of productQueries) {
-console.log(query.id)
+//  const productQueries = [
+//    { variable: 'priceAdultosPr', id: 'premedic' + functions.productIdPremedic(edad_1, edad_2, tipo, numHijos,group)},
+//    { variable: 'pricePrHijoMenir1', id: 'premedic' + tipo + 'AD-1anio'},
+//    { variable: 'pricePrHijoMenir25', id: 'premedic' + tipo + 'AD-25'},
+//    { variable: 'precioTitularSwiss', id: 'swiss' + idTitularSwiss},
+//    { variable: 'precioConyugeSwiss', id: 'swiss' + idConyugeSwiss},
+//    { variable: 'precioHijo1Swiss', id: 'swiss' + tipo_IngresoPDMI+'1h'},
+//    { variable: 'precioHijo2Swiss', id: 'swiss' + tipo_IngresoPDMI +'2h'},
+//    { variable: 'precio_titular_Omint', id: idOmint[0]},
+//    { variable: 'precio_conyuge_Omint', id: functions.productIdOmint(edad_2, tipo, 'conyuge',group)[1]},
+//    { variable: 'precio_hijo1_Omint', id: idOmint[2]},
+//    { variable: 'precio_hijo2_Omint', id: idOmint[3]},
+//    { variable: 'precio1Hijo', id: idSancor[2]},
+//    { variable: 'precio2Hijo', id: idSancor[3]},
+//    { variable: 'precioTitular', id: idSancor[0]},
+//    { variable: 'precioConyuge', id: idSancorConyuge},
+//    { variable: 'priceGrupoGaleno', id: 'galeno' + idGaleno}
+//   //  { variable: 'idAdultosMedife', id: idAdultosMedife},
+//   //  { variable: 'idHIjo0a1', id: tipo_IngresoPDMI + 'HIJO0a1'},
+//   //  { variable: 'idHIjo0a20', id: tipo_IngresoPDMI + 'HIJO2a20'},
+//   //  { variable: 'idHIjo0a25', id: tipo_IngresoPDMI + 'HIJO25'}
+// // { variable: 'idPrevencion', id: idPrevencion}
+//  ];  
+//  for (const query of productQueries) {
+// console.log(query.id)
 
-   const result = await fetchProductPrice(query.id);
-console.log(result)
+//    const result = await fetchProductPrice(query.id);
+// console.log(result)
 
-   prices[query.variable] = result;
- }
- return prices;
-}
+//    prices[query.variable] = result;
+//  }
+//  return prices;
+// }
 
-   const prices = await fetchPrices();
-console.log(' prices ' ,prices)
+//    const prices = await fetchPrices();
+// console.log(' prices ' ,prices)
 
 // <! -----------------------------ID GALENO START---------------------------------------------------->
 // <! -----------------------------ID GALENO END---------------------------------------------------->
