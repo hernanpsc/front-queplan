@@ -1,6 +1,6 @@
 import * as functions from './functions';
 
-export function valorAvalian(
+export function valor_Avalian(
     aporte_OS,
     edad_1, 
     edad_2, 

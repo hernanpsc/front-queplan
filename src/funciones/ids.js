@@ -1,4 +1,4 @@
-export function grupoFamiliar(age0, age1, kids) {
+export function grupoFamiliar(age0, age1, kids,group) {
     let edad0 = age0;
     let edad1 = age1;
     let num_adultos = 1;
@@ -8,6 +8,16 @@ export function grupoFamiliar(age0, age1, kids) {
     let grupoFam = 0;
     let numhijos = kids;
     let numhijo = 0;
+	if( group === 1){
+		edad1 = 0;
+		numhijos = 0;
+	} else if( group === 2){
+		edad1 = 0;
+	}else if (group === 3  ){
+		numhijos = 0;
+
+	}else{}
+
 
     if (kids === null) {
         numhijos = 0;
@@ -44,7 +54,7 @@ export function grupoFamiliar(age0, age1, kids) {
     } else {
         gen = '';
     }
-	// // console.log(grupoFam)
+	// console.log(grupoFam)
     return [num_adultos, numhijo1, numhijo2, numhijos, gen, grupoFam];
 }
 
@@ -62,7 +72,7 @@ export function tipoAsociado(_tipo) {
 
 
 // <!----------------------Funcion PRODUCT ID SANCOR start---------------------------->     
-export function productID(edad, tipoAsoc, gen, miembro, numHijos) { 
+export function productID(_edad, tipoAsoc, gen, miembro, numHijos,group) { 
 	let edadId = '';
 	let grupoSigla = '';
 	let tipo = tipoAsoc;
@@ -70,6 +80,8 @@ export function productID(edad, tipoAsoc, gen, miembro, numHijos) {
 	let edadID2 = '';
 	let hijoId = '';
 	let hijo2Id = '';
+	let edad = _edad;
+	
 	// if (gen == 'GEN' && numHijos > 0) {
 	// 	grupoSigla = 'GF'
 	// };
@@ -119,12 +131,25 @@ export function productID(edad, tipoAsoc, gen, miembro, numHijos) {
 };
 // <!----------------------Funcion PRODUCT ID SANCOR end---------------------------->   
 // <!----------------------Funcion PRODUCT ID GALENO start---------------------------->        
-export function productIdGaleno(anios_1, anios_2, tipoAsoc, numHijos) {
-	let tipoGaleno = tipoAsoc + 'S';
+export function productIdGaleno(anios_1, anios_2, tipoAsoc, num_Hijos,group) {
+
+let numHijos = num_Hijos
+let tipoGaleno = tipoAsoc + 'S';
 	let grupoSiglaGaleno = 'IND';
 	let edadIdGaleno = '';
 	let anios2 = anios_2;
 	let anios = anios_1;
+	if(group === 1)
+{
+	anios2=0;
+	numHijos=0;
+}else if(group === 2)
+{
+	anios2=0;
+}else if(group === 3)
+{
+	numHijos=0;
+}else {}
 	if (anios2 > anios) {
 		anios2 = anios_1;
 		anios = anios_2
@@ -147,11 +172,24 @@ export function productIdGaleno(anios_1, anios_2, tipoAsoc, numHijos) {
 };
 // // <!----------------------Funcion PRODUCT ID GALENO end---------------------------->
 // // <!----------------------Funcion PRODUCT ID PREMEDIC start----------------------------> 
-export function productIdPremedic(edad_1, edad_2, tipoAsoc, numHijos) {
+export function productIdPremedic(edad_1, edad_2, tipoAsoc, num_Hijos,group) {
 
 	let edadIdPremedic = '';
 	let age2 = edad_2;
 	let age = edad_1;
+    let numHijos = num_Hijos;
+	if(group === 1)
+{
+	age2=0;
+	numHijos=0;
+}else if(group === 2)
+{
+	age2=0;
+}else if(group === 3)
+{
+	numHijos=0;
+}else {}
+
 	if (edad_2 === null) {
         age2 = 0;
     }
@@ -187,8 +225,8 @@ export function productIdPremedic(edad_1, edad_2, tipoAsoc, numHijos) {
 }
 // <!----------------------Funcion PRODUCT ID PREMEDIC END---------------------------->    
 // <!----------------------Funcion PRODUCT ID OMINT start---------------------------->        
-export function productIdOmint(anios, tipoAsoc, miembro) {
-	// // console.log("variable anios : " + anios + "- variable tipoAsoc : " + tipoAsoc + " - variable miembro : " + miembro) 
+export function productIdOmint(anios, tipoAsoc, miembro,group) {
+	// console.log("variable anios : " + anios + "- variable tipoAsoc : " + tipoAsoc + " - variable miembro : " + miembro) 
 	let edadID = '';
 	let tipo = tipoAsoc;
 	let edad = anios;
@@ -196,6 +234,15 @@ export function productIdOmint(anios, tipoAsoc, miembro) {
 	let edadID2OMINT = '';
 	let hijoIdOMINT = 'omint' + tipo + 'H1';
 	let hijo2IdOMINT =  'omint' + tipo + 'H2';
+	if(group === 1 && miembro !== 'titular')
+{
+	edad=0;
+}else if(group === 2)
+{
+	edad=0;
+}else{}
+
+	
 	if (edad >= 18 && edad <= 25) {
 		edadID = tipo + 25;
 	} else if (edad >= 26 && edad <= 35) {
@@ -215,18 +262,27 @@ export function productIdOmint(anios, tipoAsoc, miembro) {
 	} else {
 		edadID2OMINT =  'omint' + edadID
 	};
-	// // console.log("edadID1OMINT=" + edadID1OMINT + "; edadID2OMINT =" + edadID2OMINT + "; hijoIdOMINT ="+ hijoIdOMINT + "; hijo2IdOMINT =" + hijo2IdOMINT)
+	
+	// console.log("edadID1OMINT=" + edadID1OMINT + "; edadID2OMINT =" + edadID2OMINT + "; hijoIdOMINT ="+ hijoIdOMINT + "; hijo2IdOMINT =" + hijo2IdOMINT)
 	return [edadID1OMINT, edadID2OMINT, hijoIdOMINT, hijo2IdOMINT]
 };
 // <!----------------------Funcion PRODUCT ID OMINT end---------------------------->
 
 
 // <!----------------------Funcion PRODUCT ID SWISS start---------------------------->        
-export function productIdSwiss(anios, tipoAsoc) {
+export function productIdSwiss(anios, tipoAsoc,group) {
 	let edadID = '';
 	let tipo = tipoAsoc;
 	let edad = anios;
+	if(group === 1 )
+{
+	edad=0;
+}else if(group === 2)
+{
+	edad=0;
+}else{}
 
+	
 
 	if (edad >= 18 && edad <= 25) {
 		edadID = tipo + 25;
@@ -254,11 +310,18 @@ return edadID
 // <!----------------------Funcion PRODUCT ID MEDIFE start----------------------------> 
 
 
-export function productIdMedife(edad_1, edad_2, tipoAsoc) {
+export function productIdMedife(edad_1, edad_2, tipoAsoc,group) {
 
 	let edadIdMedife = '';
 	let age2 = edad_2;
 	let age = edad_1;
+if(group === 1){
+	age2 = 0;
+}else if(group === 2){
+	age2 = 0;}
+	else{}
+
+
 	if (edad_2 === null) {
         age2 = 0;
     }

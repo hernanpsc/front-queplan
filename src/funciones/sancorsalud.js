@@ -1,8 +1,7 @@
 import * as functions from './functions';
 
-export	function  valorSancorSalud(aportesOS,coeficiente,edad_1,edad_2,numHijos, precio_1Hijo,precio_2Hijo,precio_Titular,precios_Conyuge,numhijo_2,grupo_Fam,segvida1,segvida2,supra_salud,con_afinidad,promocion,genSanCor){
+export	function  valor_SanCor(aportesOS,coeficiente,edad_1,edad_2,numHijos, precio_1Hijo,precio_2Hijo,precio_Titular,precios_Conyuge,numhijo_2,grupo_Fam,segvida1,segvida2,supra_salud,con_afinidad,promocion,genSanCor, group){
 	
-
 	let edad1 = edad_1;
 	let edad2  = edad_2;
 	let hijos  = numHijos;
@@ -12,9 +11,28 @@ export	function  valorSancorSalud(aportesOS,coeficiente,edad_1,edad_2,numHijos, 
 	let preciosConyuge = precios_Conyuge;
 	let numhijo2 = numhijo_2;
 	let grupoFam = grupo_Fam;
-	
-	let precio_adultos_Sancor = {};
+	// console.log(grupoFam)
+
+	if(grupoFam == 1 ){
+		edad2 = 0;
+		preciosConyuge = 0;
+		hijos =0;
+	} else if (grupoFam == 2 ) {
+		preciosConyuge = 0;
+		edad2 = 0;
+	  } else if ( grupoFam ==3){
+		hijos =0;
+	  }
+
+// console.log('preciosConyuge');
+// console.log(preciosConyuge);
+
+// console.log('hijos');
+// console.log(hijos);
+	  let precio_adultos_Sancor = {};
 	let precios = {};
+	         
+
 	
 //Funcion para el calculo de aportes
 let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])

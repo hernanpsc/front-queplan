@@ -1,53 +1,80 @@
-import { model } from 'mongoose';
-import models from '../models'; 
+import mongoose from 'mongoose';
+import ClinicasModel from './../models/clinicas';
+import { Clinicas } from './../interfaces/clinicas';
+import { obtenerPlanesConClinicas } from './planes';
 
 
-const getModelByName = async (modelName: string) => {
+let regiones: string[] = [];
+let clinicasPorRegiones: { [key: string]: Clinicas[] } = {};
 
-    const modeloEncontrado = (await models).find((modelInfo: { nombre: string; }) => modelInfo.nombre === modelName);
-    if (!modeloEncontrado) {
-      throw new Error(`El modelo ${modelName} no está registrado en Mongoose.`);
-    }
-    return modeloEncontrado.modelo;
-  };
+async function obtenerRegionesDisponibles() {
+  const regiones = await ClinicasModel.distinct('ubicacion.region');
+  return regiones;
+}
+
+async function organizarClinicasPorRegiones() {
+  regiones = await obtenerRegionesDisponibles();
   
-const createProduct = async (item: any,schema: string) => {
-    const Model = model(schema); 
-    const responseCreate = await Model.create(item)
-    return responseCreate;
+  // Inicializa un objeto para cada región
+  for (const region of regiones) {
+    clinicasPorRegiones[region] = [];
+  }
+
+  // Realiza una consulta a la base de datos para obtener todas las clínicas
+  const clinicas = await ClinicasModel.find({});
+  
+  // Organiza las clínicas por región
+  for (const clinica of clinicas) {
+    const region = clinica.ubicacion.region;
+    clinicasPorRegiones[region] = clinicasPorRegiones[region] || [];
+    clinicasPorRegiones[region].push(clinica);
+  }
+  return clinicasPorRegiones;
+}
+
+// Llama a la función para organizar las clínicas por regiones
+organizarClinicasPorRegiones();
+
+const createProduct = async (item: any) => {
+  const responseCreate = await ClinicasModel.create(item)
+  return responseCreate;
 };
 
-const getProducts = async (schema: string) => {
-    const Model = await getModelByName(schema);
-    const responseGet = await Model.find({});
-    return responseGet
+const getProducts = async () => {
+  const responseGet = await ClinicasModel.find({});
+  return responseGet
 };
 
-const getProduct = async (id: string,schema: string) => {
-    const Model = await getModelByName(schema);
-    const responseGetOne = await Model.findOne({_id:id})
-    return responseGetOne
+const getProduct = async (id: string) => {
+ 
+  
+  const responseGetOne = await ClinicasModel.findOne({_id:id})
+  
+  return responseGetOne
 };
 
-const updateProduct = async (id: string, data: any, schema: string) => {
-    const Model = await getModelByName(schema);
-    const responseUpdate = await Model.findOneAndUpdate({_id:id},data,{new: true})
-    return responseUpdate
+const updateProduct = async (id: string, data: any) => {
+  const responseUpdate = await ClinicasModel.findOneAndUpdate({_id:id},data,{new: true})
+  return responseUpdate
 };
 
-const deleteProduct = async (id: string, schema: string) => {
-    const Model = await getModelByName(schema);
-    const responsedelete = await Model.deleteOne({_id:id})
-    return responsedelete
+const deleteProduct = async (id: string) => {
+  const responsedelete = await ClinicasModel.deleteOne({_id:id})
+  return responsedelete
 };
 
-const searchProducts = async (query: string, concept:string,schema: string) => {
-     const Model = await getModelByName(schema);
-    // Realiza la búsqueda en la base de datos, por ejemplo, por nombre
-    const responseSearch = await Model.find({
-        concept: { $regex: query, $options: 'i' } as { $regex: string, $options: string },
-    })
-    return responseSearch
+const searchProducts = async (query: string) => {
+  // Realiza la búsqueda en la base de datos, por ejemplo, por nombre
+  const responseSearch = await ClinicasModel.find({
+      concept: { $regex: query, $options: 'i' } as { $regex: string, $options: string },
+  })
+  return responseSearch
 };
 
-export { createProduct, getProducts, getProduct, updateProduct, deleteProduct, searchProducts };
+const getPlanes = async () => {
+
+  const responseGet = await obtenerPlanesConClinicas();
+
+  return responseGet
+}; 
+export { createProduct, getProducts, getProduct, updateProduct, deleteProduct, searchProducts ,getPlanes};

@@ -1,6 +1,6 @@
 import * as functions from './functions';
 
-export function valorGaleno(aportesOS,precios,coeficiente) {
+export function valor_Galeno(aportesOS,precios,coeficiente) {
 
 	let array = [];
 //Funcion para el calculo de aportes

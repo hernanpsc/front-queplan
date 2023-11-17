@@ -1,69 +1,79 @@
 import { Request, Response } from 'express';
+import { collections } from '../config/database';
 import { handleHttp } from "../utils/error.handle";
-import { getEmpresas, getEmpresaById, createEmpresa, updateEmpresa, deleteEmpresa } from "../services/empresas";
 
-const  getItems = async (req:Request,res:Response) => {
+import * as mongodb from "mongodb";
+import {  createProduct, getProducts, getProduct, updateProduct, deleteProduct, searchProducts ,getPlanes } from "../services/empresas";
+
+
+
+
+const  getItems = async (req: Request, res: Response) => {
   try {
-    const  response = await getEmpresas();
+    const  response = await getProducts();
     res.status(200).send(response);
   } catch (e) {
-    handleHttp(res,'ERROR_GET_ITEMS')
-}
+    handleHttp(res,'ERROR_GET_CLINICAS')
+  }
 };
 
-const  getItemById = async ({ params }: Request, res: Response) => {
+const  getItemById = async ({ params }:Request,res:Response) => {
   try {
     const { id } = params
-    const response = await getEmpresaById(id);
-    if (!response) {
-      res.status(404).send('empresa not found');
-    }
-      res.status(200).send(response);
-  } catch (e) {
-    handleHttp(res,'ERROR_GET_ITEMS')
+    const  response = await getProduct(id);
+    const data = response ? response : "NOT_FOUND"
+    res.status(200).send(data);
+  }  catch (e) {
+    handleHttp(res,'ERROR_GET_uno')
   }
 };
 
-const createItem = async ({body}: Request, res: Response) => {
+const  createItem = async (req: Request, res: Response) => {
   try {
-    const result = await createEmpresa(body);
-    if (result) {
-      res.status(201).send(`Se creó una nueva empresa: ID ${result._id}.`);
-    } else {
-      res.status(500).send('Falló al crear una nueva empresa.');
-    }
+    const responseItem = await createProduct(req);
+        res.send(responseItem);
+
   } catch (e) {
-    handleHttp(res,'ERROR_CREATE_EMPRESA')
+    handleHttp(res,'ERROR_CREATE_CLINICA')
   }
 };
-
-const  updateItem = async (req: Request, res: Response) => {
+ 
+const updateItem = async ({ params, body }: Request, res: Response) => {
   try {
-    const  result = await updateEmpresa(req,res);
-    if (result) {
-      res.status(404).send('empresa not found');
-    }
-  } catch (e) {
-    handleHttp(res,'ERROR_UPDATE_EMPRESA')
-  }
+    const { id }  = params;
+  const response = await updateProduct(  id, body );
+  res.send( response )
+} catch (e) {
+  handleHttp(res,'ERROR_UPDATE')
+}
 };
 
 const  deleteItem = async ({ params }: Request, res: Response) => {
   try {
     const { id } = params
-    const result = await deleteEmpresa(id);
-    if (result && result.deletedCount) {
-      return res.status(202).send(`Clinica eliminada: ID ${id}`);
-  } else if (!result) {
-    return res.status(400).send(`Falló eliminar clinica: ID ${id}`);
-  } else if (!result.deletedCount) {
-    return res.status(404).send(`Fallo eliminar clinica: ID ${id}`);
-  }
+   const response = await deleteProduct(id);
+   res.send(response)
+ } catch (e) {
+   handleHttp(res,'ERROR_DELETE')
+};
+}
+
+
+const searchItem = async ({ params }: Request, res: Response) => {
+  try {
+    const { query, concept } = params;
+    console.log("query")
+
+    console.log(query)
+    console.log("concept")
+    console.log(concept)
+
+
+    const response = await searchProducts(query);
+    res.send(response);
   } catch (e) {
-    handleHttp(res,'ERROR_DELETE_EMPRESA')
-  }
+    handleHttp(res,'ERROR_SEARCH')
+};
 };
 
-export { getItems, getItemById, createItem, updateItem, deleteItem}
-
-
+export { getItems, getItemById, createItem, updateItem, deleteItem, searchItem  }

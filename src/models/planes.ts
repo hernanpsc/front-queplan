@@ -13,8 +13,7 @@ const planSchema = new Schema<Planes>({
     tags: [String],
     hijosSolos: Boolean,
     folletos: [String],
-    images: [String],
-    clinicas: [String],
+    images: [Object], 
     attributes: [String],
     Cirugia_Estetica: Boolean,
     Cobertura_Nacional: Boolean,
@@ -22,11 +21,12 @@ const planSchema = new Schema<Planes>({
     Ortodoncia_Adultos: Boolean,
     PMO_Solo_por_Aportes: Boolean,
     Sin_Copagos: Boolean,
-    raiting: Number,  // Cambiado de "raiting" a "rating"
+    raiting: Number, 
     valueSlide3: Number,
     valueSlide4: Number,
     aporteOS: Number,
-});
+    clinicas: [Object] // Utiliza Clinicas como el tipo de objetos en el array
+});  
 
 const PlanesModel = model('planes', planSchema);
 export default PlanesModel;

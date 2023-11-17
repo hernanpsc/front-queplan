@@ -23,9 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.valorPrevencion = void 0;
+exports.valor_Prevencion = void 0;
 const functions = __importStar(require("./functions"));
-function valorPrevencion(aporte_OS, edad_1, edad_2, numkids, numhijo2, precioTitularMedife, precioHijo1Medife, precioHijo20Medife, precioHijo25Medife, coeficienteMedife, con_afinidad, promocion) {
+function valor_Prevencion(aporte_OS, edad_1, edad_2, numkids, numhijo2, precioTitularMedife, precioHijo1Medife, precioHijo20Medife, precioHijo25Medife, coeficienteMedife, con_afinidad, promocion) {
 }
-exports.valorPrevencion = valorPrevencion;
+exports.valor_Prevencion = valor_Prevencion;
 //# sourceMappingURL=prevencionsalud.js.map

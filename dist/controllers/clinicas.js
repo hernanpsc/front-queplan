@@ -4,8 +4,9 @@ exports.searchItem = exports.deleteItem = exports.updateItem = exports.createIte
 const error_handle_1 = require("../utils/error.handle");
 const clinicas_1 = require("../services/clinicas");
 const getItems = async (req, res) => {
+    console.log('hola getItems clinicas');
     try {
-        const response = await (0, clinicas_1.getClinicas)(req, res);
+        const response = await (0, clinicas_1.getProducts)();
         res.status(200).send(response);
     }
     catch (e) {
@@ -13,20 +14,21 @@ const getItems = async (req, res) => {
     }
 };
 exports.getItems = getItems;
-const getItemById = async (req, res) => {
+const getItemById = async ({ params }, res) => {
     try {
-        const response = await (0, clinicas_1.getClinicaById)(req, res);
+        const { id } = params;
+        const response = await (0, clinicas_1.getProduct)(id);
         const data = response ? response : "NOT_FOUND";
         res.status(200).send(data);
     }
     catch (e) {
-        (0, error_handle_1.handleHttp)(res, 'ERROR_GET_CLINICA');
+        (0, error_handle_1.handleHttp)(res, 'ERROR_GET_uno');
     }
 };
 exports.getItemById = getItemById;
 const createItem = async (req, res) => {
     try {
-        const responseItem = await (0, clinicas_1.createClinica)(req, res);
+        const responseItem = await (0, clinicas_1.createProduct)(req);
         res.send(responseItem);
     }
     catch (e) {
@@ -34,34 +36,41 @@ const createItem = async (req, res) => {
     }
 };
 exports.createItem = createItem;
-const updateItem = async (req, res) => {
+const updateItem = async ({ params, body }, res) => {
     try {
-        const response = await (0, clinicas_1.updateClinica)(req, res);
+        const { id } = params;
+        const response = await (0, clinicas_1.updateProduct)(id, body);
         res.send(response);
     }
     catch (e) {
-        (0, error_handle_1.handleHttp)(res, 'ERROR_UPDATE_CLINICA');
+        (0, error_handle_1.handleHttp)(res, 'ERROR_UPDATE');
     }
 };
 exports.updateItem = updateItem;
-const deleteItem = async (req, res) => {
+const deleteItem = async ({ params }, res) => {
     try {
-        const response = await (0, clinicas_1.deleteClinica)(req, res);
+        const { id } = params;
+        const response = await (0, clinicas_1.deleteProduct)(id);
         res.send(response);
     }
     catch (e) {
-        (0, error_handle_1.handleHttp)(res, 'ERROR_DELETE_CLINICA');
+        (0, error_handle_1.handleHttp)(res, 'ERROR_DELETE');
     }
     ;
 };
 exports.deleteItem = deleteItem;
-const searchItem = async (req, res) => {
+const searchItem = async ({ params }, res) => {
     try {
-        const response = await (0, clinicas_1.searchClinicas)(req, res);
+        const { query, concept } = params;
+        console.log("query");
+        console.log(query);
+        console.log("concept");
+        console.log(concept);
+        const response = await (0, clinicas_1.searchProducts)(query);
         res.send(response);
     }
     catch (e) {
-        (0, error_handle_1.handleHttp)(res, 'ERROR_SEARCH_CLINICA');
+        (0, error_handle_1.handleHttp)(res, 'ERROR_SEARCH');
     }
     ;
 };

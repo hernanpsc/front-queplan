@@ -7,9 +7,9 @@ import {  createProduct, getProducts, getProduct, updateProduct, deleteProduct, 
 
 
 
-const getItems = async (req: Request, res: Response, schema: string) => {
+const getItems = async (req: Request, res: Response) => {
   try {
-    const response = await getProducts(schema);
+    const response = await getProducts();
     res.status(200).send(response);
   } catch (e) {
     handleHttp(res, 'ERROR_GET_todos');
@@ -20,7 +20,7 @@ const getItems = async (req: Request, res: Response, schema: string) => {
 const  getItemById = async ({ params }:Request,res:Response, schema: string) => {
   try {
     const { id } = params
-    const  response = await getProduct(id,schema);
+    const  response = await getProduct(id);
     const data = response ? response : "NOT_FOUND"
     res.status(200).send(data);
   }  catch (e) {
@@ -28,39 +28,39 @@ const  getItemById = async ({ params }:Request,res:Response, schema: string) => 
   }
 };
 
-const  createItem = async ({body}: Request, res: Response, schema: string) => {
+const  createItem = async ({body}: Request, res: Response) => {
   try {
     if (body._id) {
       body._id = new mongodb.ObjectId(body._id);
     }
-    const responseItem = await createProduct(body,schema);
+    const responseItem = await createProduct(body);
         res.send(responseItem);
   } catch (e) {
     handleHttp(res,'ERROR_CREATE')
   }
 };
  
-const updateItem = async ({ params, body }: Request, res: Response, schema: string) => {
+const updateItem = async ({ params, body }: Request, res: Response) => {
   try {
       const { id }  = params;
-    const response = await updateProduct(  id, body,schema );
+    const response = await updateProduct(  id, body);
     res.send( response )
   } catch (e) {
     handleHttp(res,'ERROR_UPDATE')
   }
 };
 
-const  deleteItem = async ({ params }: Request, res: Response, schema: string) => {
+const  deleteItem = async ({ params }: Request, res: Response) => {
   try {
      const { id } = params
-    const response = await deleteProduct(id, schema);
+    const response = await deleteProduct(id);
     res.send(response)
   } catch (e) {
     handleHttp(res,'ERROR_DELETE')
 };
 }
 
-const searchItem = async ({ params }: Request, res: Response, schema: string) => {
+const searchItem = async ({ params }: Request, res: Response) => {
   try {
     const { query, concept } = params;
     console.log("query")
@@ -70,7 +70,7 @@ const searchItem = async ({ params }: Request, res: Response, schema: string) =>
     console.log(concept)
 
 
-    const response = await searchProducts(query,concept,schema);
+    const response = await searchProducts(query);
     res.send(response);
   } catch (e) {
     handleHttp(res,'ERROR_SEARCH')

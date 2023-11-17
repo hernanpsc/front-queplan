@@ -26,3 +26,46 @@ return precio;
 
 export { getPrecios, getPrecioById, getPrecioByParam };
 
+const createProduct = async (item: any) => {
+  const responseCreate = await PreciosModel.create(item)
+  return responseCreate;
+};
+
+const getProducts = async () => {
+  const responseGet = await PreciosModel.find({});
+  return responseGet
+};
+
+const getProduct = async (id: string) => {
+ 
+
+  
+  const responseGetOne = await PreciosModel.findOne({_id:id})
+  console.log( ' responseGetOne : ', id)
+  console.log( ' responseGetOne : ', responseGetOne)
+
+
+
+  return responseGetOne
+};
+
+const updateProduct = async (id: string, data: any) => {
+  const responseUpdate = await PreciosModel.findOneAndUpdate({_id:id},data,{new: true})
+  return responseUpdate
+};
+
+const deleteProduct = async (id: string) => {
+  const responsedelete = await PreciosModel.deleteOne({_id:id})
+  return responsedelete
+};
+
+const searchProducts = async (query: string) => {
+  // Realiza la búsqueda en la base de datos, por ejemplo, por nombre
+  const responseSearch = await PreciosModel.find({
+      concept: { $regex: query, $options: 'i' } as { $regex: string, $options: string },
+  })
+  return responseSearch
+};
+
+
+export { createProduct, getProducts, getProduct, updateProduct, deleteProduct, searchProducts};

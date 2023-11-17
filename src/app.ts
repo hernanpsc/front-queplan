@@ -27,8 +27,11 @@ const whitelist = [
 
 const app = express()
 app.use(cors({
+      origin: '*',
+
     // origin: filteredWhitelist,
-    // allowedHeaders: ['Authorization', 'Content-Type']
+    allowedHeaders: ['Authorization', 'Content-Type']
+
   }));
 app.use(express.json())
 app.use(router);

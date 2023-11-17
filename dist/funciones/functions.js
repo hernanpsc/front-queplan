@@ -4,14 +4,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.suprasSalud = exports.planNombre = exports.segVidaPlus = exports.final = exports.promoDescuento = exports.calculodescOS = exports.agruparYTransformarPlanes = exports.combinePlansWithPrices = void 0;
 function combinePlansWithPrices(planes, precios) {
     const combinedArray = [];
+    // console.log(planes)
     planes.forEach((plan) => {
+        // console.log(plan)
         const matchingPrecio = precios.find((precio) => precio.item_id === plan.item_id);
+        //   console.log(plan.item_id);
+        //   console.log(precios.item_id);
         if (matchingPrecio) {
             // Combina todas las propiedades de planes y precios en un nuevo objeto
             const combinedPlan = {
-                ...plan,
+                ...plan._doc,
                 ...matchingPrecio,
             };
+            // console.log(combinedPlan)
             // Agrega el objeto combinado al array resultado
             combinedArray.push(combinedPlan);
         }
@@ -159,26 +164,12 @@ function planNombre(gen, plan_gen, plan_nombre) {
 }
 exports.planNombre = planNombre;
 function suprasSalud(supras, gen, plan_nombre, otrosBenPrecios, grupoFam) {
-    // console.log('supras');
-    // console.log(supras);
-    // console.log('gen');
-    // console.log(gen);
-    // console.log('plan_nombre');
-    // console.log(plan_nombre);
-    // console.log('otrosBenPrecios');
-    // console.log(otrosBenPrecios);
-    // console.log('grupoFam');
-    // console.log(grupoFam);
     let otrosBen = 0;
     if (supras === true && gen === '') {
         otrosBen = 0;
         if (plan_nombre.includes('B')) {
             otrosBen = otrosBen + otrosBenPrecios[grupoFam - 1]['SSPRO'];
-            // console.log('SSPRO');
-            // console.log(SSPRO);
             otrosBen = otrosBen + otrosBenPrecios[grupoFam - 1]['SSOD'];
-            // console.log('SSOD');
-            // console.log(SSOD);
         }
         else {
             otrosBen = otrosBen + otrosBenPrecios[grupoFam - 1]['SSPRO'];

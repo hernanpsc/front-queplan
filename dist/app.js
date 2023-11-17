@@ -23,8 +23,9 @@ const portRegex = /^http:\/\/localhost(?::\d+)?$/;
 const filteredWhitelist = whitelist.filter((origin) => portRegex.test(origin));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-// origin: filteredWhitelist,
-// allowedHeaders: ['Authorization', 'Content-Type']
+    origin: '*',
+    // origin: filteredWhitelist,
+    allowedHeaders: ['Authorization', 'Content-Type']
 }));
 app.use(express_1.default.json());
 app.use(routes_1.router);

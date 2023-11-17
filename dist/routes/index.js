@@ -33,14 +33,21 @@ const cleanFileName = (filename) => {
     const file = filename.split('.').shift();
     return file;
 };
-(0, fs_1.readdirSync)(PATH_ROUTER).filter((filename) => {
+const importModule = async (filename) => {
     var _a;
     const cleanName = cleanFileName(filename);
     if (cleanName !== 'index') {
-        (_a = `./${cleanName}`, Promise.resolve().then(() => __importStar(require(_a)))).then((moduleRouter) => {
+        try {
+            const moduleRouter = await (_a = `./${cleanName}`, Promise.resolve().then(() => __importStar(require(_a))));
             console.log(`Se esta cargando la ruta.../${cleanName}`);
             router.use(`/${cleanName}`, moduleRouter.router);
-        });
+        }
+        catch (error) {
+            console.error(`Error loading route.../${cleanName}: ${error.message}`);
+        }
     }
+};
+(0, fs_1.readdirSync)(PATH_ROUTER).forEach((filename) => {
+    importModule(filename);
 });
 //# sourceMappingURL=index.js.map

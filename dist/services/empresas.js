@@ -1,61 +1,54 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteEmpresa = exports.updateEmpresa = exports.createEmpresa = exports.getEmpresaById = exports.getEmpresas = void 0;
-const empresas_1 = __importDefault(require("../models/empresas"));
-const mongodb = __importStar(require("mongodb"));
-const getEmpresas = async () => {
-    const responseGet = await empresas_1.default.find({});
-    return responseGet;
-};
-exports.getEmpresas = getEmpresas;
-const getEmpresaById = async (id) => {
-    const responseGetOne = await empresas_1.default.findOne({ _id: id });
-    return responseGetOne;
-};
-exports.getEmpresaById = getEmpresaById;
-const createEmpresa = async (item) => {
+exports.obtenerEmpresasDisponibles = exports.getPlanes = exports.searchProducts = exports.deleteProduct = exports.updateProduct = exports.getProduct = exports.getProducts = exports.createProduct = void 0;
+const empresas_1 = __importDefault(require("./../models/empresas"));
+const planes_1 = __importDefault(require("./../models/planes"));
+const planes_2 = require("./planes");
+async function obtenerEmpresasDisponibles() {
+    const empresas = await planes_1.default.distinct('empresa');
+    return empresas;
+}
+exports.obtenerEmpresasDisponibles = obtenerEmpresasDisponibles;
+const createProduct = async (item) => {
     const responseCreate = await empresas_1.default.create(item);
     return responseCreate;
 };
-exports.createEmpresa = createEmpresa;
-const updateEmpresa = async (req, res) => {
-    const id = req?.params?.id;
-    const empresa = req.body;
-    const query = { _id: new mongodb.ObjectId(id) };
-    const responseUpdate = await empresas_1.default.findOneAndUpdate(query, empresa, { new: true });
+exports.createProduct = createProduct;
+const getProducts = async () => {
+    const responseGet = await empresas_1.default.find({});
+    return responseGet;
+};
+exports.getProducts = getProducts;
+const getProduct = async (id) => {
+    const responseGetOne = await empresas_1.default.findOne({ _id: id });
+    console.log(' responseGetOne : ', id);
+    return responseGetOne;
+};
+exports.getProduct = getProduct;
+const updateProduct = async (id, data) => {
+    const responseUpdate = await empresas_1.default.findOneAndUpdate({ _id: id }, data, { new: true });
     return responseUpdate;
 };
-exports.updateEmpresa = updateEmpresa;
-const deleteEmpresa = async (id) => {
-    const query = { _id: new mongodb.ObjectId(id) };
-    const result = await empresas_1.default.deleteOne(query);
-    return result;
+exports.updateProduct = updateProduct;
+const deleteProduct = async (id) => {
+    const responsedelete = await empresas_1.default.deleteOne({ _id: id });
+    return responsedelete;
 };
-exports.deleteEmpresa = deleteEmpresa;
+exports.deleteProduct = deleteProduct;
+const searchProducts = async (query) => {
+    // Realiza la búsqueda en la base de datos, por ejemplo, por nombre
+    const responseSearch = await empresas_1.default.find({
+        concept: { $regex: query, $options: 'i' },
+    });
+    return responseSearch;
+};
+exports.searchProducts = searchProducts;
+const getPlanes = async () => {
+    const responseGet = await (0, planes_2.obtenerPlanesConClinicas)();
+    return responseGet;
+};
+exports.getPlanes = getPlanes;
 //# sourceMappingURL=empresas.js.map

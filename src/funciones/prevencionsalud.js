@@ -1,6 +1,6 @@
 import * as functions from './functions';
 
-export function valorPrevencion(
+export function valor_Prevencion(
     aporte_OS,
     edad_1, 
     edad_2, 

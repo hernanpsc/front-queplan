@@ -23,16 +23,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.valorPremedic = void 0;
+exports.valor_Premedic = void 0;
 // <!----------------------Funcion VALOR DEL PLAN PREMEDIC start---------------------------->
 const functions = __importStar(require("./functions"));
-function valorPremedic(aportesOS, coeficiente, numHijos, precioAdultos, preciohm_25, preciohm_1, id, con_afinidad, promocion) {
+function valor_Premedic(aportesOS, coeficiente, numHijos, precioAdultos, preciohm_25, preciohm_1, id, con_afinidad, promocion, group) {
     let conPromo = con_afinidad;
     let hijos = numHijos;
     let adultos = precioAdultos;
     let preciohm25 = preciohm_25;
     let preciohm1 = preciohm_1;
     let idprecio = id;
+    if (group === 1 || group === 3) {
+        hijos = 0;
+        preciohm1 = 0;
+        preciohm25 = 0;
+    }
     let precios = {};
     let descOS = functions.calculodescOS(aportesOS[0], aportesOS[2], aportesOS[3], coeficiente, aportesOS[4], aportesOS[5], aportesOS[1]);
     let array = [];
@@ -71,10 +76,10 @@ function valorPremedic(aportesOS, coeficiente, numHijos, precioAdultos, preciohm
         array.push(plan);
     }
     //	<!-----------------------Bucle PREMEDIC end------------------------>								
-    // // console.log( 'array PREMEDIC')	
-    // // console.log(array)							
+    // console.log( 'array PREMEDIC')	
+    // console.log(array)							
     return array;
 }
-exports.valorPremedic = valorPremedic;
+exports.valor_Premedic = valor_Premedic;
 // <!----------------------Funcion VALOR DEL PLAN PREMEDIC end---------------------------->
 //# sourceMappingURL=premedic.js.map

@@ -1,6 +1,6 @@
 import * as functions from './functions';
 
-export function valorMedife(
+export function valor_Medife(
 aporte_OS,
 edad_1, 
 edad_2, 

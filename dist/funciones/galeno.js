@@ -23,9 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.valorGaleno = void 0;
+exports.valor_Galeno = void 0;
 const functions = __importStar(require("./functions"));
-function valorGaleno(aportesOS, precios, coeficiente) {
+function valor_Galeno(aportesOS, precios, coeficiente) {
     let array = [];
     //Funcion para el calculo de aportes
     // console.log(aportesOS[0]);
@@ -60,5 +60,5 @@ function valorGaleno(aportesOS, precios, coeficiente) {
     // console.log(array)													
     return array;
 }
-exports.valorGaleno = valorGaleno;
+exports.valor_Galeno = valor_Galeno;
 //# sourceMappingURL=galeno.js.map

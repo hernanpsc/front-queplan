@@ -1,44 +1,56 @@
-import { Request, Response } from 'express';
-import { Empresa } from "../interfaces/empresas"
-
-import EmpresaModel from "../models/empresas";
-import * as mongodb from "mongodb";
+import EmpresaModel from './../models/empresas';
+import PlanesModel from './../models/planes';
+import { obtenerPlanesConClinicas } from './planes';
 
 
+async function obtenerEmpresasDisponibles() {
+    const empresas = await PlanesModel.distinct('empresa');
+        return empresas;
+  }
+  const createProduct = async (item: any) => {
+    const responseCreate = await EmpresaModel.create(item)
+    return responseCreate;
+};
 
-const  getEmpresas = async () => {
-const responseGet = await EmpresaModel.find({});
-return responseGet;
-  };
+const getProducts = async () => {
+    const responseGet = await EmpresaModel.find({});
+    return responseGet
+};
 
-const  getEmpresaById = async (id: string) => {
-    const responseGetOne = await EmpresaModel.findOne({_id:id});
+const getProduct = async (id: string) => {
+   
+
+    
+    const responseGetOne = await EmpresaModel.findOne({_id:id})
+    console.log( ' responseGetOne : ', id)
+
     return responseGetOne
-  };
+};
 
-
-
-  const createEmpresa = async (item:Empresa) => {
-      const responseCreate = await EmpresaModel.create(item);
-      return responseCreate
-    };
- 
-
-const  updateEmpresa = async (req: Request, res: Response) => {
-    const id = req?.params?.id;
-    const empresa = req.body;
-    const query = { _id: new mongodb.ObjectId(id) };
-    const responseUpdate = await EmpresaModel.findOneAndUpdate(query,empresa,{new: true})
+const updateProduct = async (id: string, data: any) => {
+    const responseUpdate = await EmpresaModel.findOneAndUpdate({_id:id},data,{new: true})
     return responseUpdate
-   };
+};
 
+const deleteProduct = async (id: string) => {
+    const responsedelete = await EmpresaModel.deleteOne({_id:id})
+    return responsedelete
+};
 
-const  deleteEmpresa = async (id: string) => {
-    const query = { _id: new mongodb.ObjectId(id) };
-    const result = await EmpresaModel.deleteOne(query);
-    return result
-  };
+const searchProducts = async (query: string) => {
+    // Realiza la búsqueda en la base de datos, por ejemplo, por nombre
+    const responseSearch = await EmpresaModel.find({
+        concept: { $regex: query, $options: 'i' } as { $regex: string, $options: string },
+    })
+    return responseSearch
+};
 
-  export { getEmpresas, getEmpresaById, createEmpresa, updateEmpresa, deleteEmpresa };
+const getPlanes = async () => {
 
+    const responseGet = await obtenerPlanesConClinicas();
 
+    return responseGet
+}; 
+export { createProduct, getProducts, getProduct, updateProduct, deleteProduct, searchProducts ,getPlanes};
+
+  export { obtenerEmpresasDisponibles };

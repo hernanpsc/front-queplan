@@ -26,16 +26,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = require("express");
 const express = __importStar(require("express"));
-const items_1 = require("../controllers/items");
+const empresas_1 = require("../controllers/empresas");
 const router = (0, express_1.Router)();
 exports.router = router;
 router.use(express.json());
-router.get('/', (req, res) => { (0, items_1.getItems)(req, res, "empresas"); });
-router.get('/:id', (req, res) => { (0, items_1.getItemById)(req, res, "empresas"); });
-router.post('/', (req, res) => { (0, items_1.createItem)(req, res, "empresas"); });
-router.put('/:id', (req, res) => { (0, items_1.updateItem)(req, res, "empresas"); });
-router.delete('/:id', (req, res) => { (0, items_1.deleteItem)(req, res, "empresas"); });
+router.get('/', (req, res) => { (0, empresas_1.getItems)(req, res); });
+router.get('/:id', (req, res) => { (0, empresas_1.getItemById)(req, res); });
+router.post('/', (req, res) => { (0, empresas_1.createItem)(req, res); });
+router.put('/:id', (req, res) => { (0, empresas_1.updateItem)(req, res); });
+router.delete('/:id', (req, res) => { (0, empresas_1.deleteItem)(req, res); });
 router.get('/search', (req, res) => {
-    (0, items_1.searchItem)(req, res, "empresas");
+    (0, empresas_1.searchItem)(req, res);
 });
 //# sourceMappingURL=empresas.js.map

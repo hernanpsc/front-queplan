@@ -1,16 +1,16 @@
 import { Router } from "express";
 import * as express from "express";
-import { getItems, getItemById, createItem, updateItem, deleteItem, searchItem  } from '../controllers/items';
+import { getItems, getItemById, createItem, updateItem, deleteItem, searchItem  } from '../controllers/clinicas';
 
 const router = Router();
 
 router.use(express.json());
-router.get('/',(req, res) => { getItems(req, res, "clinicas");});
-router.get('/:id', (req, res) => { getItemById(req, res, "clinicas");});
-router.post('/', (req, res) => {createItem(req, res, "clinicas" ) });
-router.put('/:id', (req, res) => { updateItem(req, res, "clinicas" )});
-router.delete('/:id', (req, res) => { deleteItem(req, res, "clinicas" )});
-router.get('/search',(req, res) => {searchItem(req, res, "clinicas");
+router.get('/',(req, res) => { getItems(req, res);});
+router.get('/:id', (req, res) => { getItemById(req, res);});
+router.post('/', (req, res) => {createItem(req, res ) });
+router.put('/:id', (req, res) => { updateItem(req, res )});
+router.delete('/:id', (req, res) => { deleteItem(req, res )});
+router.get('/search',(req, res) => {searchItem(req, res);
   });
  
 export { router }

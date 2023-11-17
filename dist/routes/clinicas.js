@@ -26,16 +26,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = require("express");
 const express = __importStar(require("express"));
-const items_1 = require("../controllers/items");
+const clinicas_1 = require("../controllers/clinicas");
 const router = (0, express_1.Router)();
 exports.router = router;
 router.use(express.json());
-router.get('/', (req, res) => { (0, items_1.getItems)(req, res, "clinicas"); });
-router.get('/:id', (req, res) => { (0, items_1.getItemById)(req, res, "clinicas"); });
-router.post('/', (req, res) => { (0, items_1.createItem)(req, res, "clinicas"); });
-router.put('/:id', (req, res) => { (0, items_1.updateItem)(req, res, "clinicas"); });
-router.delete('/:id', (req, res) => { (0, items_1.deleteItem)(req, res, "clinicas"); });
+router.get('/', (req, res) => { (0, clinicas_1.getItems)(req, res); });
+router.get('/:id', (req, res) => { (0, clinicas_1.getItemById)(req, res); });
+router.post('/', (req, res) => { (0, clinicas_1.createItem)(req, res); });
+router.put('/:id', (req, res) => { (0, clinicas_1.updateItem)(req, res); });
+router.delete('/:id', (req, res) => { (0, clinicas_1.deleteItem)(req, res); });
 router.get('/search', (req, res) => {
-    (0, items_1.searchItem)(req, res, "clinicas");
+    (0, clinicas_1.searchItem)(req, res);
 });
 //# sourceMappingURL=clinicas.js.map

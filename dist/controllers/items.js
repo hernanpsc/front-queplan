@@ -27,9 +27,9 @@ exports.searchItem = exports.deleteItem = exports.updateItem = exports.createIte
 const mongodb = __importStar(require("mongodb"));
 const error_handle_1 = require("../utils/error.handle");
 const items_1 = require("../services/items");
-const getItems = async (req, res, schema) => {
+const getItems = async (req, res) => {
     try {
-        const response = await (0, items_1.getProducts)(schema);
+        const response = await (0, items_1.getProducts)();
         res.status(200).send(response);
     }
     catch (e) {
@@ -40,7 +40,7 @@ exports.getItems = getItems;
 const getItemById = async ({ params }, res, schema) => {
     try {
         const { id } = params;
-        const response = await (0, items_1.getProduct)(id, schema);
+        const response = await (0, items_1.getProduct)(id);
         const data = response ? response : "NOT_FOUND";
         res.status(200).send(data);
     }
@@ -49,12 +49,12 @@ const getItemById = async ({ params }, res, schema) => {
     }
 };
 exports.getItemById = getItemById;
-const createItem = async ({ body }, res, schema) => {
+const createItem = async ({ body }, res) => {
     try {
         if (body._id) {
             body._id = new mongodb.ObjectId(body._id);
         }
-        const responseItem = await (0, items_1.createProduct)(body, schema);
+        const responseItem = await (0, items_1.createProduct)(body);
         res.send(responseItem);
     }
     catch (e) {
@@ -62,10 +62,10 @@ const createItem = async ({ body }, res, schema) => {
     }
 };
 exports.createItem = createItem;
-const updateItem = async ({ params, body }, res, schema) => {
+const updateItem = async ({ params, body }, res) => {
     try {
         const { id } = params;
-        const response = await (0, items_1.updateProduct)(id, body, schema);
+        const response = await (0, items_1.updateProduct)(id, body);
         res.send(response);
     }
     catch (e) {
@@ -73,10 +73,10 @@ const updateItem = async ({ params, body }, res, schema) => {
     }
 };
 exports.updateItem = updateItem;
-const deleteItem = async ({ params }, res, schema) => {
+const deleteItem = async ({ params }, res) => {
     try {
         const { id } = params;
-        const response = await (0, items_1.deleteProduct)(id, schema);
+        const response = await (0, items_1.deleteProduct)(id);
         res.send(response);
     }
     catch (e) {
@@ -85,14 +85,14 @@ const deleteItem = async ({ params }, res, schema) => {
     ;
 };
 exports.deleteItem = deleteItem;
-const searchItem = async ({ params }, res, schema) => {
+const searchItem = async ({ params }, res) => {
     try {
         const { query, concept } = params;
         console.log("query");
         console.log(query);
         console.log("concept");
         console.log(concept);
-        const response = await (0, items_1.searchProducts)(query, concept, schema);
+        const response = await (0, items_1.searchProducts)(query);
         res.send(response);
     }
     catch (e) {

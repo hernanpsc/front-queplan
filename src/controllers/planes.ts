@@ -1,73 +1,79 @@
 import { Request, Response } from 'express';
 import { collections } from '../config/database';
-import * as mongodb from "mongodb";
 import { handleHttp } from "../utils/error.handle";
-import { Planes } from '../interfaces/planes'; // Reemplaza con la importación adecuada de tu tipo de documento
-import { getPlanes, getPlanById, createPlan, updatePlan, deletePlan } from "../services/planes";
+
+import * as mongodb from "mongodb";
+import {  createProduct, getProducts, getProduct, updateProduct, deleteProduct, searchProducts ,getPlanes } from "../services/planes";
 
 
-const getItems = async (req:Request,res:Response) =>{
+
+
+const  getItems = async (req: Request, res: Response) => {
   try {
-  const response = await getPlanes();
-  res.send(response)
+    const  response = await getProducts();
+    res.status(200).send(response);
   } catch (e) {
-      handleHttp(res,'ERROR_GET_ITEMS')
+    handleHttp(res,'ERROR_GET_CLINICAS')
   }
-  };
+};
 
-
-const  getItemById = async ({ params }: Request, res: Response) => {
+const  getItemById = async ({ params }:Request,res:Response) => {
   try {
     const { id } = params
-    const  response = await getPlanById(id);
+    const  response = await getProduct(id);
     const data = response ? response : "NOT_FOUND"
-        res.send(data)
-  } catch (e) {
-    handleHttp(res,'ERROR_GET_ITEM')
-}
+    res.status(200).send(data);
+  }  catch (e) {
+    handleHttp(res,'ERROR_GET_uno')
+  }
 };
 
-const createItem = async ({body}: Request, res: Response) => {
+const  createItem = async (req: Request, res: Response) => {
   try {
-    const plan = body;
-    // Convierte el _id a ObjectId
-    if (plan._id) {
-      plan._id = new mongodb.ObjectId(plan._id);
-    }
-    const result = await createPlan(plan);
-  } catch (e) {
-    handleHttp(res,'ERROR_CREATE_ITEMS')
-};
-};
+    const responseItem = await createProduct(req);
+        res.send(responseItem);
 
-const  updateItem = async ({ params, body }:Request,res:Response) => {
+  } catch (e) {
+    handleHttp(res,'ERROR_CREATE_CLINICA')
+  }
+};
+ 
+const updateItem = async ({ params, body }: Request, res: Response) => {
   try {
     const { id }  = params;
-    const  result = await updatePlan(id, body);
-    if (!result) {
-      res.status(404).send('plan not found');
-    }
-  } catch (e) {
-    handleHttp(res,'ERROR_UPDATE_ITEMS')
-  }
+  const response = await updateProduct(  id, body );
+  res.send( response )
+} catch (e) {
+  handleHttp(res,'ERROR_UPDATE')
+}
 };
 
 const  deleteItem = async ({ params }: Request, res: Response) => {
   try {
     const { id } = params
-    const result = await deletePlan(id);
-    if (result && result.deletedCount) {
-      res.status(202).send(`Plan eliminado: ID ${id}`);
-  } else if (!result) {
-      res.status(400).send(`Falló eliminar plan: ID ${id}`);
-  } else if (!result.deletedCount) {
-      res.status(404).send(`Fallo eliminar plan: ID ${id}`);
-  };
+   const response = await deleteProduct(id);
+   res.send(response)
+ } catch (e) {
+   handleHttp(res,'ERROR_DELETE')
+};
+}
+
+
+const searchItem = async ({ params }: Request, res: Response) => {
+  try {
+    const { query, concept } = params;
+    console.log("query")
+
+    console.log(query)
+    console.log("concept")
+    console.log(concept)
+
+
+    const response = await searchProducts(query);
+    res.send(response);
   } catch (e) {
-    handleHttp(res,'ERROR_DELETE_ITEMS')
+    handleHttp(res,'ERROR_SEARCH')
 };
 };
 
-export {getItems, getItemById, createItem, updateItem, deleteItem }
-
-
+export { getItems, getItemById, createItem, updateItem, deleteItem, searchItem  }

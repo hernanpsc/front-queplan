@@ -1,7 +1,17 @@
 // <!----------------------Funcion VALOR DEL PLAN PREMEDIC start---------------------------->
 import * as functions from './functions';
 
-export function valorPremedic(aportesOS,coeficiente,numHijos,precioAdultos,preciohm_25,preciohm_1,id,con_afinidad,promocion){
+export function valor_Premedic(
+    aportesOS,
+    coeficiente,
+    numHijos,
+    precioAdultos,
+    preciohm_25,
+    preciohm_1,
+    id,
+    con_afinidad,
+    promocion,
+    group){
 
 let conPromo = con_afinidad;
 let hijos = numHijos;
@@ -9,7 +19,11 @@ let adultos = precioAdultos;
 let preciohm25 = preciohm_25;
 let preciohm1 = preciohm_1;
 let idprecio = id;
-
+if(group === 1 || group === 3 ){
+    hijos = 0;
+    preciohm1 = 0;
+    preciohm25 = 0;
+}
 let precios = {};
 let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])
 let array = [];
@@ -38,7 +52,7 @@ let array = [];
 
         //funcion para que impacten los descuentos y bonificaciones
         let precio = functions.final(aportesOS[0],descOS,precioTotal);
-         var plan = new Object();
+        var plan = new Object();
                         plan.item_id = _id;
                         plan.name = 'Premedic ' + nombre;
                         plan.precio = precio;
@@ -51,8 +65,8 @@ let array = [];
                     
                     }
     //	<!-----------------------Bucle PREMEDIC end------------------------>								
-    // // console.log( 'array PREMEDIC')	
-    // // console.log(array)							
+    // console.log( 'array PREMEDIC')	
+    // console.log(array)							
                     
     return array
 }			

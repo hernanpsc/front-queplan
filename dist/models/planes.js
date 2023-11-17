@@ -13,8 +13,7 @@ const planSchema = new mongoose_1.Schema({
     tags: [String],
     hijosSolos: Boolean,
     folletos: [String],
-    images: [String],
-    clinicas: [String],
+    images: [Object],
     attributes: [String],
     Cirugia_Estetica: Boolean,
     Cobertura_Nacional: Boolean,
@@ -26,6 +25,7 @@ const planSchema = new mongoose_1.Schema({
     valueSlide3: Number,
     valueSlide4: Number,
     aporteOS: Number,
+    clinicas: [Object] // Utiliza Clinicas como el tipo de objetos en el array
 });
 const PlanesModel = (0, mongoose_1.model)('planes', planSchema);
 exports.default = PlanesModel;

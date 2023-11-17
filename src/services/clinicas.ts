@@ -1,69 +1,83 @@
-import { Request, Response } from 'express';
-import { collections } from '../config/database';
-import * as mongodb from "mongodb";
+import mongoose from 'mongoose';
+import ClinicasModel from './../models/clinicas';
+import { Clinicas } from './../interfaces/clinicas';
+import { obtenerPlanesConClinicas } from './planes';
 
-const  getClinicas = async (req: Request, res: Response) => {
-    const  clinicas = await collections.clinicas?.find({}).toArray();
-    return clinicas
-  };
 
-const  getClinicaById = async ({params}: Request, res: Response) => {
-    const { id }=  params;
-    const query = { _id: new mongodb.ObjectId(id) };
-    const  clinica = await collections.clinicas?.findOne(query);
-    return clinica
-};
+let regiones: string[] = [];
+let clinicasPorRegiones: { [key: string]: Clinicas[] } = {};
 
-const  createClinica = async (req: Request, res: Response) => {
-    const clinica = req.body;
-      // Convierte el _id a ObjectId
-      if (clinica._id) {
-        clinica._id = new mongodb.ObjectId(clinica._id);
-      }
-    const result = await collections.clinicas?.insertOne (clinica);
-    if (result?.acknowledged) {
-      res.status(201).send(`Se creo una nueva clinica: ID ${result.insertedId}.`);
-  } else {
-      res.status(500).send("Falló crear una nueva clinica.");
+async function obtenerRegionesDisponibles() {
+  const regiones = await ClinicasModel.distinct('ubicacion.region');
+  return regiones;
+}
+
+async function organizarClinicasPorRegiones() {
+  regiones = await obtenerRegionesDisponibles();
+  
+  // Inicializa un objeto para cada región
+  for (const region of regiones) {
+    clinicasPorRegiones[region] = [];
   }
+
+  // Realiza una consulta a la base de datos para obtener todas las clínicas
+  const clinicas = await ClinicasModel.find({});
+  
+  // Organiza las clínicas por región
+  for (const clinica of clinicas) {
+    const region = clinica.ubicacion.region;
+    clinicasPorRegiones[region] = clinicasPorRegiones[region] || [];
+    clinicasPorRegiones[region].push(clinica);
+  }
+  return clinicasPorRegiones;
+}
+
+// Llama a la función para organizar las clínicas por regiones
+organizarClinicasPorRegiones();
+
+const createProduct = async (item: any) => {
+  const responseCreate = await ClinicasModel.create(item)
+  return responseCreate;
 };
+
+const getProducts = async () => {
+  console.log('hola getProducts clinicas')
+  const responseGet = await ClinicasModel.find({});
+  console.log('hola getProducts clinicas responseGet',responseGet )
+
+  return responseGet
+};
+
+const getProduct = async (id: string) => {
  
-const updateClinica = async (req: Request, res: Response) => {
-    const id = req?.params?.id;
-    const { _id, ...updatedClinica } = req.body; // Destructuración para eliminar el campo _id
-    const query = { _id: new mongodb.ObjectId(id) };
-    const result = await collections.clinicas?.replaceOne(query, updatedClinica); // Usa updatedClinica en lugar de req.body
-    if (result?.modifiedCount === 0) {
-      return res.status(404).send('clinica not found');
-    }
-    res.status(200).send(await collections.clinicas?.findOne(query));
+  
+  const responseGetOne = await ClinicasModel.findOne({_id:id})
+  
+  return responseGetOne
 };
 
-const  deleteClinica = async (req: Request, res: Response) => {
-    const id = req?.params?.id;
-    const query = { _id: new mongodb.ObjectId(id) };
-    const result = await collections.clinicas?.deleteOne(query);
-    if (result && result.deletedCount) {
-      res.status(202).send(`Clinica eliminada: ID ${id}`);
-  } else if (!result) {
-      res.status(400).send(`Falló eliminar clinica: ID ${id}`);
-  } else if (!result.deletedCount) {
-      res.status(404).send(`Fallo eliminar clinica: ID ${id}`);
-  }
+const updateProduct = async (id: string, data: any) => {
+  const responseUpdate = await ClinicasModel.findOneAndUpdate({_id:id},data,{new: true})
+  return responseUpdate
 };
 
-
-
-const searchClinicas = async (req: Request, res: Response) => {
-    const query = req.query.textSearch as string; // Asegúrate de que query es una cadena
-
-    // Realiza la búsqueda en la base de datos, por ejemplo, por nombre
-    const clinicas = await collections.clinicas?.find({
-      nombre: { $regex: query, $options: 'i' } as { $regex: string, $options: string },
-    }).toArray();
-
-    res.status(200).send(clinicas);
+const deleteProduct = async (id: string) => {
+  const responsedelete = await ClinicasModel.deleteOne({_id:id})
+  return responsedelete
 };
 
-export { getClinicas, getClinicaById, createClinica, updateClinica, deleteClinica, searchClinicas };
+const searchProducts = async (query: string) => {
+  // Realiza la búsqueda en la base de datos, por ejemplo, por nombre
+  const responseSearch = await ClinicasModel.find({
+      concept: { $regex: query, $options: 'i' } as { $regex: string, $options: string },
+  })
+  return responseSearch
+};
 
+const getPlanes = async () => {
+
+  const responseGet = await obtenerPlanesConClinicas();
+
+  return responseGet
+}; 
+export { createProduct, getProducts, getProduct, updateProduct, deleteProduct, searchProducts ,getPlanes};

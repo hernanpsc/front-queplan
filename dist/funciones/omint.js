@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.valorOmint = void 0;
 // <!----------------------Funcion VALOR DEL PLAN OMINT start----------------------------> 
 const functions = __importStar(require("./functions"));
-function valorOmint(aportesOS, edad_2, numHijos, numhijo_2, precio_titular, precio_conyuge, precio_hijo1, precio_hijo2, edad_ID1OMINT, conPromo, promocion, coeficiente) {
+function valorOmint(aportesOS, edad_2, num_Hijos, numhijo_2, precio_titular, precio_conyuge, precio_hijo1, precio_hijo2, edad_ID1OMINT, conPromo, promocion, coeficiente, group) {
     let edad2 = edad_2;
     let edadID1OMINT = edad_ID1OMINT;
     let precios = {};
@@ -38,6 +38,26 @@ function valorOmint(aportesOS, edad_2, numHijos, numhijo_2, precio_titular, prec
     let conyuge = precio_conyuge;
     let hijo_1 = precio_hijo1;
     let hijo_2 = precio_hijo2;
+    let numHijos = num_Hijos;
+    if (group === 1) {
+        hijos = 0;
+        numHijos = 0;
+        hijo_1 = 0;
+        hijo_2 = 0;
+        hijos = 0;
+        conyuge = 0;
+    }
+    else if (group === 2) {
+        conyuge = 0;
+    }
+    else if (group === 3) {
+        hijos = 0;
+        numHijos = 0;
+        hijo_1 = 0;
+        hijo_2 = 0;
+        hijos = 0;
+    }
+    else { }
     let array = [];
     if (edad2 > 17) {
         precio_adultos_Omint = Object.entries(conyuge).reduce((acc, [key, value]) => // matrimonio
@@ -102,8 +122,6 @@ function valorOmint(aportesOS, edad_2, numHijos, numhijo_2, precio_titular, prec
         array.push(plan);
     }
     //	<!-----------------------Bucle OMINT end------------------------>								
-    // console.log( 'array OMINT')
-    // console.log(array)													
     return array;
 }
 exports.valorOmint = valorOmint;

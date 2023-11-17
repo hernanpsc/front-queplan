@@ -23,9 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.valorAvalian = void 0;
+exports.valor_Avalian = void 0;
 const functions = __importStar(require("./functions"));
-function valorAvalian(aporte_OS, edad_1, edad_2, numkids, numhijo2, precioTitularMedife, precioHijo1Medife, precioHijo20Medife, precioHijo25Medife, coeficienteMedife, con_afinidad, promocion) {
+function valor_Avalian(aporte_OS, edad_1, edad_2, numkids, numhijo2, precioTitularMedife, precioHijo1Medife, precioHijo20Medife, precioHijo25Medife, coeficienteMedife, con_afinidad, promocion) {
 }
-exports.valorAvalian = valorAvalian;
+exports.valor_Avalian = valor_Avalian;
 //# sourceMappingURL=avalian.js.map

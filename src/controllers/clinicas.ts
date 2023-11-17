@@ -3,33 +3,35 @@ import { collections } from '../config/database';
 import { handleHttp } from "../utils/error.handle";
 
 import * as mongodb from "mongodb";
-import {  getClinicas, getClinicaById, createClinica, updateClinica, deleteClinica, searchClinicas } from "../services/clinicas";
+import {  createProduct, getProducts, getProduct, updateProduct, deleteProduct, searchProducts} from "../services/clinicas";
 
 
 
 
 const  getItems = async (req: Request, res: Response) => {
+  console.log('hola getItems clinicas')
   try {
-    const  response = await getClinicas(req,res);
+    const  response = await getProducts();
     res.status(200).send(response);
   } catch (e) {
     handleHttp(res,'ERROR_GET_CLINICAS')
   }
 };
 
-const  getItemById = async (req: Request, res: Response) => {
+const  getItemById = async ({ params }:Request,res:Response) => {
   try {
-    const  response = await getClinicaById(req,res);
+    const { id } = params
+    const  response = await getProduct(id);
     const data = response ? response : "NOT_FOUND"
     res.status(200).send(data);
   }  catch (e) {
-    handleHttp(res,'ERROR_GET_CLINICA')
+    handleHttp(res,'ERROR_GET_uno')
   }
 };
 
 const  createItem = async (req: Request, res: Response) => {
   try {
-    const responseItem = await createClinica(req,res);
+    const responseItem = await createProduct(req);
         res.send(responseItem);
 
   } catch (e) {
@@ -37,31 +39,41 @@ const  createItem = async (req: Request, res: Response) => {
   }
 };
  
-const updateItem = async (req: Request, res: Response) => {
+const updateItem = async ({ params, body }: Request, res: Response) => {
   try {
-    const response = await updateClinica( req,res );
-    res.send( response )
-  } catch (e) {
-    handleHttp(res,'ERROR_UPDATE_CLINICA')
-  }
+    const { id }  = params;
+  const response = await updateProduct(  id, body );
+  res.send( response )
+} catch (e) {
+  handleHttp(res,'ERROR_UPDATE')
+}
 };
 
-const  deleteItem = async (req: Request, res: Response) => {
+const  deleteItem = async ({ params }: Request, res: Response) => {
   try {
-    const response = await deleteClinica(req,res);
-    res.send(response)
-  } catch (e) {
-    handleHttp(res,'ERROR_DELETE_CLINICA')
+    const { id } = params
+   const response = await deleteProduct(id);
+   res.send(response)
+ } catch (e) {
+   handleHttp(res,'ERROR_DELETE')
 };
 }
 
 
-const searchItem = async (req: Request, res: Response) => {
+const searchItem = async ({ params }: Request, res: Response) => {
   try {
-    const response = await searchClinicas(req,res);
+    const { query, concept } = params;
+    console.log("query")
+
+    console.log(query)
+    console.log("concept")
+    console.log(concept)
+
+
+    const response = await searchProducts(query);
     res.send(response);
   } catch (e) {
-    handleHttp(res,'ERROR_SEARCH_CLINICA')
+    handleHttp(res,'ERROR_SEARCH')
 };
 };
 
