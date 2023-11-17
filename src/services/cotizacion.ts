@@ -1,11 +1,9 @@
 import { Request, Response } from 'express';
 import * as servicios from './index'; 
 import * as functions from '../funciones';
-import {
- 
-  getProduct,
- 
-} from './precios'
+import PreciosModel from '../models/precios'; 
+
+import { getProduct } from './precios'
 
 import { handleHttp } from '../utils/error.handle';
 import { Document } from 'mongoose';
@@ -15,26 +13,26 @@ import PlanesModel from './../models/planes';
 import EmpresaModel from './../models/empresas';
 export const  calcularPrecio = async (req: Request, res: Response) => {
  try{
-console.log(req.body.grupo);
-console.log(req.body.empresa_prepaga);
-console.log(req.body.edad_1);
-console.log(req.body.edad_2);    
-console.log(req.body.numkids); 
-console.log(req.body.plan_type);
-console.log(req.body.tipo);
-console.log(req.body.agree);
-console.log(req.body.aporteOS);
-console.log(req.body.sueldo);
-console.log(req.body.aporte);
-console.log(req.body.monoadic);
-console.log(req.body.cantAport);
-console.log(req.body.afinidad);
-console.log(req.body.bonAfinidad);
-console.log(req.body.supras);
-console.log(req.body.segvida);
-console.log(req.body.segvida1);
-console.log(req.body.region);
-console.log(req.body.coeficientes);
+// console.log(req.body.grupo);
+// console.log(req.body.empresa_prepaga);
+// console.log(req.body.edad_1);
+// console.log(req.body.edad_2);    
+// console.log(req.body.numkids); 
+// console.log(req.body.plan_type);
+// console.log(req.body.tipo);
+// console.log(req.body.agree);
+// console.log(req.body.aporteOS);
+// console.log(req.body.sueldo);
+// console.log(req.body.aporte);
+// console.log(req.body.monoadic);
+// console.log(req.body.cantAport);
+// console.log(req.body.afinidad);
+// console.log(req.body.bonAfinidad);
+// console.log(req.body.supras);
+// console.log(req.body.segvida);
+// console.log(req.body.segvida1);
+// console.log(req.body.region);
+// console.log(req.body.coeficientes);
 
 // const group = req.body.grupo;
 
@@ -130,7 +128,7 @@ const grupo = calcularGrupo(edad_1, edad_2, numkids, group);
 
 // Ahora puedes usar la variable 'grupo' en el resto de tu código
 
-console.log('esta es la variable grupo ' , grupo)
+// console.log('esta es la variable grupo ' , grupo)
 
   const porcentaje: { [nombreEmpresa: string]: number } = {};
 
@@ -145,25 +143,25 @@ console.log('esta es la variable grupo ' , grupo)
     let gen = grupo[4]; //checked
     let grupoFam = grupo[5];
 
-console.log('grupoFam')
-console.log(grupoFam)
+// console.log('grupoFam')
+// console.log(grupoFam)
 
     let tipo_IngresoPDMI = functions.tipoAsociado(tipo);
-console.log(tipo_IngresoPDMI)
+// console.log(tipo_IngresoPDMI)
     const aporte_OS = [tipo_IngresoPDMI,beneficiariosF184,eleccionSueldoOAporte,sueldoSueldoOAporte,categoria_Mono,arrayValorMonotXCategoria]
-console.log(tipo_IngresoPDMI)
+// console.log(tipo_IngresoPDMI)
 
 // <! ----------SANCOR---------------------------------------------------->
 let idSancor = functions.productID(edad_1, tipo, gen, 'titular', numHijos,group);
 let idSancor1 = functions.productID(edad_2, tipo, gen, 'conyuge', numHijos,group);
-console.log(idSancor1)
+// console.log(idSancor1)
 let idSancorConyuge: string
 if (grupoFam >= 3) {
   idSancorConyuge = idSancor1[1];
-console.log(idSancorConyuge)
+// console.log(idSancorConyuge)
 }else {idSancorConyuge
   =idSancor[0]}
-console.log(idSancorConyuge)
+// console.log(idSancorConyuge)
 // <! -----------------------------OMINT---------------------------------------------------->
 let idOmint =  functions.productIdOmint(edad_1, tipo, 'titular',group);
 // <! -----------------------------GALENO--------------------------------------------------->
@@ -194,7 +192,7 @@ const empresasConCoeficientes = companies.map(empresa => {
   return { [empresa.name]: empresa.factores.coeficiente };
 });
 
-console.log('Coeficientes de todas las empresas:', empresasConCoeficientes);
+// console.log('Coeficientes de todas las empresas:', empresasConCoeficientes);
 // Acceder al coeficiente de una empresa en particular por su nombre
 async function buscar_mi_coeficiente(type:string){
 const coeficiente = empresasConCoeficientes.find(empresa => empresa[type]);
@@ -269,11 +267,13 @@ let priceAdultosPr  = await getProduct('premedic' + functions.productIdPremedic(
    let precioTitular  = await getProduct(idSancor[0]);
    let precioConyuge  = await getProduct(idSancorConyuge);
    let priceGrupoGaleno  = await getProduct('galeno' + idGaleno);
-
-
-   priceAdultosPr =  priceAdultosPr.toObjet();
-   pricePrHijoMenir25 = pricePrHijoMenir25.toObjet();
-   pricePrHijoMenir1 =  pricePrHijoMenir1.toObjet();
+   
+   console.log('priceAdultosPr  ', priceAdultosPr);
+   console.log('pricePrHijoMenir25  ', pricePrHijoMenir25);
+   console.log('pricePrHijoMenir1  ', pricePrHijoMenir1);
+  //  priceAdultosPr =  priceAdultosPr.toObject();
+  //  pricePrHijoMenir25 = pricePrHijoMenir25.toObjet();
+  //  pricePrHijoMenir1 =  pricePrHijoMenir1.toObjet();
 
    console.log('priceAdultosPr  ', priceAdultosPr.precios);
    console.log('pricePrHijoMenir25  ', pricePrHijoMenir25.precios);
@@ -311,10 +311,10 @@ console.log(valor_Premedic)
 
 
 // Use the toObject method to convert Mongoose Documents to plain JavaScript objects
-precio1Hijo = precio1Hijo.toObject();
-precio2Hijo = precio2Hijo.toObject();
-precioTitular = precioTitular.toObject();
-precioConyuge = precioConyuge.toObject();
+// precio1Hijo = precio1Hijo.toObject();
+// precio2Hijo = precio2Hijo.toObject();
+// precioTitular = precioTitular.toObject();
+// precioConyuge = precioConyuge.toObject();
 console.log('precio1Hijo.precios:', precio1Hijo.precios);
 console.log('precio2Hijo.precios:', precio2Hijo.precios);
 console.log('precioTitular.precios:', precioTitular.precios);
@@ -349,10 +349,10 @@ console.log(valor_SanCor)
 
 // <! -----------------------------VALOR PRECIO OMINT START------------------------------------------------------>
 
-precio_titular_Omint = precio_titular_Omint.toObject();
-precio_conyuge_Omint = precio_conyuge_Omint.toObject();
-precio_hijo1_Omint = precio_hijo1_Omint.toObject();
-precio_hijo2_Omint = precio_hijo2_Omint.toObject();
+// precio_titular_Omint = precio_titular_Omint.toObject();
+// precio_conyuge_Omint = precio_conyuge_Omint.toObject();
+// precio_hijo1_Omint = precio_hijo1_Omint.toObject();
+// precio_hijo2_Omint = precio_hijo2_Omint.toObject();
 
 console.log('precio_titular_Omint',precio_titular_Omint.precios);
 console.log('precio_conyuge_Omint',precio_conyuge_Omint.precios);
@@ -380,8 +380,10 @@ let valor_OMINT = functions.valorOmint(
 
 // <! -----------------------------VALOR PRECIO OMINT END---------------------------------------------------->
 // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
-priceGrupoGaleno = priceGrupoGaleno.toObjet();
-console.log('priceGrupoGaleno  ',priceGrupoGaleno.precios )
+
+
+// ...
+
 
 
 let valor_Galeno = functions.valor_Galeno(
@@ -396,10 +398,10 @@ let valor_Galeno = functions.valor_Galeno(
 
 // <! -----------------------------VALOR PRECIO GALENO END----------------------------------prices------------------>
 // <! -----------------------------VALOR PRECIO GALENO START---------------------------------------------------->
-precioTitularSwiss = precioTitularSwiss.toObjet();
-precioConyugeSwiss = precioConyugeSwiss.toObjet();
-precioHijo1Swiss = precioHijo1Swiss.toObjet();
-precioHijo2Swiss = precioHijo2Swiss.toObjet();
+// precioTitularSwiss = precioTitularSwiss.toObjet();
+// precioConyugeSwiss = precioConyugeSwiss.toObjet();
+// precioHijo1Swiss = precioHijo1Swiss.toObjet();
+// precioHijo2Swiss = precioHijo2Swiss.toObjet();
 
 console.log('precioTitularSwiss  ',precioTitularSwiss.precios);
 console.log('precioConyugeSwiss  ',precioConyugeSwiss.precios);
@@ -460,9 +462,9 @@ console.log(valor_Swiss)
     return empresas;
   }
   empresas = await obtenerEmpresasDisponibles();
-console.log('empresas 297')
+// console.log('empresas 297')
 
-console.log(empresas)
+// console.log(empresas)
 
   
 // Ahora puedes acceder a los resultados por empresa
@@ -482,7 +484,7 @@ console.log(empresas)
     planesPorEmpresa[empresa] = planesPorEmpresa[empresa] || [];
     planesPorEmpresa[empresa].push(plan);
   }
-console.log(planesPorEmpresa); 
+// console.log(planesPorEmpresa); 
 
 
 const planesSwiss = combinedPlans.filter((plan: { empresa: string; }) => plan.empresa === 'Swiss Medical');
