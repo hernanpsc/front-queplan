@@ -7,6 +7,8 @@ import { Planes } from "../interfaces/planes";
 import { Clinicas } from "../interfaces/clinicas";
 import { Precios } from "../interfaces/precios";
 import { Posts } from "../interfaces/posts";
+import { Cotizaciones } from "../interfaces/cotizaciones";
+
 
 export const collections: {
     employees?: mongodb.Collection<Employee>,
@@ -15,6 +17,7 @@ export const collections: {
     clinicas?: mongodb.Collection<Clinicas>,
     precios?: mongodb.Collection<Precios>,
     posts?: mongodb.Collection<Posts>,
+    cotizaciones?: mongodb.Collection<Cotizaciones>
 } = {};
 
 async function dbConnect(): Promise<void> {
@@ -29,6 +32,7 @@ async function dbConnect(): Promise<void> {
     const db1 = client.db("planes");
     const db2 = client.db("precios");
     const db3 = client.db("posts");
+    const db4 = client.db("cotizaciones");
 
     // await applySchemaValidation(db);
     // await applySchemasValidation(db1);
@@ -51,6 +55,9 @@ async function dbConnect(): Promise<void> {
 
     const postsCollection = db3.collection<Posts>("posts"); 
     collections.posts = postsCollection;
+
+    const cotizacionesCollection = db1.collection<Cotizaciones>("cotizaciones"); 
+    collections.cotizaciones = cotizacionesCollection;
 }
 
 export default dbConnect;

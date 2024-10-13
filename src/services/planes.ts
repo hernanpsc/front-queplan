@@ -63,7 +63,7 @@ const getProduct = async (id: string) => {
 
     
     const responseGetOne = await PlanesModel.findOne({_id:id})
-    console.log( ' responseGetOne : ', id)
+    // console.log( ' responseGetOne : ', id)
 
     return responseGetOne
 };

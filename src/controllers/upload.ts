@@ -9,9 +9,9 @@ import { Storage } from "../interfaces/storage.interface";
 const getFile = async (req: RequestExt, res: Response) => {
   try {
     const { user, file } = req;
-    console.log(user)
+    // console.log(user)
 
-    console.log(file)
+    // console.log(file)
     const dataToRegister: Storage  = {
       filename: `${file?.filename}`,
       idUser: `${user?.id}`,

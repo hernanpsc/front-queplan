@@ -9,7 +9,7 @@ import {  createProduct, getProducts, getProduct, updateProduct, deleteProduct, 
 
 
 const  getItems = async (req: Request, res: Response) => {
-  console.log('hola getItems clinicas')
+  // console.log('hola getItems clinicas')
   try {
     const  response = await getProducts();
     res.status(200).send(response);

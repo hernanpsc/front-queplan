@@ -10,8 +10,8 @@
 			// console.log(plan)
 	
 		  const matchingPrecio = precios.find((precio) => precio.item_id === plan.item_id);
-		//   console.log(plan.item_id);
-		//   console.log(precios.item_id);
+		//   // console.log(plan.item_id);
+		//   // console.log(precios.item_id);
 	
 	
 		  if (matchingPrecio) {

@@ -33,6 +33,50 @@ app.use(cors({
     allowedHeaders: ['Authorization', 'Content-Type']
 
   }));
+  app.get("/",(req,res) => {
+    const htmlResponse =`
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página Web</title>
+    <style>
+        /* Estilos CSS van aquí */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        /* Agrega más estilos según tus necesidades */
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Bienvenido a mi página web</h1>
+</header>
+
+<main>
+    <p>Aquí puedes empezar a escribir el contenido de tu página web.</p>
+</main>
+
+<footer>
+    <p>© 2024 Mi Página Web</p>
+</footer>
+
+</body>
+</html>
+
+    `;
+    res.send(htmlResponse)
+  });
 app.use(express.json())
 app.use(router);
 app.use(bodyParser.json({ limit: '50mb' })); // Puedes ajustar el límite según tus necesidades
@@ -45,3 +89,4 @@ dbConnect().then(() => {
     });
   })
   .catch(error => console.error(error));
+export default app

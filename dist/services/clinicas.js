@@ -36,9 +36,9 @@ const createProduct = async (item) => {
 };
 exports.createProduct = createProduct;
 const getProducts = async () => {
-    console.log('hola getProducts clinicas');
+    // console.log('hola getProducts clinicas');
     const responseGet = await clinicas_1.default.find({});
-    console.log('hola getProducts clinicas responseGet', responseGet);
+    // console.log('hola getProducts clinicas responseGet', responseGet);
     return responseGet;
 };
 exports.getProducts = getProducts;
@@ -48,6 +48,13 @@ const getProduct = async (id) => {
 };
 exports.getProduct = getProduct;
 const updateProduct = async (id, data) => {
+    console.log("id: string : ", id, "data: any ", data);
+    // Manejar valores null
+    for (const key in data) {
+        if (data[key] === null) {
+            delete data[key]; // Eliminar propiedades con valor null
+        }
+    }
     const responseUpdate = await clinicas_1.default.findOneAndUpdate({ _id: id }, data, { new: true });
     return responseUpdate;
 };

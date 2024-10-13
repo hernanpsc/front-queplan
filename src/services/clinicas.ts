@@ -36,14 +36,15 @@ async function organizarClinicasPorRegiones() {
 organizarClinicasPorRegiones();
 
 const createProduct = async (item: any) => {
+  console.log("Nueva clinica :", item)
   const responseCreate = await ClinicasModel.create(item)
   return responseCreate;
 };
 
 const getProducts = async () => {
-  console.log('hola getProducts clinicas')
+  // console.log('hola getProducts clinicas')
   const responseGet = await ClinicasModel.find({});
-  console.log('hola getProducts clinicas responseGet',responseGet )
+  // console.log('hola getProducts clinicas responseGet',responseGet )
 
   return responseGet
 };
@@ -57,6 +58,13 @@ const getProduct = async (id: string) => {
 };
 
 const updateProduct = async (id: string, data: any) => {
+  console.log("id: string : ",id, "data: any ", data)
+   // Manejar valores null
+   for (const key in data) {
+    if (data[key] === null) {
+      delete data[key]; // Eliminar propiedades con valor null
+    }
+  }
   const responseUpdate = await ClinicasModel.findOneAndUpdate({_id:id},data,{new: true})
   return responseUpdate
 };

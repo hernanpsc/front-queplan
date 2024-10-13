@@ -4,7 +4,7 @@ exports.searchItem = exports.deleteItem = exports.updateItem = exports.createIte
 const error_handle_1 = require("../utils/error.handle");
 const clinicas_1 = require("../services/clinicas");
 const getItems = async (req, res) => {
-    console.log('hola getItems clinicas');
+    // console.log('hola getItems clinicas');
     try {
         const response = await (0, clinicas_1.getProducts)();
         res.status(200).send(response);
