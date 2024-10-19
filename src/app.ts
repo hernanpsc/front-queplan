@@ -17,7 +17,11 @@ const whitelist = [
     'http://localhost:4500',
     'https://sakai-ng-front.vercel.app',
     'https://soloclinic.vercel.app',
-    'https://front-prepagas.vercel.app'
+    'https://front-prepagas.vercel.app',
+    'https://n8n.tuchat.com.ar',
+    'https://n8nwebhook.tuchat.com.ar',
+    'https://type.tuchat.com.ar',
+    'https://typeapi.tuchat.com.ar'
   ];
   const portRegex = /^http:\/\/localhost(?::\d+)?$/;
   
