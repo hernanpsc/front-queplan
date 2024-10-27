@@ -8,25 +8,30 @@ export const createImage = (req: Request, res: Response) => {
     console.log('htmlConvert: arrancando');
 
     // Obtener los datos del cuerpo de la solicitud
-    const { items } = req.body;
-
+    // const { items } = req.body;
+    const products = [
+        { "name": "Swiss Medical SMG02", "precio": 42331 },
+        { "name": "Producto 2", "precio": 32000 },
+        { "name": "Producto 3", "precio": 45000 },
+        { "name": "Producto 4", "precio": 51000 }
+    ];
     // Generar HTML dinámico
-    const htmlContent = `
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <title>Lista de Items</title>
-    </head>
-    <body>
-        <h1>Lista de Items</h1>
-        <ul>
-            ${items.map((item: any) => `<li>${item}</li>`).join('')}
-        </ul>
-    </body>
-    </html>
-    `;
-
+     // Generar HTML dinámico
+     const htmlContent = `
+     <!DOCTYPE html>
+     <html lang="es">
+     <head>
+         <meta charset="UTF-8">
+         <title>Lista de Productos</title>
+     </head>
+     <body>
+         <h1>Lista de Productos</h1>
+         <ul>
+             ${products.map(product => `<li>${product.name}: $${product.precio}</li>`).join('')}
+         </ul>
+     </body>
+     </html>
+     `;
     // Ruta temporal para guardar el HTML
     const htmlFilePath = path.join(__dirname, '../controllers', 'temp.html');
     const outputImagePath = path.join(__dirname, '../controllers', 'simple.png');

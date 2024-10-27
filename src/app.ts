@@ -41,7 +41,9 @@ app.use(cors({
     res.setHeader("Content-Security-Policy", "default-src 'self'; connect-src 'self' http://localhost:5200");
     next();
 });
-
+app.get("/test", (req, res) => {
+  res.send("Esta es una prueba.");
+});
   
   app.get("/",(req,res) => {
     const htmlResponse =`
