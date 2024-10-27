@@ -7,7 +7,10 @@ const router = Router();
 router.use(express.json());
 
 
-router.get('/', (req, res) => { createImage(req, res); }); // Nueva ruta
-
+// Ruta que genera la imagen
+router.get('/', (req, res) => {
+    console.log('Accediendo a la ruta /'); // Agregado: Log en la consola
+    createImage(req, res);
+}); 
 
 export { router };
