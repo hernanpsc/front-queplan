@@ -7,7 +7,7 @@ import dbConnect from "./config/mongo";
 
 
 import bodyParser from 'body-parser';
-
+import path from 'path';
 const PORT = process.env.PORT || 3001;
 
 const whitelist = [
@@ -37,22 +37,25 @@ app.use(cors({
     allowedHeaders: ['Authorization', 'Content-Type']
 
   }));
+  
   app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", 
-        "default-src *; " +
-        "img-src *; " +
-        "script-src *; " +
-        "style-src *; " +
-        "connect-src *"
+        "default-src 'self'; " +
+        "img-src 'self' https://cotizador.tuchat.com.ar http://localhost:5200; " +
+        "script-src 'self'; " +
+        "style-src 'self' 'unsafe-inline'; " +
+        "connect-src 'self'; " +
+        "font-src 'self';"  // Permitir fuentes del mismo origen
     );
     next();
 });
 
-
 app.get("/test", (req, res) => {
   res.send("Esta es una prueba.");
 });
-  
+
+ app.use(express.static(path.join(__dirname, 'public')));
+  // Servir archivos estáticos desde la carpeta "public"
   app.get("/",(req,res) => {
     const htmlResponse =`
     <!DOCTYPE html>

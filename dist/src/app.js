@@ -9,6 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const routes_1 = require("./routes");
 const mongo_1 = __importDefault(require("./config/mongo"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const path_1 = __importDefault(require("path"));
 const PORT = process.env.PORT || 3001;
 const whitelist = [
     'http://localhost:4200',
@@ -32,12 +33,20 @@ app.use((0, cors_1.default)({
     allowedHeaders: ['Authorization', 'Content-Type']
 }));
 app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "default-src '*'; img-src '*' https://cotizador.tuchat.com.ar; script-src '*'; style-src '*'; connect-src '*' http://localhost:5200");
-    next(); // Asegúrate de llamar a next() con paréntesis
+    res.setHeader("Content-Security-Policy", "default-src 'self'; " +
+        "img-src 'self' https://cotizador.tuchat.com.ar http://localhost:5200; " +
+        "script-src 'self'; " +
+        "style-src 'self' 'unsafe-inline'; " +
+        "connect-src 'self'; " +
+        "font-src 'self';" // Permitir fuentes del mismo origen
+    );
+    next();
 });
 app.get("/test", (req, res) => {
     res.send("Esta es una prueba.");
 });
+app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
+// Servir archivos estáticos desde la carpeta "public"
 app.get("/", (req, res) => {
     const htmlResponse = `
     <!DOCTYPE html>
