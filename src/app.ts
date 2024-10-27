@@ -38,9 +38,16 @@ app.use(cors({
 
   }));
   app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "default-src '*'; img-src '*' https://cotizador.tuchat.com.ar; script-src '*'; style-src '*'; connect-src '*' http://localhost:5200");
-    next(); // Asegúrate de llamar a next() con paréntesis
+    res.setHeader("Content-Security-Policy", 
+        "default-src *; " +
+        "img-src *; " +
+        "script-src *; " +
+        "style-src *; " +
+        "connect-src *"
+    );
+    next();
 });
+
 
 app.get("/test", (req, res) => {
   res.send("Esta es una prueba.");
