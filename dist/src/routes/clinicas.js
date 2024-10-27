@@ -29,13 +29,10 @@ const express = __importStar(require("express"));
 const clinicas_1 = require("../controllers/clinicas");
 const router = (0, express_1.Router)();
 exports.router = router;
-router.get('/', (req, res) => {
-    res.send('Hello from the HTML converter!');
-});
 router.use(express.json());
-// router.get('/',(req, res) => { getItems(req, res);});
+router.get('/', (req, res) => { (0, clinicas_1.getItems)(req, res); });
 router.get('/:id', (req, res) => { (0, clinicas_1.getItemById)(req, res); });
-// router.post('/', (req, res) => {createItem(req, res ) });
+router.post('/', (req, res) => { (0, clinicas_1.createItem)(req, res); });
 router.put('/:id', (req, res) => { (0, clinicas_1.updateItem)(req, res); });
 router.delete('/:id', (req, res) => { (0, clinicas_1.deleteItem)(req, res); });
 router.get('/search', (req, res) => {

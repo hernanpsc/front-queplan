@@ -26,19 +26,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = require("express");
 const express = __importStar(require("express"));
-const clinicas_1 = require("../controllers/clinicas");
+const htmlconverter_1 = require("../controllers/htmlconverter");
 const router = (0, express_1.Router)();
 exports.router = router;
-router.get('/', (req, res) => {
-    res.send('Hello from the HTML converter!');
-});
 router.use(express.json());
-// router.get('/',(req, res) => { getItems(req, res);});
-router.get('/:id', (req, res) => { (0, clinicas_1.getItemById)(req, res); });
-// router.post('/', (req, res) => {createItem(req, res ) });
-router.put('/:id', (req, res) => { (0, clinicas_1.updateItem)(req, res); });
-router.delete('/:id', (req, res) => { (0, clinicas_1.deleteItem)(req, res); });
-router.get('/search', (req, res) => {
-    (0, clinicas_1.searchItem)(req, res);
+// Ruta que genera la imagen
+router.get('/', (req, res) => {
+    console.log('Accediendo a la ruta /'); // Agregado: Log en la consola
+    (0, htmlconverter_1.createImage)(req, res);
 });
 //# sourceMappingURL=htmlconverter.js.map
