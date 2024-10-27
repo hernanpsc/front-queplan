@@ -32,9 +32,10 @@ app.use((0, cors_1.default)({
     allowedHeaders: ['Authorization', 'Content-Type']
 }));
 app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "default-src 'self'; connect-src 'self' http://localhost:5200");
+    res.setHeader("Content-Security-Policy", "default-src 'self'; img-src 'self' https://cotizador.tuchat.com.ar; script-src 'self'; style-src 'self'; connect-src 'self' http://localhost:5200");
     next();
 });
+
 app.get("/", (req, res) => {
     const htmlResponse = `
     <!DOCTYPE html>
