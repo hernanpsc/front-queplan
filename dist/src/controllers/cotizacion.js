@@ -6,6 +6,7 @@ const error_handle_1 = require("../utils/error.handle");
 const getPrecios = async (fromCotizar, res) => {
     try {
         const response = await (0, cotizacion_1.calcularPrecio)(fromCotizar, res);
+        console.log('controlador fromCotizar :', fromCotizar);
         res.send(response);
     }
     catch (e) {

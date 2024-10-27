@@ -7,10 +7,10 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
-        "baseUrl": ".",
+        "baseUrl": ".",  // Asegúrate de que este campo esté presente
         "allowJs": true,
         "paths": {
-            "*": ["node_modules/*"]
+            "*": ["node_modules/*"] // Esta línea está correcta
         },
         "types": [
             "node",
@@ -22,7 +22,10 @@
     },
     "include": [
         "src/**/*",
-        "./api/*.ts"
+        "api/**/*.ts"  // Esto asegura que incluya todos los archivos .ts en la carpeta api
+    ],
+    "exclude": [
+        "node_modules",  // Para evitar compilar la carpeta node_modules
+        "dist"           // Para evitar compilar la carpeta de salida
     ]
-    
 }

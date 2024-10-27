@@ -37,6 +37,12 @@ app.use(cors({
     allowedHeaders: ['Authorization', 'Content-Type']
 
   }));
+  app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; connect-src 'self' http://localhost:5200");
+    next();
+});
+
+  
   app.get("/",(req,res) => {
     const htmlResponse =`
     <!DOCTYPE html>

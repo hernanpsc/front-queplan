@@ -17,7 +17,11 @@ const whitelist = [
     'http://localhost:4500',
     'https://sakai-ng-front.vercel.app',
     'https://soloclinic.vercel.app',
-    'https://front-prepagas.vercel.app'
+    'https://front-prepagas.vercel.app',
+    'https://n8n.tuchat.com.ar',
+    'https://n8nwebhook.tuchat.com.ar',
+    'https://type.tuchat.com.ar',
+    'https://typeapi.tuchat.com.ar'
 ];
 const portRegex = /^http:\/\/localhost(?::\d+)?$/;
 const filteredWhitelist = whitelist.filter((origin) => portRegex.test(origin));
@@ -27,6 +31,10 @@ app.use((0, cors_1.default)({
     // origin: filteredWhitelist,
     allowedHeaders: ['Authorization', 'Content-Type']
 }));
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; connect-src 'self' http://localhost:5200");
+    next();
+});
 app.get("/", (req, res) => {
     const htmlResponse = `
     <!DOCTYPE html>

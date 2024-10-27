@@ -233,10 +233,10 @@ console.log(idSancor1)
 // // { variable: 'idPrevencion', id: idPrevencion}
 //  ];  
 //  for (const query of productQueries) {
-console.log(query.id)
+// console.log(query.id)
 
 //    const result = await fetchProductPrice(query.id);
-console.log(result)
+// console.log(result)
 
 //    prices[query.variable] = result;
 //  }
@@ -244,7 +244,7 @@ console.log(result)
 // }
 
 //    const prices = await fetchPrices();
-console.log(' prices ' ,prices)
+// console.log(' prices ' ,prices)
 
 // <! -----------------------------ID GALENO START---------------------------------------------------->
 // <! -----------------------------ID GALENO END---------------------------------------------------->
@@ -426,7 +426,7 @@ console.log('valor_Swiss')
 console.log(valor_Swiss)
 
 // for ( let i=0 ; i < prices.length ; i++){
-console.log(prices[i])
+// console.log(prices[i])
 
 // }
 
@@ -468,7 +468,7 @@ console.log(empresas)
 
   
 // Ahora puedes acceder a los resultados por empresa
-console.log(resultados['GBA-Norte']);
+// console.log(resultados['GBA-Norte']);
 
 // Combinar los planes con precioCalculado
 
