@@ -4,6 +4,7 @@ FROM node:18-slim
 RUN apt-get update && apt-get install -y \
     wget \
     ca-certificates \
+    bzip2 \
     fonts-liberation \
     libappindicator3-1 \
     libatk-bridge2.0-0 \
@@ -17,15 +18,19 @@ RUN apt-get update && apt-get install -y \
     libxcomposite1 \
     libxdamage1 \
     libxrandr2 \
+    libfontconfig1 \
     x11-utils \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
+
 # Establecer el directorio de trabajo
 WORKDIR /app
 
 # Copiar archivos de configuración y dependencias
 COPY package*.json ./
-RUN npm install
+
+# Limpiar caché de npm y luego instalar dependencias
+RUN npm cache clean --force && npm install
 
 # Copiar el resto de la aplicación
 COPY . .
@@ -38,6 +43,3 @@ EXPOSE 5200
 
 # Comando para iniciar la aplicación al ejecutar el contenedor
 CMD ["pm2-runtime", "dist/app.js"]
-
-
-
