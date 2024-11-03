@@ -25,10 +25,15 @@ async function organizarClinicasPorRegiones() {
   
   // Organiza las clínicas por región
   for (const clinica of clinicas) {
-    const region = clinica.ubicacion.region;
-    clinicasPorRegiones[region] = clinicasPorRegiones[region] || [];
-    clinicasPorRegiones[region].push(clinica);
+    // Verifica que 'ubicacion' y 'region' existan antes de acceder
+    const region = clinica.ubicacion?.region; // Uso del operador de encadenamiento opcional
+
+    // Asegúrate de que region no sea undefined
+    if (region && clinicasPorRegiones.hasOwnProperty(region)) {
+      clinicasPorRegiones[region].push(clinica);
+    }
   }
+
   return clinicasPorRegiones;
 }
 

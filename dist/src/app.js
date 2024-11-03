@@ -10,7 +10,9 @@ const routes_1 = require("./routes");
 const mongo_1 = __importDefault(require("./config/mongo"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const path_1 = __importDefault(require("path"));
+const os = require('os');
 const PORT = process.env.PORT || 3001;
+const appip = os.networkInterfaces().en0[2].address;
 const whitelist = [
     'http://localhost:4200',
     'http://localhost:4300',

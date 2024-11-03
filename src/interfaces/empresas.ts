@@ -5,7 +5,7 @@ import * as mongodb from "mongodb";
 export interface Empresa {
 _id?: mongodb.ObjectId;
 item_id?:string,
-name?: string;
+name?: string | undefined;
 planes?:[],
 lineas?:[],
 ubicacion?: MiUbicacion;

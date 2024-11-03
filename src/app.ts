@@ -4,11 +4,16 @@ import express from "express";
 import cors from "cors";
 import { router } from "./routes"
 import dbConnect from "./config/mongo";
-
-
 import bodyParser from 'body-parser';
 import path from 'path';
+
 const PORT = process.env.PORT || 3001;
+
+const os = require('os');
+const networkInterfaces = os.networkInterfaces();
+const ipv6Address = networkInterfaces["vEthernet (Default Switch)"][0].address;
+const appaddress = 'http://['+ipv6Address+']:'+PORT+'/';
+
 
 const whitelist = [
     'http://localhost:4200',
@@ -54,7 +59,7 @@ app.get("/test", (req, res) => {
   res.send("Esta es una prueba.");
 });
 
- app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, 'public')));
   // Servir archivos estáticos desde la carpeta "public"
   app.get("/",(req,res) => {
     const htmlResponse =`
@@ -108,6 +113,8 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 dbConnect().then(() => {
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:` + PORT + `...`);
+      console.log(`Web application public URL :  ` + appaddress);
+
 
     });
   })

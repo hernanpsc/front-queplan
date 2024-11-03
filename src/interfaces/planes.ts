@@ -24,7 +24,7 @@ export interface Planes {
     valueSlide3: Number,
     valueSlide4: Number,
     aporteOS: Number,
-    imagenes?: string[] | undefined;
+    imagenes?: MiImagen;
     folletos?:string[];
     beneficios?:string[];
     clinicas?:string[];

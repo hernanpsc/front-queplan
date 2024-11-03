@@ -3,11 +3,10 @@ import PlanesModel from "./../models/planes";
 
 async function addClinicas() {
   try {
-    const products = await PlanesModel.find({}); // Consulta a la base de datos para obtener los planes
-    const clinicas = await ClinicasModel.find({}); // Consulta a la base de datos para obtener las clínicas
+    const products = await PlanesModel.find({}); // Fetch plans from the database
+    const clinicas = await ClinicasModel.find({}); // Fetch clinics from the database
 
     if (!products || !clinicas) {
-      // Manejo de error si las consultas no devuelven resultados
       return [];
     }
 
@@ -15,16 +14,19 @@ async function addClinicas() {
       const clinicPlan = [];
 
       for (let x in clinicas) {
-        const incluyeId = clinicas[x].cartillas.includes(products[i].item_id);
+        const itemId = products[i].item_id;
 
-        if (incluyeId) {
+        // Ensure item_id is defined before checking for inclusion
+        if (itemId && clinicas[x].cartillas.includes(itemId)) {
           clinicPlan.push(clinicas[x]);
         }
       }
-      // Actualizar los documentos en MongoDB
+
+      // Update documents in MongoDB
       await PlanesModel.updateOne({ _id: products[i]._id }, { clinicas: clinicPlan });
     }
-// console.log(products)
+
+    console.log(products);
     return products;
   } catch (error) {
     console.error(error);
@@ -63,7 +65,7 @@ const getProduct = async (id: string) => {
 
     
     const responseGetOne = await PlanesModel.findOne({_id:id})
-    // console.log( ' responseGetOne : ', id)
+    console.log( ' responseGetOne : ', id)
 
     return responseGetOne
 };

@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
-import { Clinicas, Cobertura } from "../interfaces/clinicas";
-
+import { Clinicas } from "../interfaces/clinicas";
 
 // Definir el esquema de las coberturas
 const coberturaSchema = new Schema({
@@ -43,13 +42,9 @@ const clinicasSchema = new Schema<Clinicas>(
     }
 );
 
-
-
-
-
 // Crear el modelo de Mongoose para las coberturas
-const CoberturaModel = model<Cobertura>('Cobertura', coberturaSchema);
-export {CoberturaModel };
+// const CoberturaModel = model<Cobertura>('Cobertura', coberturaSchema);
+// export {CoberturaModel };
 
 const ClinicasModel = model<Clinicas>('clinicas', clinicasSchema);
 export default ClinicasModel;

@@ -49,3 +49,5 @@ const htmlResponse =`
     `;
     res.send(htmlResponse)
   });
+
+export { router }
