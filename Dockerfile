@@ -42,4 +42,4 @@ RUN npm install -g pm2
 EXPOSE 5200
 
 # Comando para iniciar la aplicación al ejecutar el contenedor
-CMD ["pm2-runtime", "dist/app.js"]
+CMD ["pm2-runtime", "dist/src/app.js"]
