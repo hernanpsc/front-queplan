@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CoberturaModel = void 0;
 const mongoose_1 = require("mongoose");
 // Definir el esquema de las coberturas
 const coberturaSchema = new mongoose_1.Schema({
@@ -40,8 +39,8 @@ const clinicasSchema = new mongoose_1.Schema({
     select: Boolean
 });
 // Crear el modelo de Mongoose para las coberturas
-const CoberturaModel = (0, mongoose_1.model)('Cobertura', coberturaSchema);
-exports.CoberturaModel = CoberturaModel;
+// const CoberturaModel = model<Cobertura>('Cobertura', coberturaSchema);
+// export {CoberturaModel };
 const ClinicasModel = (0, mongoose_1.model)('clinicas', clinicasSchema);
 exports.default = ClinicasModel;
 //# sourceMappingURL=clinicas.js.map

@@ -39,11 +39,17 @@ const importModule = async (filename) => {
     if (cleanName !== 'index') {
         try {
             const moduleRouter = await (_a = `./${cleanName}`, Promise.resolve().then(() => __importStar(require(_a))));
-            console.log(`Se esta cargando la ruta.../${cleanName}`);
+            console.log(`Se está cargando la ruta.../${cleanName}`);
             router.use(`/${cleanName}`, moduleRouter.router);
         }
         catch (error) {
-            console.error(`Error loading route.../${cleanName}: ${error.message}`);
+            // Manejo del error: verificación del tipo de error
+            if (error instanceof Error) {
+                console.error(`Error loading route.../${cleanName}: ${error.message}`);
+            }
+            else {
+                console.error(`Error loading route.../${cleanName}: ${String(error)}`);
+            }
         }
     }
 };

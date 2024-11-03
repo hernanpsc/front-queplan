@@ -10,7 +10,7 @@ const { PORT } = process.env;
 
 export const fileUpload = async (req: Request, res: Response) => {
   try {
-    // Middleware de carga de archivos, aquí se procesa el archivo y lo guarda en `req.file`
+    // Middleware de carga de archivos
     upload.single('myFile')(req, res, async function (err) {
       if (err) {
         console.error(err);
@@ -42,6 +42,10 @@ export const fileUpload = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send(error.message);
+    if (error instanceof Error) {
+      res.status(500).send(error.message);
+    } else {
+      res.status(500).send('An unknown error occurred.');
+    }
   }
 };

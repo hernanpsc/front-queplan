@@ -34,7 +34,7 @@ dotenv.config();
 const { PORT } = process.env;
 const fileUpload = async (req, res) => {
     try {
-        // Middleware de carga de archivos, aquí se procesa el archivo y lo guarda en `req.file`
+        // Middleware de carga de archivos
         multer_1.default.single('myFile')(req, res, async function (err) {
             if (err) {
                 console.error(err);
@@ -65,7 +65,12 @@ const fileUpload = async (req, res) => {
     }
     catch (error) {
         console.error(error);
-        res.status(500).send(error.message);
+        if (error instanceof Error) {
+            res.status(500).send(error.message);
+        }
+        else {
+            res.status(500).send('An unknown error occurred.');
+        }
     }
 };
 exports.fileUpload = fileUpload;

@@ -23,9 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
 const express_1 = require("express");
 const express = __importStar(require("express"));
 const router = (0, express_1.Router)();
+exports.router = router;
 router.use(express.json());
 router.get("/", (req, res) => {
     const htmlResponse = `

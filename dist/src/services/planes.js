@@ -8,24 +8,24 @@ const clinicas_1 = __importDefault(require("./../models/clinicas"));
 const planes_1 = __importDefault(require("./../models/planes"));
 async function addClinicas() {
     try {
-        const products = await planes_1.default.find({}); // Consulta a la base de datos para obtener los planes
-        const clinicas = await clinicas_1.default.find({}); // Consulta a la base de datos para obtener las clínicas
+        const products = await planes_1.default.find({}); // Fetch plans from the database
+        const clinicas = await clinicas_1.default.find({}); // Fetch clinics from the database
         if (!products || !clinicas) {
-            // Manejo de error si las consultas no devuelven resultados
             return [];
         }
         for (let i = 0; i < products.length; i++) {
             const clinicPlan = [];
             for (let x in clinicas) {
-                const incluyeId = clinicas[x].cartillas.includes(products[i].item_id);
-                if (incluyeId) {
+                const itemId = products[i].item_id;
+                // Ensure item_id is defined before checking for inclusion
+                if (itemId && clinicas[x].cartillas.includes(itemId)) {
                     clinicPlan.push(clinicas[x]);
                 }
             }
-            // Actualizar los documentos en MongoDB
+            // Update documents in MongoDB
             await planes_1.default.updateOne({ _id: products[i]._id }, { clinicas: clinicPlan });
         }
-        // console.log(products)
+        console.log(products);
         return products;
     }
     catch (error) {
@@ -52,7 +52,7 @@ const getProducts = async () => {
 exports.getProducts = getProducts;
 const getProduct = async (id) => {
     const responseGetOne = await planes_1.default.findOne({ _id: id });
-    // console.log( ' responseGetOne : ', id)
+    console.log(' responseGetOne : ', id);
     return responseGetOne;
 };
 exports.getProduct = getProduct;
