@@ -9,10 +9,10 @@ import path from 'path';
 
 const PORT = process.env.PORT || 3001;
 
-const os = require('os');
-const networkInterfaces = os.networkInterfaces();
-const ipv6Address = networkInterfaces["vEthernet (Default Switch)"][0].address;
-const appaddress = 'http://['+ipv6Address+']:'+PORT+'/';
+// const os = require('os');
+// const networkInterfaces = os.networkInterfaces();
+// const ipv6Address = networkInterfaces["vEthernet (Default Switch)"][0].address;
+// const appaddress = 'http://['+ipv6Address+']:'+PORT+'/';
 
 
 const whitelist = [
@@ -113,7 +113,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 dbConnect().then(() => {
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:` + PORT + `...`);
-      console.log(`Web application public URL :  ` + appaddress);
+      // console.log(`Web application public URL :  ` + appaddress);
 
 
     });
