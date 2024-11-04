@@ -34,26 +34,26 @@ const planes_1 = __importDefault(require("./../models/planes"));
 const empresas_1 = __importDefault(require("./../models/empresas"));
 const calcularPrecio = async (req, res) => {
     try {
-        console.log(req.body.grupo);
-        console.log(req.body.empresa_prepaga);
-        console.log(req.body.edad_1);
-        console.log(req.body.edad_2);
-        console.log(req.body.numkids);
-        console.log(req.body.plan_type);
-        console.log(req.body.tipo);
-        console.log(req.body.agree);
-        console.log(req.body.aporteOS);
-        console.log(req.body.sueldo);
-        console.log(req.body.aporte);
-        console.log(req.body.monoadic);
-        console.log(req.body.cantAport);
-        console.log(req.body.afinidad);
-        console.log(req.body.bonAfinidad);
-        console.log(req.body.supras);
-        console.log(req.body.segvida);
-        console.log(req.body.segvida1);
-        console.log(req.body.region);
-        console.log(req.body.coeficientes);
+        console.log('linea 18 : ' + req.body.grupo);
+        console.log('linea 19 : ' + req.body.empresa_prepaga);
+        console.log('linea 20 : ' + req.body.edad_1);
+        console.log('linea 21 : ' + req.body.edad_2);
+        console.log('linea 22 : ' + req.body.numkids);
+        console.log('linea 23 : ' + req.body.plan_type);
+        console.log('linea 24 : ' + req.body.tipo);
+        console.log('linea 25 : ' + req.body.agree);
+        console.log('linea 26 : ' + req.body.aporteOS);
+        console.log('linea 27 : ' + req.body.sueldo);
+        console.log('linea 28 : ' + req.body.aporte);
+        console.log('linea 29 : ' + req.body.monoadic);
+        console.log('linea 30 : ' + req.body.cantAport);
+        console.log('linea 31 : ' + req.body.afinidad);
+        console.log('linea 32 : ' + req.body.bonAfinidad);
+        console.log('linea 33 : ' + req.body.supras);
+        console.log('linea 34 : ' + req.body.segvida);
+        console.log('linea 35 : ' + req.body.segvida1);
+        console.log('linea 36 : ' + req.body.region);
+        console.log('linea 37 : ' + req.body.coeficientes);
         // const group = req.body.grupo;
         // const empresa_prepaga = req.body.empresa_prepaga;
         // const edad_1 = req.body.edad_1;
@@ -74,9 +74,12 @@ const calcularPrecio = async (req, res) => {
         // const segvida1 = req.body.segvida1;;
         // const region = req.body.region;
         // const coeficientes = req.body.coeficientes;
+        console.log('linea 86');
         const formCotizar = req.body;
+        console.log('linea 89');
         // Extraer datos del formulario
         const { group, empresa_prepaga, edad_1, edad_2, numkids, plan_type, tipo, agree, aporteOS, sueldo, aporte, monoadic, cantAport, afinidad, bonAfinidad, supras, segvida, segvida1, region, } = formCotizar;
+        console.log('linea 112');
         const calcularGrupo = (edad_1, edad_2, numkids, group) => {
             let edad1 = edad_1;
             let edad2 = edad_2;
@@ -90,6 +93,7 @@ const calcularPrecio = async (req, res) => {
             let grupo = functions.grupoFamiliar(edad1, edad2, num_kids, group);
             return grupo;
         };
+        console.log('linea 127');
         // Llamada a la función para obtener el grupo
         const grupo = calcularGrupo(edad_1, edad_2, numkids, group);
         // Ahora puedes usar la variable 'grupo' en el resto de tu código

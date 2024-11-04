@@ -11,10 +11,10 @@ const mongo_1 = __importDefault(require("./config/mongo"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const path_1 = __importDefault(require("path"));
 const PORT = process.env.PORT || 3001;
-// const os = require('os');
-// const networkInterfaces = os.networkInterfaces();
-// const ipv6Address = networkInterfaces["vEthernet (Default Switch)"][0].address;
-// const appaddress = 'http://['+ipv6Address+']:'+PORT+'/';
+const os = require('os');
+const networkInterfaces = os.networkInterfaces();
+const ipv6Address = networkInterfaces["vEthernet (Default Switch)"][0].address;
+const appaddress = 'http://[' + ipv6Address + ']:' + PORT + '/';
 const whitelist = [
     'http://localhost:4200',
     'http://localhost:4300',
@@ -102,7 +102,7 @@ app.use(body_parser_1.default.urlencoded({ limit: '50mb', extended: true }));
 (0, mongo_1.default)().then(() => {
     app.listen(PORT, () => {
         console.log(`Server running at http://localhost:` + PORT + `...`);
-        // console.log(`Web application public URL :  ` + appaddress);
+        console.log(`Web application public URL :  ` + appaddress);
     });
 })
     .catch(error => console.error(error));
