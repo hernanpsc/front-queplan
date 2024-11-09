@@ -55,7 +55,7 @@ export function grupoFamiliar(age0, age1, kids,group) {
         gen = '';
     }
 	// console.log(grupoFam)
-    return [num_adultos, numhijo1, numhijo2, numhijos, gen, grupoFam];
+    return [num_adultos, numhijo1, numhijo2, numhijo, gen, grupoFam];
 }
 
 
@@ -415,3 +415,65 @@ export function productIdPrevencion(edad_1, edad_2,hijos, tipoAsoc){
 	} 
 	
 // <!----------------------Funcion PRODUCT ID PREVENCION SALUD end----------------------------> 
+// // <!----------------------Funcion PRODUCT ID DOCTORED start----------------------------> 
+export function productIdDoctored(edad_1, edad_2, tipoAsoc, num_Hijos,group) {
+	
+	let age2 = edad_2;
+	let age = edad_1;
+	let hijos1y2 =num_Hijos;
+	let indOMat = "IND";
+    let rangoEtario = '18-25';
+    let tipo = tipoAsoc;
+	let idDoctored = 'doctored' + indOMat + tipoAsoc + rangoEtario + '+' + hijos1y2 + 'h';
+	let idDoctoredHijo3 = 'doctored' + tipo + 'HIJO';
+	let idDoctoredAd = 'doctoredAD' + tipo + rangoEtario;
+
+if (hijos1y2 > 2){
+    hijos1y2 = 2;
+} else {}
+if (tipo == 'I'){
+    tipo = 'P';
+} else if ( tipo == 'M'){
+	tipo = 'D'
+} else {}
+	if(group === 1)
+{
+	age2=0;
+	hijos1y2=0;
+} else if(group === 2)
+{
+	age2=0;
+}else if(group === 3)
+{
+	hijos1y2=0;
+}else {}
+
+	if (edad_2 === null) {
+        age2 = 0;
+    }
+
+	if (age2 > age) {
+		age2 = age;
+		age = edad_2;
+		indOMat = 'MAT';
+	};
+
+		if (age <= 25) {
+			rangoEtario =  '18-25+';
+		} else if (age <= 35 && age >= 26) {
+			rangoEtario =  '25-35+';
+		} else if (age <= 45 && age >= 36) {
+			rangoEtario =  '35-45+';
+		} else if (age <= 55 && age >= 46) {
+			rangoEtario =  '46-55+';
+		} else if (age <= 60 && age >= 56) {
+			rangoEtario =  '56-60+';
+		} else if (age <= 69 && age >= 61) {
+		    rangoEtario =  '61-69+';
+		} else if (age <= 79 && age >= 70) {
+		    rangoEtario =  '70-79+';	
+	}
+
+	return [idDoctored, idDoctoredHijo3, idDoctoredAd]
+}
+// <!----------------------Funcion PRODUCT ID DOCTORED END---------------------------->    

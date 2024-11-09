@@ -1,7 +1,25 @@
   // <!----------------------Funcion VALOR DEL PLAN OMINT start----------------------------> 
   import * as functions from './functions';
+  export function valorOmint2(){
+    return 'vamos , vamos, las bandas'
+  }
 
   export function valorOmint(aportesOS,edad_2,num_Hijos,numhijo_2, precio_titular, precio_conyuge, precio_hijo1, precio_hijo2, edad_ID1OMINT,conPromo,promocion,coeficiente,group) {
+    // console.log('aportesOS  : ' + aportesOS);
+    // console.log('edad_2  : '+ edad_2);
+    // console.log('num_Hijos  : '+ num_Hijos);
+    // console.log('numhijo_2  : '+numhijo_2 );
+    // console.log('precio_titular  : '+ precio_titular);
+    // console.log('precio_conyuge  : '+ precio_conyuge);
+    // console.log('precio_hijo1  : '+precio_hijo1 );
+    // console.log('precio_hijo2  : '+ precio_hijo2);
+    // console.log('edad_ID1OMINT  : '+ edad_ID1OMINT);
+    // console.log('conPromo  : '+ conPromo);
+    // console.log('promocion  : '+promocion );
+    // console.log('coeficiente  : '+ coeficiente);
+    // console.log('group  : '+ group);
+    
+    
     let edad2 = edad_2;
 
     let edadID1OMINT = edad_ID1OMINT;

@@ -103,7 +103,7 @@ export function valor_Swiss(
 	//	<!--------------------Crear Objeto SWISS end------------------------------>																            			
     var plan = new Object();
     plan.item_id = _id;
-    plan.name = 'Swiss Medical ' + nombre;
+    plan.name = 'Swiss-Medical ' + nombre;
      plan.precio = precio;
 //    plan.promoPorcentaje = promo;
 //    plan.promoDescuento = descPromo;

@@ -3,7 +3,7 @@ import { calcularPrecio } from "../services/cotizacion";
 import { handleHttp } from '../utils/error.handle';
 
 const getPrecios = async (fromCotizar:Request,res:Response) =>{
-  console.log('controlador fromCotizar :' , fromCotizar)
+  // console.log('controlador fromCotizar :' , fromCotizar)
 
   try {
   const response = await calcularPrecio(fromCotizar, res);

@@ -1,17 +1,17 @@
 
-	//	<!-----------------------FUNCIONES QUE SE USAN EL CONTROLADOR CORIZACION ANTES DE ENTREGAR EL RESULTADO------------------------>							
+	//	<!----------------------FUNCIONES QUE SE USAN EL CONTROLADOR CORIZACION ANTES DE ENTREGAR EL RESULTADO------------------------>							
 
   	
 	export function combinePlansWithPrices(planes, precios) {
 		const combinedArray = [];
-			  // console.log(planes)
+			//   console.log(planes)
 	
 		planes.forEach((plan) => {
 			// console.log(plan)
 	
 		  const matchingPrecio = precios.find((precio) => precio.item_id === plan.item_id);
-		//   // console.log(plan.item_id);
-		//   // console.log(precios.item_id);
+		//   console.log(plan.item_id);
+		//   console.log(precios.item_id);
 	
 	
 		  if (matchingPrecio) {
