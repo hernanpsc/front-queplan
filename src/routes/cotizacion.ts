@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import * as express from "express";
 import { getPrecios} from '../controllers/cotizacion';
 

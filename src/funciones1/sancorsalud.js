@@ -1,6 +1,6 @@
 import * as functions from './functions';
 
-export	function  valor_SanCor(aportes_OS,coeficiente,edad_1,edad_2,numHijos, precio_1Hijo,precio_2Hijo,precio_Titular,precios_Conyuge,numhijo_2,grupo_Fam,segvida1,segvida2,supra_salud,con_afinidad,promocion,genSanCor, group){
+export	function  valor_SanCor(aportesOS,coeficiente,edad_1,edad_2,numHijos, precio_1Hijo,precio_2Hijo,precio_Titular,precios_Conyuge,numhijo_2,grupo_Fam,segvida1,segvida2,supra_salud,con_afinidad,promocion,genSanCor, group){
 	
 	let edad1 = edad_1;
 	let edad2  = edad_2;
@@ -11,7 +11,6 @@ export	function  valor_SanCor(aportes_OS,coeficiente,edad_1,edad_2,numHijos, pre
 	let preciosConyuge = precios_Conyuge;
 	let numhijo2 = numhijo_2;
 	let grupoFam = grupo_Fam;
-	let aportesOS = aportes_OS;
 	// console.log(grupoFam)
 
 	if(grupoFam == 1 ){
@@ -74,6 +73,7 @@ let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coef
 		} else {
 			precios = precio_adultos_Sancor;
 		}
+		// console.log('precios 58')
         // console.log(precios)
 	//	<!-----------------------Bucle SANCOR start------------------------>							
 	              
@@ -93,8 +93,7 @@ let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coef
 					let empresaPlan = [j][0];
 					// console.log('empresaPlan ')
 					// console.log(empresaPlan)
-					// console.log('conPromo SanCor  :')
-					// console.log(conPromo)
+
 					let _id = empresaPlan;
 
 					let gen = genSanCor;
