@@ -54,17 +54,22 @@ const grupo = calcularGrupo(edad_1, edad_2, numkids, group);
 
     let tipo_IngresoPDMI = functions.tipoAsociado(tipo);
     const aporte_OS = [tipo_IngresoPDMI,beneficiariosF184,eleccionSueldoOAporte,sueldoSueldoOAporte,categoria_Mono,arrayValorMonotXCategoria]
+     
+    // let ids = functions.ids_prepagas(edad_1, edad_2, tipo, numHijos,numkids,group,tipo_IngresoPDMI)
+    // let idSancor = ids[0];let idSancorConyuge: any; idSancorConyuge = ids[2]; let idOmint = ids[3];let idGaleno = ids[4];let edadIdPremedic = ids[5];let idTitularSwiss = ids[6];let idConyugeSwiss = ids[7];let idAdultosMedife = ids[8];let idPrevencion = ids[9];let IdDoctored = ids[10];let IdsAvalian = ids[11];let idsCristalyRas = ids[12];let idsLuisPasteur = ids[13];let idsAsmepriv = ids[14];let idsBayresPlan = ids[15];let  idsHominis = ids[16];
 
-// // <! ----------SANCOR---------------------------------------------------->
+
+    // <! ----------SANCOR---------------------------------------------------->
 let idSancor = functions.productID(edad_1, tipo, gen, 'titular', numHijos,group);
 let idSancor1 = functions.productID(edad_2, tipo, gen, 'conyuge', numHijos,group);
 let idSancorConyuge: string
+
 if (grupo[0] == 2) {
   idSancorConyuge = idSancor1[1];
-// console.log(idSancorConyuge)
+console.log(idSancorConyuge)
 }else {idSancorConyuge
   =idSancor[0]}
-// console.log(idSancorConyuge)
+console.log(idSancorConyuge)
 // <! -----------------------------OMINT---------------------------------------------------->
 let idOmint =  functions.productIdOmint(edad_1, tipo, 'titular',group);
 // <! -----------------------------GALENO--------------------------------------------------->
@@ -100,21 +105,27 @@ async function fetchProductPrice(id: string) {
  return await getProduct(id);
 }
 
-const companies = await EmpresaModel.find({});
-  
-  
-const empresasConCoeficientes = companies.map(empresa => {
-  const nombre = String(empresa.name); // Asegúrate de que sea una cadena
-  return { [nombre]: empresa.factores?.coeficiente };
-});
 
-// Acceder al coeficiente de una empresa en particular por su nombre
-async function buscar_mi_coeficiente(type:string){
-const coeficiente = empresasConCoeficientes.find(empresa => empresa[type]);
-if (coeficiente) { return coeficiente } else {
-// console.log(`No se encontró la empresa ${type}.`);
-}
-}
+// Obtener todas las empresas de la base de datos (suponiendo que 'EmpresaModel' es un modelo de mongoose o algo similar)
+const companies: Empresa[] = await EmpresaModel.find({});
+
+// Crear un objeto con nombre de empresa como clave y coeficiente como valor
+const coeficientes: { [key: string]: number } = companies.reduce((acc, empresa) => {
+  const nombre = String(empresa.name); // Asegúrate de que el nombre sea una cadena
+  const coeficiente = empresa.factores?.coeficiente;
+
+  if (coeficiente !== undefined) { // Solo agregamos si el coeficiente existe
+    acc[nombre] = coeficiente;
+  }
+
+  return acc;
+}, {} as { [key: string]: number }); // Tipamos el objeto como clave: valor de tipo string: número
+
+// Llevarse la variable completa, creando una copia superficial del objeto
+const coeficientesCopia: { [key: string]: number } = { ...coeficientes };
+
+
+// Ejemplo de cómo usar la función de búsqueda
 
 
 async function fetchPrices() {
@@ -197,67 +208,15 @@ async function fetchPrices() {
 }
 
    const prices = await fetchPrices();
-// console.log(' prices ' ,prices)
-
-// console.log('aporte_OS  : ' + aporte_OS);
-// console.log('edad_2  : '+ edad_2);
-// console.log('numHijos  : '+ numHijos);
-// console.log('numhijo2  : '+numhijo2 );
-// console.log('precio_titular  : '+ prices.precio_titular_Omint.precios);
-// console.log('precio_conyuge  : '+ prices.precio_conyuge_Omint.precios);
-// console.log('precio_hijo1  : '+prices.precio_hijo1_Omint.precios );
-// console.log('precio_hijo2  : '+ prices.precio_hijo2_Omint.precios);
-// console.log('edad_ID1OMINT  : '+ idOmint[0]);
-// console.log('conPromo  : '+ afinidad);
-// console.log('promocion  : '+bonAfinidad );
-// console.log('coeficiente  : '+ buscar_mi_coeficiente('OMINT'));
-// console.log('group  : '+ group);
-// functions.imprimirPrecios (prices,tipo_IngresoPDMI,group,idAdultosMedife,idPrevencion,IdDoctored,IdsAvalian,idsCristalyRas,idsLuisPasteur,idsAsmepriv,idsBayresPlan,idsHominis)
-
-// // <! -----------------------------ID PREMEDIC START---------------------------------------------------->
-
- let valor_OMINT = functions.valorOmint(aporte_OS,edad_2,numHijos,numhijo2,prices.precio_titular_Omint.precios,prices.precio_conyuge_Omint.precios,prices.precio_hijo1_Omint.precios,prices.precio_hijo2_Omint.precios,idOmint[0],afinidad,bonAfinidad,buscar_mi_coeficiente('OMINT'),group);
-// // console.log(' valor_OMINT ' ,valor_OMINT)
- let valor_Premedic = functions.valor_Premedic(aporte_OS,buscar_mi_coeficiente('Premedic'),grupo[3],prices.priceAdultosPr.precios,prices.pricePrHijoMenir25.precios,prices.pricePrHijoMenir1.precios,edadIdPremedic,afinidad,bonAfinidad,group)
-// // console.log(' valor_Premedic ' ,valor_Premedic)
- let valor_SanCor = functions.valor_SanCor(aporte_OS,buscar_mi_coeficiente('SanCor Salud'),edad_1,edad_2,grupo[3],prices.precioSanCor1Hijo.precios,prices.precioSanCor2Hijo.precios,prices.precioSanCorTitular.precios,prices.precioConyugeSanCor.precios,numhijo2,grupoFam,segvida,segvida1,supras,afinidad,bonAfinidad,gen);
-// // console.log(' valor_SanCor ' ,valor_SanCor)
- let valor_Galeno = functions.valor_Galeno(aporte_OS,prices.priceGrupoGaleno.precios,buscar_mi_coeficiente('Galeno'));    
-// // console.log(' valor_Galeno ' ,valor_Galeno)
- let valor_Swiss = functions.valor_Swiss(aporte_OS,edad_2,numkids,numhijo2,prices.precioTitularSwiss.precios,prices.precioConyugeSwiss.precios,prices.precioHijo1Swiss.precios,prices.precioHijo2Swiss.precios,buscar_mi_coeficiente('Swiss Medical'),group)
-// // console.log(' valor_Swiss ' ,valor_Swiss)
- let valor_Doctored = functions.valor_Doctored(aporte_OS,buscar_mi_coeficiente('Doctored'),grupo[3],prices.precioDoctoredGrupo.precios,prices.precioDoctoredHijo3.precios,group)
-// // console.log(' valor_Doctored ' ,valor_Doctored)
- let valor_Prevencion = functions.valor_Prevencion(aporte_OS,buscar_mi_coeficiente('Prevencion'),grupo[3],prices.precioPrevencion.precios,group)
-// // console.log(' valor_Prevencion ' ,valor_Prevencion)
- let valor_Avalian = functions.valor_Avalian(aporte_OS,buscar_mi_coeficiente('Avalian'),edad_1,edad_2,grupo[3], grupoFam,afinidad,bonAfinidad, prices.precioAvalianTitular.precios,prices.precioAvalianConyuge.precios,prices.precioAvalianHijo1.precios,prices.precioAvalianHijo2.precios,prices.precioAvalianHijo3.precios,prices.precioAvalianHijo25.precios);
-// // console.log(' valor_Avalian ' ,valor_Avalian)
-// let valor_Ras = functions.valor_Ras(aporte_OS,buscar_mi_coeficiente('Ras'), group, bonAfinidad, prices.precioTitularRas.precios, prices.precioConyugeRas.precios, prices.precioHijo1Ras.precios, prices.precioHijo2Ras.precios, prices.precioHijo3Ras.precios);
-// // console.log(' valor_Ras ' ,valor_Ras)
-//  let valor_Cristal = functions.valor_Cristal(aporte_OS,buscar_mi_coeficiente('Cristal'), group, bonAfinidad, prices.precioTitularCristal.precios, prices.precioConyugeCristal.precios, prices.precioHijo1Cristal.precios, prices.precioHijo2Cristal.precios, prices.precioHijo3Cristal.precios);
-// // console.log(' valor_Cristal ' ,valor_Cristal)
-//  let valor_Asmepriv = functions.valor_Asmepriv(aporte_OS,buscar_mi_coeficiente('Asmepriv'), group, bonAfinidad, prices.precioAsmepriv.precios, prices.precioAdmenorUno.precios, prices.precioAsmeprivHijoHasta21.precios, prices.precioAsmeprivRecargoHijo21a29.precios);
-//  // console.log(' valor_Asmepriv ' ,valor_Asmepriv)
-//  let valor_Luispasteur = functions.valor_Luispasteur(aporte_OS,buscar_mi_coeficiente('Luispasteur'), group, bonAfinidad, prices.precioLuispasteurAdultos.precios, prices.precioLuispasteurNieto.precios, prices.precioLuispasteurAdicional.precios, prices.precioLuispasteurHijo.precios );
-
-//  // console.log(' valor_Luispasteur ' ,valor_Luispasteur);
-//  let valor_Bayresplan = functions.valor_Bayresplan(aporte_OS,buscar_mi_coeficiente('Bayresplan'), group, bonAfinidad, prices.precioBayresAdultos.precios, prices.precioBayresHijoHasta25.precios, prices.precioBayresAd18a49.precios, prices.precioBayresJovenSinMaternidad.precios, prices.precioBayresInd18a29.precios );
-//  // console.log(' valor_Bayresplan ' ,valor_Bayresplan)
-//  let valor_Hominis = functions.valor_Hominis(aporte_OS,buscar_mi_coeficiente('Hominis'), group, bonAfinidad, prices.precioHominis.precios );
-//  // console.log(' valor_Bayresplan ' ,valor_Bayresplan)
 
 
+  //  const ids = functions.imprimirPrecios(prices,tipo_IngresoPDMI,group,idAdultosMedife,idPrevencion,IdDoctored,IdsAvalian,idsCristalyRas,idsLuisPasteur,idsAsmepriv,idsBayresPlan,idsHominis)
 
+   let concatenarPrecios = functions.valor_prepagas(aporte_OS,edad_2,numHijos,numhijo2,prices,idOmint,afinidad,bonAfinidad,group,grupo,edadIdPremedic,edad_1,grupoFam,segvida,segvida1,supras,gen,numkids,coeficientesCopia);
 
-
-
-
-
-
-
-// for ( let i=0 ; i < prices.length ; i++){
-// console.log(prices[i])
-// }
+for ( let i=0 ; i < prices.length ; i++){
+console.log(prices[i])
+}
 
 let empresas: string[] = [];
 let planesPorEmpresa: { [key: string]: Document[] } = {};
@@ -267,20 +226,14 @@ async function obtenerEmpresasDisponibles() {
     return empresas;
   }
 empresas = await obtenerEmpresasDisponibles();
-// console.log('empresas : ' + empresas)
-let allPlanes = await PlanesModel.find({}); // Consulta a la base de datos para obtener los planes
-// console.log('allPlanes : ')  
-// console.log(allPlanes)  
-const concatenarPrecios = valor_OMINT.concat(valor_SanCor, valor_Premedic,valor_Galeno,valor_Swiss,valor_Doctored,valor_Prevencion, valor_Avalian
 
+let allPlanes = await PlanesModel.find({}); 
 
-);
-// console.log('concatenarPrecios: ')  
-// console.log(concatenarPrecios)  
-
+// console.log('allPlanes  : ' + allPlanes)
+// console.log('concatenarPrecios  : ' + concatenarPrecios)
   const combinedPlans = functions.combinePlansWithPrices(allPlanes, concatenarPrecios);
-// console.log('combinedPlans :')
-// console.log(combinedPlans)
+  // console.log('combinedPlans  : ' + combinedPlans)
+
 
   for (const plan of combinedPlans) {
     const empresa = 'planes_' + plan.empresa;

@@ -376,3 +376,167 @@ console.log(" id:  =  +  precioHominis  :  "   +  idsHominis );
 console.log(' precioHominis  :');
 console.log( prices.precioHominis.precios );
 }
+
+// Función de búsqueda de coeficientes (sin tipos de TypeScript)
+function buscar_mi_coeficiente(type, coeficientesCopia) {
+	return coeficientesCopia[type]; // Devuelve el coeficiente correspondiente
+  }
+
+import { valorOmint, valor_Premedic, valor_SanCor, valor_Galeno, valor_Swiss, valor_Doctored, valor_Prevencion, valor_Avalian, valor_Ras, valor_Cristal, valor_Asmepriv, valor_Luispasteur, valor_Bayresplan, valor_Hominis } from './index';
+
+export function valor_prepagas(aporte_OS,edad_2,numHijos,numhijo2,prices,idOmint,afinidad,bonAfinidad,group,grupo,edadIdPremedic,edad_1,grupoFam,segvida,segvida1,supras,gen,numkids,coeficientesCopia){
+// console.log('valor_prepagas')
+	let omint = valorOmint(aporte_OS,edad_2,numHijos,numhijo2,prices.precio_titular_Omint.precios,prices.precio_conyuge_Omint.precios,prices.precio_hijo1_Omint.precios,prices.precio_hijo2_Omint.precios,idOmint[0],afinidad,bonAfinidad,buscar_mi_coeficiente('OMINT', coeficientesCopia),group);
+	// console.log(' valor_OMINT ' ,omint)
+	 let Premedic = valor_Premedic(aporte_OS,buscar_mi_coeficiente('Premedic', coeficientesCopia),grupo[3],prices.priceAdultosPr.precios,prices.pricePrHijoMenir25.precios,prices.pricePrHijoMenir1.precios,edadIdPremedic,afinidad,bonAfinidad,group)
+	// console.log(' valor_Premedic ' , Premedic)
+	 let SanCor = valor_SanCor(aporte_OS,buscar_mi_coeficiente('SanCor Salud', coeficientesCopia),edad_1,edad_2,grupo[3],prices.precioSanCor1Hijo.precios,prices.precioSanCor2Hijo.precios,prices.precioSanCorTitular.precios,prices.precioConyugeSanCor.precios,numhijo2,grupoFam,segvida,segvida1,supras,afinidad,bonAfinidad,gen);
+	// console.log(' valor_SanCor ' , SanCor)
+	 let Galeno = valor_Galeno(aporte_OS,prices.priceGrupoGaleno.precios,buscar_mi_coeficiente('Galeno', coeficientesCopia));    
+	// console.log(' valor_Galeno ' , Galeno)
+	 let Swiss = valor_Swiss(aporte_OS,edad_2,numkids,numhijo2,prices.precioTitularSwiss.precios,prices.precioConyugeSwiss.precios,prices.precioHijo1Swiss.precios,prices.precioHijo2Swiss.precios,buscar_mi_coeficiente('Swiss Medical', coeficientesCopia),group)
+	// console.log(' valor_Swiss ' , Swiss)
+	 let Doctored = valor_Doctored(aporte_OS,buscar_mi_coeficiente('Doctored', coeficientesCopia),grupo[3],prices.precioDoctoredGrupo.precios,prices.precioDoctoredHijo3.precios,group)
+	// console.log(' valor_Doctored ' , Doctored)
+	 let Prevencion = valor_Prevencion(aporte_OS,buscar_mi_coeficiente('Prevencion', coeficientesCopia),grupo[3],prices.precioPrevencion.precios,group)
+	// console.log(' valor_Prevencion ' , Prevencion)
+	 let Avalian = valor_Avalian(aporte_OS,buscar_mi_coeficiente('Avalian', coeficientesCopia),edad_1,edad_2,grupo[3], grupoFam,afinidad,bonAfinidad, prices.precioAvalianTitular.precios,prices.precioAvalianConyuge.precios,prices.precioAvalianHijo1.precios,prices.precioAvalianHijo2.precios,prices.precioAvalianHijo3.precios,prices.precioAvalianHijo25.precios);
+	// console.log(' valor_Avalian ' , Avalian)
+
+	// let Ras = valor_Ras(aporte_OS,buscar_mi_coeficiente('Ras', coeficientesCopia),edad_1, edad_2,numHijos, group, grupo, afinidad, bonAfinidad, prices.precioTitularRas.precios, prices.precioHijo1Ras.precios, prices.precioHijo2Ras.precios, prices.precioHijo3Ras.precios);
+	let Ras = valor_Ras(aporte_OS,buscar_mi_coeficiente('RAS', coeficientesCopia),edad_1, edad_2,numHijos, group, grupo, afinidad, bonAfinidad, prices.precioTitularRas.precios, prices.precioHijo1Ras.precios, prices.precioHijo2Ras.precios, prices.precioHijo3Ras.precios, prices.precioConyugeRas.precios);
+
+	// console.log(' valor_Ras ' , Ras)// No code was selected, so I will provide a// No code was selected, so I will provide a general improvement to the code
+		 let Cristal = valor_Cristal(aporte_OS,buscar_mi_coeficiente('Cristal', coeficientesCopia),edad_1, edad_2,numHijos, group, grupo, afinidad, bonAfinidad, prices.precioTitularCristal.precios, prices.precioHijo1Cristal.precios, prices.precioHijo2Cristal.precios, prices.precioHijo3Cristal.precios, prices.precioConyugeCristal.precios);
+		
+		
+		
+		 let Asmepriv = valor_Asmepriv(aporte_OS,buscar_mi_coeficiente('Asmepriv', coeficientesCopia),edad_1, edad_2,numHijos, group,  grupo, afinidad,bonAfinidad, prices.precioAsmepriv.precios, prices.precioAdmenorUno.precios, prices.precioAsmeprivHijoHasta21.precios,prices.precioAsmeprivRecargoHijo21a29.precios);
+	//  // console.log(' valor_Asmepriv ' , Asmepriv)
+
+	 console.log(' precio 1   :  ' ); console.log(prices.precioLuispasteurAdultos.precios);
+	 console.log(' precio 1   :  ' ); console.log(prices.precioLuispasteurNieto.precios);
+	 console.log(' precio 1   :  ' ); console.log(prices.precioLuispasteurAdicional.precios);
+	 console.log(' precio 1   :  ' ); console.log(prices.precioLuispasteurHijo.precios);
+	 let Luispasteur = valor_Luispasteur(aporte_OS,buscar_mi_coeficiente('Luis Pasteur', coeficientesCopia),edad_1, edad_2,numHijos, group,  grupo, afinidad,bonAfinidad, prices.precioLuispasteurAdultos.precios, prices.precioLuispasteurNieto.precios, prices.precioLuispasteurAdicional.precios, prices.precioLuispasteurHijo.precios );
+	
+	//  // console.log(' valor_Luispasteur ' , Luispasteur);
+	//  let Bayresplan = valor_Bayresplan(aporte_OS,buscar_mi_coeficiente('Bayresplan', coeficientesCopia), group, bonAfinidad, prices.precioBayresAdultos.precios, prices.precioBayresHijoHasta25.precios, prices.precioBayresAd18a49.precios, prices.precioBayresJovenSinMaternidad.precios, prices.precioBayresInd18a29.precios );
+	//  // console.log(' valor_Bayresplan ' , Bayresplan)
+	//  let Hominis = valor_Hominis(aporte_OS,buscar_mi_coeficiente('Hominis', coeficientesCopia), group, bonAfinidad, prices.precioHominis.precios );
+	//  // console.log(' valor_Hominis ' , Hominis)
+	let concat = omint.concat(SanCor, Premedic,Galeno,Swiss,Doctored,Prevencion, Avalian, Ras, Cristal, Asmepriv, Luispasteur);
+	
+	
+	return concat
+
+
+ };
+
+// // <! ----------SANCOR---------------------------------------------------->
+import { productID, productIdOmint, productIdGaleno, productIdPremedic, productIdSwiss, productIdMedife, productIdPrevencion, productIdDoctored, productIdAvalian, productIdRasCristal, productIdLuisPasteur,productIdAsmepriv, productIBayres,productIdHominis } from './index';
+export function ids_prepagas(edad_1, edad_2, tipo, numHijos,numkids,group,tipo_IngresoPDMI){
+
+let idSancor = productID(edad_1, tipo, gen, 'titular', numHijos,group);
+let idSancor1 = productID(edad_2, tipo, gen, 'conyuge', numHijos,group);
+let idSancorConyuge = "";
+let ids = [];
+if (grupo[0] == 2) {
+  idSancorConyuge = idSancor1[1];
+// console.log(idSancorConyuge)
+}else {idSancorConyuge
+  =idSancor[0]
+}
+// console.log(idSancorConyuge)
+
+// <! -----------------------------OMINT---------------------------------------------------->
+let idOmint =  productIdOmint(edad_1, tipo, 'titular',group);
+// <! -----------------------------GALENO--------------------------------------------------->
+let idGaleno = productIdGaleno(edad_1, edad_2, tipo, numHijos,group);
+// <! ----------PREMEDIC-------------------------------------------------------------------->
+let edadIdPremedic = productIdPremedic(edad_1, edad_2, tipo, numHijos,group);
+// <! ----------SWISS----------------------------------------------------------------------->
+let idTitularSwiss = productIdSwiss(edad_1, tipo_IngresoPDMI,group);
+let idConyugeSwiss = productIdSwiss(edad_2, tipo_IngresoPDMI,group);
+
+// <! ----------MEDIFE---------------------------------------------------->
+let idAdultosMedife = productIdMedife(edad_1,edad_2, tipo_IngresoPDMI);
+// <! ----------PREVENCION---------------------------------------------------->
+let idPrevencion = productIdPrevencion(edad_1,edad_2, numkids, tipo_IngresoPDMI);
+// <! ----------DOCTORED---------------------------------------------------->
+let IdDoctored = productIdDoctored(edad_1, edad_2, tipo_IngresoPDMI, numkids,group);
+// <! ----------AVALIAN---------------------------------------------------->
+let IdsAvalian = productIdAvalian(edad_1, edad_2, tipo_IngresoPDMI, group);
+// <! ----------CRISTAL y RAS---------------------------------------------------->
+let idsCristalyRas = productIdRasCristal(edad_1, edad_2, tipo_IngresoPDMI, group);  
+// <! ----------LUIS PASTEUR---------------------------------------------------->
+let idsLuisPasteur = productIdLuisPasteur(edad_1, edad_2,numkids, tipo_IngresoPDMI, group)
+// <! ----------ASMEPRIV---------------------------------------------------->
+let idsAsmepriv = productIdAsmepriv(edad_1, edad_2,numkids, tipo_IngresoPDMI, group)
+// <! ----------BAYRES PLAN---------------------------------------------------->
+let idsBayresPlan = productIBayres(edad_1, edad_2, group)
+// <! ----------HOMINIS---------------------------------------------------->
+let idsHominis = productIdHominis(edad_1, edad_2, tipo_IngresoPDMI, numkids, group)
+
+ids.push(idSancor, idSancor1, idSancorConyuge, idOmint, idGaleno, edadIdPremedic, idTitularSwiss, idConyugeSwiss, idAdultosMedife, idPrevencion, IdDoctored, IdsAvalian, idsCristalyRas, idsLuisPasteur, idsAsmepriv, idsBayresPlan, idsHominis);
+
+return ids
+
+}
+
+
+// export function promoDescuento(valor_plan, promo_Porcentaje, afiche){
+
+// 	// console.log('valor_plan  :' + valor_plan)
+// 	// console.log('promo_Porcentaje  :' + promo_Porcentaje)
+// 	// console.log('afiche  :' + afiche)
+// 	let bonAfinidad = 0;
+// 	let valor_total_plan = 0;
+// 	let bonAfinidadporcentaje = promo_Porcentaje;
+// 	if (afiche === true) {
+// 		bonAfinidad = parseInt(valor_plan) * bonAfinidadporcentaje;
+// 		valor_total_plan = parseInt(valor_plan) - parseInt(bonAfinidad.toFixed());
+// 	} else {
+// 		bonAfinidad = 0;
+// 		valor_total_plan = valor_plan
+// 	}
+// 	// console.log('valor_total_plan  :' + valor_total_plan);
+// 	// console.log('bonAfinidad  :' + bonAfinidad);
+// 	// console.log('bonAfinidadporcentaje  :' + bonAfinidadporcentaje);
+// 	let promo = [];
+// 	promo.push(valor_total_plan,bonAfinidad,bonAfinidadporcentaje);
+// 	return promo;
+// }
+
+
+// export function promoDesc(valor_plan, promo_Porcentaje, afiche) {
+// console.log('valor_plan  :' + valor_plan);
+// console.log('promo_Porcentaje  :' + promo_Porcentaje);
+// console.log('afiche  :' + afiche);
+
+// // Ensure valor_plan and promo_Porcentaje are numbers
+// valor_plan = parseFloat(valor_plan);
+// promo_Porcentaje = parseFloat(promo_Porcentaje);
+
+// let bonAfinidad = 0;
+// let valor_total_plan = 0;
+// let bonAfinidadporcentaje = promo_Porcentaje;
+
+// if (afiche === true) {
+// 	bonAfinidad = valor_plan * bonAfinidadporcentaje;
+// 	valor_total_plan = valor_plan - Math.round(bonAfinidad); // Use Math.round to round to nearest integer
+// } else {
+// 	valor_total_plan = valor_plan;
+// }
+
+// console.log('valor_total_plan  :' + valor_total_plan);
+// console.log('bonAfinidad  :' + bonAfinidad);
+// console.log('bonAfinidadporcentaje  :' + bonAfinidadporcentaje);
+
+// // Return an object instead of an array for better readability
+// return {
+// 	valor_total_plan: valor_total_plan,
+// 	bonAfinidad: bonAfinidad,
+// 	bonAfinidadporcentaje: bonAfinidadporcentaje
+// };
+// }

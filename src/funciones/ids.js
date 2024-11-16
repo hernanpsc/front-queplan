@@ -513,7 +513,7 @@ export function productIdRasCristal(anios1, anios2, tipoAsoc, group) {
 
     // Determine the age ranges
     const rangoEtario_1 = getAgeRange(anios1);
-    let rangoEtario_2 = '';
+    const rangoEtario_2 = getAgeRange(anios1);
     
     if (group === 3 || group === 4) {
         rangoEtario_2 = getAgeRange(anios2);
