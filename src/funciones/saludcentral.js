@@ -139,12 +139,12 @@ console.log('Entrando a promoDescuento con:', { precioInicial, porcentajeBonific
                 var plan = new Object();
                 plan.item_id = _id
                 plan.name = 'Salud Central ' + nombre;
-               plan.precio = precio;
-               plan.promoPorcentaje = porcentajeBonificado;
-               plan.promoDescuento = bonificacionAplicada;
-               plan.valorLista = precioInicial;
-               plan.aportes_OS = factores.deduction;
-               array.push(plan);	    
+                plan.precio = precio;
+                plan.promoPorcentaje = porcentajeBonificado;
+                plan.promoDescuento = bonificacionAplicada;
+                plan.valorLista = precioInicial;
+                plan.aportes_OS = factores.deduction;
+                array.push(plan);	    
 }
 console.log('array   :' ,array);
 
