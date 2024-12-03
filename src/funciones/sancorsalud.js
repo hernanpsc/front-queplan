@@ -1,45 +1,57 @@
 import * as functions from './functions';
 
-export	function  valor_SanCor(aportes_OS,coeficiente,edad_1,edad_2,numHijos, precio_1Hijo,precio_2Hijo,precio_Titular,precios_Conyuge,numhijo_2,grupo_Fam,segvida1,segvida2,supra_salud,con_afinidad,promocion,genSanCor, group){
-	
-	let edad1 = edad_1;
-	let edad2  = edad_2;
-	let hijos  = numHijos;
-	let precio1Hijo = precio_1Hijo;
-	let precio2Hijo = precio_2Hijo;
-	let precioTitular = precio_Titular;
-	let preciosConyuge = precios_Conyuge;
-	let numhijo2 = numhijo_2;
-	let grupoFam = grupo_Fam;
-	let aportesOS = aportes_OS;
+export	function  valor_SanCor( prices,grupo, arrayDeducciones){
+    let segvida1 = false;
+	let segvida2 = false;
+    let supra_salud = false;
+	let edad1 = grupo[7];
+	let edad_2  = grupo[8];
+	let hijos  = grupo[3];
+	let precio1Hijo = prices.precioSanCor1Hijo.precios.precios;
+	let precio2Hijo = prices.precioSanCor2Hijo.precios.precios;
+	let precioTitular = prices.precioSanCorTitular.precios.precios;
+	let preciosConyuge = prices.precioConyugeSanCor.precios.precios;
+	let numhijo2 = grupo[2];
 	// console.log(grupoFam)
-
-	if(grupoFam == 1 ){
-		edad2 = 0;
+	let empresa = 'SanCor Salud';
+	let familia = grupo[9];
+	let capitas = grupo[5];
+	if(familia === 1 ){
+		edad_2 = 0;
 		preciosConyuge = 0;
 		hijos =0;
-	} else if (grupoFam == 2 ) {
+	} else if (familia === 2 ) {
 		preciosConyuge = 0;
-		edad2 = 0;
-	  } else if ( grupoFam ==3){
+		edad_2 = 0;
+	  } else if ( familia ===3){
 		hijos =0;
 	  }
 
-// console.log('preciosConyuge');
-// console.log(preciosConyuge);
+console.log('preciosConyuge');
+console.log(preciosConyuge);
 
-// console.log('hijos');
-// console.log(hijos);
+console.log('hijos');
+console.log(hijos);
 	  let precio_adultos_Sancor = {};
 	let precios = {};
 	         
 
 	
 //Funcion para el calculo de aportes
-let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])
-	let array = [];
+      let factores = arrayDeducciones.find(item => item.name === empresa);
+	  let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
+	  console.log('factores   :' , factores);
+	  console.log('tipoAsociado   :' , tipoAsociado);
+	  let promociones = factores.bonificaciones;
+	  let bonAfinidad = promociones[promociones[0]];
+	  let con_afinidad = false;
+	if (promociones[0] >= 1 ){
+		con_afinidad === true;
+	}
 
-		if (edad2 > 17) {
+let array = [];
+
+		if (edad_2 > 17) {
 			precio_adultos_Sancor = Object.entries(preciosConyuge).reduce((acc, [key, value]) => // matrimonio
 				({
 					...acc,
@@ -74,6 +86,7 @@ let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coef
 		} else {
 			precios = precio_adultos_Sancor;
 		}
+		// console.log('precios 58')
         // console.log(precios)
 	//	<!-----------------------Bucle SANCOR start------------------------>							
 	              
@@ -88,28 +101,40 @@ let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coef
 					
 					let segVidacheck = segvida1;
 					let segVida2check = segvida2;					    						
-					let segVidaTotal = 	functions.segVidaPlus(segVidacheck,segVida2check,edad1,edad2,segVidaPrecio);
+					let segVidaTotal = 	functions.segVidaPlus(segVidacheck,segVida2check,edad1,edad_2,segVidaPrecio);
 					let conPromo = con_afinidad;
 					let empresaPlan = [j][0];
 					// console.log('empresaPlan ')
 					// console.log(empresaPlan)
-					// console.log('conPromo SanCor  :')
-					// console.log(conPromo)
+
 					let _id = empresaPlan;
 
-					let gen = genSanCor;
+					let gen = grupo[4];
 					let plan_gen = empresaPlan.substring(3, 6);
 					let nombre = functions.planNombre(gen,plan_gen,empresaPlan.substring(3))
-					
-					let bonInscr = parseInt(precios[j]) * 0.1;
-					let otrosBen = functions.suprasSalud(supra_salud,gen,nombre,otrosBenPrecios,grupoFam);
+					let confirmaSiTieneBonificaciones = con_afinidad;
+					let porcentajeBonificado = bonAfinidad;
+					let precioInicial = precios[j];
+					// console.log('precioInicial SanCor Salud  :');console.log(precioInicial)					
+					let bonInscr = parseInt(precioInicial) * 0.1;
+					let otrosBen = functions.suprasSalud(supra_salud,gen,nombre,otrosBenPrecios,familia);
 
-					let promo = functions.promoDescuento(precios[j],promocion, conPromo)[2];
-					let descPromo = functions.promoDescuento(precios[j],promo, conPromo)[1];
-					let precioTotal = functions.promoDescuento(precios[j],promo, conPromo)[0];
-                     // console.log('precioTotal');// console.log(precioTotal)
+					// Llamar a la función y desestructurar el array devuelto
+					let [valor_total_plan, valorBonificacion] = functions.promoDescuento(precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones);
 
-					let cuotaSocial = otrosBenPrecios[grupoFam - 1]['CS'];
+					// Asignar los valores a nuevas variables
+					let precioTotal = valor_total_plan;
+					let bonificacionAplicada = valorBonificacion;
+
+					// Mostrar los resultados en consola
+					// console.log('precioTotal :');
+					// console.log(precioTotal);
+
+					// console.log('bonificacionAplicada :');
+					// console.log(bonificacionAplicada);
+
+
+					let cuotaSocial = otrosBenPrecios[capitas - 1]['CS'];
 
 					// console.log('cuotaSocial');
 					// console.log(cuotaSocial)
@@ -127,17 +152,16 @@ let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coef
 					
 					precioTotal = precioTotal + otrosCargos;
 					// console.log('precioTotal');// console.log(precioTotal)
-                    // console.log('descOS');// console.log(descOS)
+                    // console.log('factores');// console.log(factores)
 					// console.log('precioTotal');// console.log(precioTotal)
 
-					// console.log('aportesOS[0]');// console.log(aportesOS[0])
 
-					let precio = functions.final(aportesOS[0],descOS,precioTotal);
+					let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
 					// console.log('precio ')
 					// console.log(precio)
-					// if (aportesOS[0] === "I") {
+					// if (tipoAsociado === "I") {
 					// 	precio = parseInt(precioTotal) - parseInt(bonInscr);
-					// 	descOS = bonInscr;
+					// 	factores = bonInscr;
 					// 	textoAportesOS = 'Bonif. RI :'
 					//  }
 				//	<!--------------------Crear Objeto SANCOR end------------------------------>																            			
@@ -150,10 +174,10 @@ let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coef
 							}					
 							plan.seguroVidaPlus = segVidaTotal;		
 							plan.precio = precio;
-							plan.promoPorcentaje = promo;
-				        	plan.promoDescuento = descPromo;
-				            plan.valorLista = precios[j];
-							plan.aporteOS = descOS;
+							plan.promoPorcentaje = porcentajeBonificado;
+				        	plan.promoDescuento = bonificacionAplicada;
+				            plan.valorLista = precioInicial;
+							plan.aportes_OS = factores.deduction;
 							array.push(plan);	
 						}
 			 //	<!-----------------------Bucle SANCOR end------------------------>											

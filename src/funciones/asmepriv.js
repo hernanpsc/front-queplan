@@ -1,77 +1,116 @@
 import * as functions from './functions';
-//  grupoFamiliar, AdmenorUno, HijoHasta21, RecargoHijo21a29
-export function valor_Asmepriv(aportes_OS,valorCoeficiente,edad_1, edad_2,numHijos, group,  grupo, con_afinidad,bonAfinidad,grupoFamiliar, AdmenorUno, HijoHasta21, RecargoHijo21a29){
-   
-    let edad1 = edad_1;
-	let edad2  = edad_2;
-	let hijos  = numHijos;
-	let grupoFam = group;    
-    let aportesOS = aportes_OS;
-    let coeficiente = valorCoeficiente;
-    let precioPrincipal = grupoFamiliar;
-    let precioAdmenorUnAnio = AdmenorUno;
-    let precioHijoHasta21 = HijoHasta21;
-    let precioRecargoHijo21a29 = RecargoHijo21a29;
-    let descuento_promo = bonAfinidad;
-    let grupo_array = grupo;
-    
-    console.log('aportesOS Asmepriv :  '  + aportesOS);
-    console.log('coeficiente Asmepriv :  '  + coeficiente);
-    console.log('edad1 Asmepriv :  '  + edad1);
-    console.log('edad2 Asmepriv :  '  + edad2);
-    console.log('grupoFam Asmepriv :  '  + grupoFam);
-    console.log('hijos Asmepriv :  '  + hijos);
-    console.log('precioPrincipal Asmepriv :  '  );console.log(precioPrincipal);
-    console.log('precioAdmenorUnAnio Asmepriv :  '  );console.log(precioAdmenorUnAnio);
-    console.log('precioHijoHasta21 Asmepriv :  '  );console.log(precioHijoHasta21);
-    console.log('precioRecargoHijo21a29 Asmepriv :  '  );console.log(precioRecargoHijo21a29);
-  
-    console.log('descuento_promo Asmepriv :  '  + descuento_promo);
-    console.log('grupo_array Asmepriv :  '  + grupo_array);
 
 
+export function valor_Asmepriv(
+    prices,
+    grupo,
+    arrayDeducciones
+    ){
 
+        
 
+        let familia = grupo[9];
+        console.log('familia Asmepriv :  ' ,familia);
 
-    if(grupoFam === 1 ){
-		edad2 = 0;
-		precioAdmenorUnAnio = [];
-        precioHijoHasta21 = [];
-        precioRecargoHijo21a29 = [];
-		hijos =0;
-        console.log('hijos 45 Asmepriv :  '  + hijos);
+        let capitas = grupo[5];
+        console.log('capitas Asmepriv :  ' ,capitas);
 
-	} else if (grupoFam === 2 ) {
-		edad2 = 0;
-        console.log('hijos 51 Asmepriv :  '  + hijos);
+    let edad_1 = grupo[7];
+    console.log('edad_1 Asmepriv :  ' ,edad_1);
 
-	  } else if ( grupoFam === 3){
-		hijos =0;
-        precioAdmenorUnAnio = [];
-        precioHijoHasta21 = [];
-        precioRecargoHijo21a29 = [];
+	let edad_2  = grupo[8];
+    console.log('edad_2 Asmepriv :  ' ,edad_2);
 
-	  } else if ( grupoFam ==4){
+	let hijos  = grupo[3];
+    console.log('hijos Asmepriv :  ' ,hijos);
+
+    let precioPrincipal = prices.precioAsmepriv.precios.precios;
+    console.log('precioPrincipal Asmepriv :  ',precioPrincipal  );// console.log(precioPrincipal);
+
+    let precioAdmenorUnAnio = prices.precioAdmenorUno.precios.precios;
+    console.log('precioAdmenorUnAnio Asmepriv :  ',precioAdmenorUnAnio  );// console.log(precioAdmenorUnAnio);
+
+    let precioHijoHasta21 = prices.precioAsmeprivHijoHasta21.precios.precios;
+    console.log('precioHijoHasta21 Asmepriv :  ', precioHijoHasta21 );// console.log(precioHijoHasta21);
+    let precioRecargoHijo21a29 = {};
+
+    let precioModuloMaternidad =    {};
+    if(prices.precioAsmeprivRecargoHijo21a29){
+
+    precioRecargoHijo21a29 = prices.precioAsmeprivRecargoHijo21a29.precios.precios;
+
+    precioModuloMaternidad = prices.precioAsmeprivModuloMat.precios.precios;
     }
+  
+    let empresa = 'Asmepriv';
+
+
+
+   
+
+
+
+    switch (familia) {
+        case 1:
+            precioAdmenorUnAnio = {};
+            precioHijoHasta21 = {};
+            precioRecargoHijo21a29 = {};
+            break;
+        case 2:
+
+            break;
+        case 3:
+            precioAdmenorUnAnio = {};
+            precioHijoHasta21 = {};
+            precioRecargoHijo21a29 = {};
+            break;
+        case 4:
+            // No changes here, maybe you want to add logic for case 4?
+            break;
+        default:
+            // Handle unknown group cases, if necessary
+            break;
+    }
+
+
 
 	  let precio_Asmepriv = {};
 	  let precios = {};
 
-      let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])
-      let array = [];
+      let factores = arrayDeducciones.find(item => item.name === empresa);
+      let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
+      let promociones = factores.bonificaciones;
+      let bonAfinidad = promociones[promociones[0]];
+      let con_afinidad = false;
+    if (promociones[0] >= 1 ){
+        con_afinidad === true;
+    }
 
+    let array = [];
 
-      
       precios = precioPrincipal;
+console.log('  precios :',precios)
 
-    
 	// // //	<!-----------------------Bucle ASMEPRIV start------------------------>							
 	              
     for (let j in precios) {
-        console.log('imprimir j')
+        // console.log('imprimir j')
 
-        console.log(j)
+        let _id = [j][0];
 
+        let nombre = _id.substring(3);
+        let confirmaSiTieneBonificaciones = con_afinidad;
+        let porcentajeBonificado = bonAfinidad;
+        let precioInicial = precios[j];
+        
+        
+        // Llamar a la función y desestructurar el array devuelto
+        let [valor_total_plan, valorBonificacion] = functions.promoDescuento(precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones);
+        
+        // Asignar los valores a nuevas variables
+        let precioTotal = valor_total_plan;
+        let bonificacionAplicada = valorBonificacion;
+        
 
                 
                 let conPromo = con_afinidad;
@@ -80,9 +119,6 @@ export function valor_Asmepriv(aportes_OS,valorCoeficiente,edad_1, edad_2,numHij
                 console.log('promocion Asmepriv :  '  + promocion);
             
                 let empresaPlan = [j][0];
-
-                let _id = empresaPlan;
-                let nombre = empresaPlan.substring(3);
 
                 console.log('conPromo : ' + conPromo)
                 console.log('precios[j] : ' + precios[j])
@@ -94,21 +130,17 @@ export function valor_Asmepriv(aportes_OS,valorCoeficiente,edad_1, edad_2,numHij
                 // console.log('descPromo  >');
                 // console.log(descPromo)
                 // let precioTotal = functions.promoDescuento(precios[j],promo, conPromo)[0];
-                let precioTotal = precios[j];
+           
 
-                 console.log('precioTotal  >');
-                 console.log(precioTotal)
-               
-                //  console.log('descOS');
-                //   console.log(descOS)
-         
+                 // console.log('precioTotal  >');
+                 // console.log(precioTotal)
+ 
 
-                //  console.log('aportes_OS[0]');
-                //  console.log(aportesOS[0])
 
-                // let precio = functions.final(aportesOS[0],descOS,precioTotal);
-                // console.log('precio ')
-                // console.log(precio)
+
+                let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
+                console.log('precio ')
+                console.log(precio)
 
     //         //	<!--------------------Crear Objeto ASMEPRIV end------------------------------>																            			
         var plan = new Object();
@@ -119,7 +151,7 @@ export function valor_Asmepriv(aportes_OS,valorCoeficiente,edad_1, edad_2,numHij
                         // plan.promoPorcentaje = promo;
                         // plan.promoDescuento = descPromo;
                         // plan.valorLista = precios[j];
-                        // plan.aporteOS = descOS;
+                        plan.aportes_OS = factores.deduction;
                         array.push(plan);
                     
                     }
@@ -128,9 +160,11 @@ export function valor_Asmepriv(aportes_OS,valorCoeficiente,edad_1, edad_2,numHij
     //      //	<!-----------------------Bucle ASMEPRIV end------------------------>											
     // //                 console.log( 'array ASMEPRIV')							
     // //                 console.log(array)							
-    // return "hola"
 
 
                     return array    
 
 }
+
+
+

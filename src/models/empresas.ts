@@ -22,7 +22,9 @@ const empresaSchema = new Schema<Empresa>(
         type: [String]
     },
     factores: {
-      coeficiente: Number
+      coeficiente: Number,
+      mono: [Number],
+      monotributo: {}
     }
 })
 

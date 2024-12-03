@@ -1,4 +1,94 @@
 
+export function grupoFamiliar(age0, age1, kids,family,edadh1,edadh2,edadh3,edadh4,edadh5) {
+    let edad_1 = age0;
+    let edad_2 = age1;
+	let familia = family;
+    let num_adultos = 1;
+    let primerhijo = 0;
+    let restohijos = 0;
+    let gen = '';
+    let capitas = 0;
+    let hijos = kids + 1;
+    let totalhijos = 0;
+    let arrayEdadesHijos = [];
+    let edadesHijos = [edadh1,edadh2,edadh3,edadh4,edadh5]
+	let grupoSigla = 'IND';
+
+	    // Ensure age2 is not greater than age
+		if (edad_2 > edad_1) {
+			[edad_1, edad_2] = [edad_2, edad_1];  // Swap values if age2 is greater than age
+		}
+	if( familia === 1){
+		edad_2 = 0;
+		hijos = 0;
+	} else if( familia === 2){
+		edad_2 = 0;
+        for(let i=0;i < hijos;i++ ){
+            arrayEdadesHijos.push(edadesHijos[i]);
+        }
+	}else if (familia === 3  ){
+		hijos = 0;
+		grupoSigla = 'MAT';
+     
+	}else{
+		grupoSigla = 'MAT'; 
+		 for(let i=0;i < edadesHijos.length;i++ ){
+        arrayEdadesHijos.push(edadesHijos[i]);
+    }}
+
+
+
+    if (kids === null) {
+        hijos = 0;
+    }
+    if (age1 === null) {
+        edad_2 = 0;
+    }
+
+	if (edad_2 == 0 && hijos == 0) {
+		num_adultos = 1;
+		primerhijo = 0;
+		restohijos = 0;
+		hijos = 0;
+	} else if (edad_2 > 0 && hijos == 0) {
+		num_adultos = 2;
+		primerhijo = 0;
+		restohijos = 0;
+		hijos = 0;
+	} else if (edad_2 == 0 && hijos >= 1) {
+		num_adultos = 1;
+		primerhijo = 1;
+		restohijos = hijos - 1;
+		hijos = hijos;
+	} else if (edad_2 > 0 && hijos >= 1) {
+		num_adultos = 2;
+		primerhijo = 1;
+		restohijos = hijos - 1;
+		totalhijos = hijos;
+	}
+	capitas = parseInt(num_adultos) + parseInt(totalhijos);
+    clearTimeout = parseInt(hijos);
+    if (edad_1 <= 35 && edad_2 <= 35) {
+        gen = 'GEN';
+    } else {
+        gen = '';
+    }
+// console.log('fila 66 :', num_adultos)
+// console.log('fila 66 :', primerhijo)
+// console.log('fila 66 :', restohijos)
+// console.log('fila 66 :', totalhijos)
+// console.log('fila 66 :', gen)
+// console.log('fila 66 :', capitas)
+// console.log('fila 66 :', arrayEdadesHijos)
+// console.log('fila 66 :', edad_1)
+// console.log('fila 66 :', edad_2)
+// console.log('fila 66 :', familia)
+
+
+	// console.log(capitas)
+    return [num_adultos, primerhijo, restohijos, totalhijos, gen, capitas,arrayEdadesHijos,edad_1,edad_2,familia,grupoSigla];
+}
+
 	//	<!----------------------FUNCIONES QUE SE USAN EL CONTROLADOR CORIZACION ANTES DE ENTREGAR EL RESULTADO------------------------>							
 
   	
@@ -71,77 +161,142 @@
 	
 	
 	
-		//	<!-----------------------FUNVIONES QUE SE USAN EN LOS ARCHIVOS DE ESTA MISMA CARPETA PARA EL CALCULO DELOS PRECIOS------------------------>							
+		//	<!-----------------------FUNCIONES QUE SE USAN EN LOS ARCHIVOS DE ESTA MISMA CARPETA PARA EL CALCULO DELOS PRECIOS------------------------>							
 		// let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])
 
-	 export function calculodescOS(
-		tipo_IngresoPDMI,
-		eleccionSueldoOAporte,
-		sueldoSueldoOAporte,
-		porporsentajeDeAPorte,
-		categoria_Mono,
-		arrayValorMonotXCategoria,
-		beneficiariosF184,
-		){
-	let	descXCapita = arrayValorMonotXCategoria[categoria_Mono]
-	
-	
-	let deduccionAportesObraSocial = 0;
-	if (tipo_IngresoPDMI == "D") {
+		
+	 export function calculodescOS(aportes_OS,empresa){
+		console.log('linea functions 79 :  ',aportes_OS)
+		console.log('linea functions 80 :  ',empresa)
+
+        let prepaga = empresa;
+		let tipo_IngresoPDMI =aportes_OS[0];
+		console.log('linea functions 84 :  ',tipo_IngresoPDMI)
+
+		let cifraRecibida =aportes_OS[3];
+		console.log('linea functions 87 :  ',cifraRecibida)
+
+
+		let arrayFactores = aportes_OS[5];
+		console.log('linea functions 83 :  ',arrayFactores)
+        
+		let categoria_Mono =aportes_OS[4];
+		if(categoria_Mono){
+		console.log('linea functions 86 categoria_Mono:  ',categoria_Mono)
+		}
+		const bonificaciones = buscar_valores(arrayFactores, prepaga,categoria_Mono)[2];
+		console.log('linea functions 99 bonificaciones',bonificaciones)
+
+        let coeficiente = buscar_valores(arrayFactores, prepaga,categoria_Mono)[0];
+		console.log('linea functions 99 coeficiente',coeficiente)
+
+		const descXCapita = buscar_valores(arrayFactores, prepaga, categoria_Mono)[1];
+
+		console.log('linea functions 104 descXCapita',descXCapita)
+		let beneficiariosF184 =aportes_OS[1];
+			console.log('tipo_IngresoPDMI linea 104    :      ' ,tipo_IngresoPDMI);
+			console.log('cifraRecibida  linea 105    :      ' ,cifraRecibida);
+			console.log('coeficiente   linea 106   :      ' ,coeficiente);
+			console.log('categoria_Mono    linea 107  :      ' ,categoria_Mono);
+			console.log('beneficiariosF184   linea 108  :      ' ,beneficiariosF184);
+
+	let deduccionOS = 0;
 					
-			
+	console.log('linea functions 116 deduccionOS',deduccionOS)
+
 		if (tipo_IngresoPDMI == "D") {
-			if (eleccionSueldoOAporte.includes('Sueldo')) {
-				deduccionAportesObraSocial = sueldoSueldoOAporte * porporsentajeDeAPorte/100;
-	
-			} else if (eleccionSueldoOAporte.includes('Aporte')) {
-				deduccionAportesObraSocial = sueldoSueldoOAporte /3*porporsentajeDeAPorte;
+			if ( cifraRecibida > 300000) {
+				deduccionOS = cifraRecibida * coeficiente/100;
+				console.log('linea functions 120 cifraRecibida',cifraRecibida)
+				console.log('linea functions 120 coeficiente',coeficiente)
+				console.log('linea functions 120 deduccionOS',deduccionOS)
+			} else if (cifraRecibida < 290000) {
+				deduccionOS = cifraRecibida /3*coeficiente;
+				console.log('linea functions 125 cifraRecibida',cifraRecibida)
+				console.log('linea functions 125 coeficiente',coeficiente)
+				console.log('linea functions 125 deduccionOS',deduccionOS)
 			} else if (beneficiariosF184 > 0) {
 	
-				deduccionAportesObraSocial = deduccionAportesObraSocial + (beneficiariosF184 * descXCapita);
+				deduccionOS = deduccionOS + (beneficiariosF184 * descXCapita);
+				console.log('linea functions 131 cifraRecibida',cifraRecibida)
+				console.log('linea functions 131 coeficiente',coeficiente)
+				console.log('linea functions 131 deduccionOS',deduccionOS)
 			};
-		} else if (tipo_IngresoPDMI === "M") {
-			deduccionAportesObraSocial = beneficiariosF184 * descXCapita;
+		} else if (tipo_IngresoPDMI === "M" || cifraRecibida === "" && beneficiariosF184 > 0 ) {
+			deduccionOS = beneficiariosF184 * descXCapita;
+			console.log('linea functions 131 beneficiariosF184',beneficiariosF184)
+			console.log('linea functions 131 descXCapita',descXCapita)
+			console.log('linea functions 131 tipo_IngresoPDMI',tipo_IngresoPDMI)
+			tipo_IngresoPDMI === "M";
 		} else {
-			deduccionAportesObraSocial = '';
-		};
-	}	return deduccionAportesObraSocial
-	}
+			deduccionOS = 0;
+	}	console.log('linea functions 132 deduccionOS',deduccionOS)
+
+	return [deduccionOS,tipo_IngresoPDMI,bonificaciones]
+}
+
 	
-	
-	export function promoDescuento(valor_plan,promo_Porcentaje, afiche){
-		let bonAfinidad = 0;
-		let valor_total_plan = 0;
-		let bonAfinidadporcentaje = promo_Porcentaje;
-		if (afiche == true) {
-			bonAfinidad = parseInt(valor_plan) * bonAfinidadporcentaje;
-			valor_total_plan = parseInt(valor_plan) - parseInt(bonAfinidad.toFixed());
-		} else {
-			bonAfinidad = 0;
-			valor_total_plan = valor_plan
+	export function promoDescuento(valor_plan, porcentajeBonificado, confirmaSiTienePromo) {
+
+		let descuentoAplicado = 0;
+		let nuevoValor = valor_plan;
+		console.log('descuentoAplicado:',descuentoAplicado);
+		console.log('nuevoValor:', nuevoValor);
+		console.log('valor_plan:', valor_plan);
+
+		if (confirmaSiTienePromo) {
+		  descuentoAplicado = valor_plan * (porcentajeBonificado / 100);
+		  nuevoValor = valor_plan - descuentoAplicado;
 		}
-		return [valor_total_plan,bonAfinidad,bonAfinidadporcentaje]
-	}
+		console.log('descuentoAplicado:',descuentoAplicado);
+		console.log('nuevoValor:', nuevoValor);
+		console.log('valor_plan:', valor_plan);
+
+		// // Verificar el valor antes de retornarlo
+		console.log('Devolviendo array desde promoDescuento:', [nuevoValor, descuentoAplicado]);
+		
+		// Devolver un array con el valor final y el descuento
+		return [nuevoValor, descuentoAplicado];
+	 }
+	 
 	
 	
 	export function final(tipo_IngresoPDMI,deduccionAportesObraSocial,valor_total_plan){
+
+
 		let tipoIngresoPDMI = tipo_IngresoPDMI;
+		console.log('tipo_IngresoPDMI :', tipo_IngresoPDMI);
+
 		let deduccion_AportesObraSocial = deduccionAportesObraSocial;
+		console.log('deduccionAportesObraSocial 1:', deduccionAportesObraSocial);
+
 		let valortotal_plan = valor_total_plan;
+		console.log('valor_total_plan :', valor_total_plan);
+
 		let precio_final_a_pagar = valortotal_plan;
+		console.log('precio_final_a_pagar 1 :', precio_final_a_pagar);
+
 		if (tipoIngresoPDMI === "M" || tipoIngresoPDMI === "D") {
 			deduccion_AportesObraSocial = parseInt(deduccion_AportesObraSocial);
+			console.log('deduccionAportesObraSocial 2:', deduccionAportesObraSocial);
+
 			precio_final_a_pagar = parseInt(valor_total_plan)- deduccion_AportesObraSocial;
+			console.log('precio_final_a_pagar 2 :', precio_final_a_pagar);
+
 		} else {
 			precio_final_a_pagar = valortotal_plan;
+			console.log('precio_final_a_pagar 3 :', precio_final_a_pagar);
+
 		}
 		if (precio_final_a_pagar < 0){
 			precio_final_a_pagar = 0;
+			console.log('precio_final_a_pagar 4 :', precio_final_a_pagar);
+
 		}
+		console.log('precio_final_a_pagar 5 :', precio_final_a_pagar);
+
 		return precio_final_a_pagar
 		}
-	
-	
 	
 		//	<!-----------------------ESTAS FUNCIONES LAS USA SOLO SANCOR SALUD------------------------>							
 	
@@ -177,12 +332,20 @@
 	
 	
 	export function planNombre(gen,plan_gen,plan_nombre){
+		// console.log('26 0')
+		let nombrePlan = "";
 		if (gen === 'GEN' && plan_gen >= 100 && plan_gen <= 450) {
-			plan_nombre = 'GEN' + plan_nombre;
+			nombrePlan = 'GEN' + plan_nombre;
+			// console.log('26 1')
+
 		} else {
-			plan_nombre = plan_nombre;
+			nombrePlan = plan_nombre;
+			// console.log('26 2')
+
 		};
-		return plan_nombre
+		// console.log('26 3')
+		console.log(nombrePlan)
+		return nombrePlan;
 	}
 		
 	export function suprasSalud(supras,gen,plan_nombre,otrosBenPrecios,grupoFam){
@@ -217,326 +380,281 @@
 		}return otrosBen
 	}
 	
-export function imprimirPrecios (prices,tipo_IngresoPDMI,group,idAdultosMedife,idPrevencion,IdDoctored,IdsAvalian,idsCristalyRas,idsLuisPasteur,idsAsmepriv,idsBayresPlan,idsHominis){
+export function imprimirPrecios(prices,ids){
 
-console.log(' ID Prevencion  :  ' + idPrevencion);
-console.log(' precioPrevencion  :');
-console.log(prices.precioPrevencion.precios );
+	  const claves = [	  
+		{ key: 'precioSanCor1Hijo', index: [0, 2] },
+		{ key: 'precioSanCor2Hijo', index: [0, 3] },
+		{ key: 'precioSanCorTitular', index: [0, 0] },
+		{ key: 'precioConyugeSanCor', index: [0, 1] },
+		{ key: 'precio_titular_Omint', index: [1, 0] },
+		{ key: 'precio_conyuge_Omint', index: [1, 1] },
+		{ key: 'precio_hijo1_Omint', index: [1, 2] },
+		{ key: 'precio_hijo2_Omint', index: [1, 3] },
+		{ key: 'priceAdultosPr', index: [14, 0] },
+		{ key: 'pricePrHijoMenir1', index: [14, 1] },
+		{ key: 'pricePrHijoMenir25', index: [14, 2] },
+		{ key: 'precioTitularSwiss', index: [3, 0] },
+		{ key: 'precioConyugeSwiss', index: [3, 1] },
+		{ key: 'precioHijo1Swiss', index: [3, 2] },
+		{ key: 'precioHijo2Swiss', index: [3, 3] },
+		{ key: 'priceGrupoGaleno', index: [2] },
+		{ key: 'precioMedifeAdultos', index: [4, 0] },
+		{ key: 'precioMedifeHIJO0a1', index: [4, 1] },
+		{ key: 'precioMedifeHIJO2a20', index: [4, 2] },
+		{ key: 'precioMedifeHIJO21a29', index: [4, 3] },
+		{ key: 'precioPrevencion', index: [5] },
+		{ key: 'precioDoctoredGrupo', index: [6, 0] },
+		{ key: 'precioDoctoredHijo3', index: [6, 1] },
+		{ key: 'precioDoctoredAd', index: [6, 2] },
+		{ key: 'precioAvalianTitular', index: [7, 0] },
+		{ key: 'precioAvalianConyuge', index: [7, 1] },
+		{ key: 'precioAvalianHijo1', index: [7, 2] },
+		{ key: 'precioAvalianHijo2', index: [7, 3] },
+		{ key: 'precioAvalianHijo3', index: [7, 4] },
+		{ key: 'precioAvalianHijo25', index: [7, 5] },
+		{ key: 'precioTitularRas', index: [8, 0] },
+		{ key: 'precioConyugeRas', index: [8, 1] },
+		{ key: 'precioHijo1Ras', index: [8, 2] },
+		{ key: 'precioHijo2Ras', index: [8, 3] },
+		{ key: 'precioHijo3Ras', index: [8, 4] },
+		{ key: 'precioTitularCristal', index: [8, 5] },
+		{ key: 'precioConyugeCristal', index: [8, 6] },
+		{ key: 'precioHijo1Cristal', index: [8, 7] },
+		{ key: 'precioHijo2Cristal', index: [8, 8] },
+		{ key: 'precioHijo3Cristal', index: [8, 9] },
+		{ key: 'precioLuispasteurAdultos', index: [9, 0] },
+		{ key: 'precioLuispasteurNieto', index: [9, 1] },
+		{ key: 'precioLuispasteurAdicional', index: [9, 2] },
+		{ key: 'precioLuispasteurHijo', index: [9, 3] },
+		{ key: 'precioAsmepriv', index: [10, 0] },
+		{ key: 'precioAdmenorUno', index: [10, 1] },
+		{ key: 'precioAsmeprivHijoHasta21', index: [10, 2] },
+		{ key: 'precioAsmeprivRecargoHijo21a29', index: [10, 3] },
+		{ key: 'precioAsmeprivModuloMat', index: [10, 4] },
+		{ key: 'precioBayresAdultos', index: [11, 0] },
+		{ key: 'precioBayresHijoHasta25', index: [11, 1] },
+		{ key: 'precioBayresAd18a49', index: [11, 2] },
+		{ key: 'precioBayresJovenSinMaternidad', index: [11, 3] },
+		{ key: 'precioBayresInd18a29', index: [11, 4] },
+		{ key: 'precioHominis', index: [12] },
+		{ key: 'precioSaludcentralTitular', index: [13, 0] },
+		{ key: 'precioSaludcentralConyuge', index: [13, 1] },
+		{ key: 'precioSaludcentralHijo1', index: [13, 2] },
+		{ key: 'precioSaludcentralHijo2', index: [13, 3] },
+	  ];
+ 
+	  claves.forEach(({ key, index }) => {
+		try {
+		  const id = ids[index[0]]?.[index[1]];
+		  const precio = prices[key]?.precios;
+	
+		  console.log(`${key} : ${id}`);
+		  console.log(precio);
+		} catch (error) {
+		  console.error(`Error al procesar ${key}:`, error);
+		}
+	  });
+	}
+	export function buscar_valores(arreglo, nombre, cat) {
+		// Mapear las letras de categoría a índices
+		let orden = '';
+		if (cat === "A") orden = 0;
+		else if (cat === "B") orden = 1;
+		else if (cat === "C") orden = 2;
+		else if (cat === "D") orden = 3;
+		else if (cat === "E") orden = 4;
+		else if (cat === "F") orden = 5;
+		else if (cat === "G") orden = 6;
+		else if (cat === "H") orden = 7;
+		else if (cat === "I") orden = 8;
+		else if (cat === "J") orden = 9;
+		else if (cat === "K") orden = 10;
+	  
+		// Encontrar la empresa en el arreglo
+    // Buscar la empresa en el arreglo
+    const empresa = arreglo.find(item => item.nombre === nombre);
+    console.log('Empresa encontrada:', empresa);
 
-console.log(" id:  IdDoctored[0]  :  "   + IdDoctored[0] );
-console.log(' precioDoctoredGrupo  :');
-console.log( prices.precioDoctoredGrupo.precios );
+    if (!empresa) {
+        console.warn('Empresa no encontrada');
+        return null;
+    }
 
-console.log(" id:  IdDoctored[1]   :  "   +  IdDoctored[1]);
-console.log(' precioDoctoredHijo3  :');
-console.log( prices.precioDoctoredHijo3.precios );
+    // Acceder a los factores de la empresa
+    const { factores } = empresa;
 
-console.log(" id:  IdDoctored[2]   :  "   +  IdDoctored[2]);
-console.log(' precioDoctoredAd  :');
-console.log( prices.precioDoctoredAd.precios );
+    const coeficiente = factores?.coeficiente || null;
+    const bonificaciones = factores?.monotributo || null;
 
-console.log('idAdultosMedife :' + idAdultosMedife);
-console.log(' precioMedifeAdultos  :');
-console.log( prices.precioMedifeAdultos.precios );
+    // Acceder a otros arrays
+    const valorMonotributo = factores?.mono[orden] || {};
 
-console.log('IDMedifeHijo0a1  :' + 'medife'+ tipo_IngresoPDMI + 'HIJO0a1');
-console.log(' precioMedifeHijo0a1  :');
-console.log( prices.precioMedifeHijo0a1.precios );
+    // Mostrar en consola para depuración
+    console.log('Bonificaciones:', bonificaciones);
 
-console.log('IDMedifeHijo0a20 :' + 'medife'+ tipo_IngresoPDMI + 'HIJO2a20');
-console.log(' precioMedifeHijo0a20  :');
-console.log( prices.precioMedifeHijo0a20.precios );
+    console.log('Coeficiente:', coeficiente);
+    console.log('Valor Monotributo:', valorMonotributo);
 
-console.log('IDMedifeHijo0a25 :' + 'medife'+ tipo_IngresoPDMI + 'HIJO25');
-console.log(' precioMedifeHijo0a25  :');
-console.log( prices.precioMedifeHijo0a25.precios );
-
-console.log('IDAvalianTitular  :' + IdsAvalian[0]);
-console.log(' precioAvalianTitular  :');
-console.log( prices.precioAvalianTitular.precios );
-
-console.log('IDAvalianConyuge  :' + IdsAvalian[1]);
-console.log(' precioAvalianConyuge  :');
-console.log( prices.precioAvalianConyuge.precios );
-
-console.log('IDAvalianHijo1  :' + IdsAvalian[2]);
-console.log(' precioAvalianHijo1  :');
-console.log( prices.precioAvalianHijo1.precios );
-
-console.log('IDAvalianHijo2  :' + IdsAvalian[3]);
-console.log(' precioAvalianHijo2  :');
-console.log( prices.precioAvalianHijo2.precios );
-
-console.log('IDAvalianHijo3  :' + IdsAvalian[4]);
-console.log(' precioAvalianHijo3  :');
-console.log( prices.precioAvalianHijo3.precios );
-
-console.log('IDAvalianHijo25  :' + IdsAvalian[5]);
-console.log(' precioAvalianHijo25  :');
-console.log( prices.precioAvalianHijo25.precios );
-
-console.log(" id:  'ras' + idsCristalyRas[0]   :  "   + idsCristalyRas[0]);
-console.log(' precioTitularRas  :');
-console.log( prices.precioTitularRas.precios );
-
-if(group== 3 || group == 4) {
-console.log(" id:  'ras' + idsCristalyRas[1]   :  "   + idsCristalyRas[1]);
-console.log(' precioConyugeRas  :');
-console.log( prices.precioConyugeRas.precios );
+    // Retornar los valores necesarios
+    return [coeficiente, valorMonotributo, bonificaciones];
 }
 
-console.log(" id:  'ras' + idsCristalyRas[2]   :  "   + idsCristalyRas[2]);
-console.log(' precioHijo3Ras  :');
-console.log( prices.precioHijo3Ras.precios );
-
-console.log(" id:  'ras' + idsCristalyRas[3]   :  "   + idsCristalyRas[3]);
-console.log(' precioHijo2Ras  :');
-console.log( prices.precioHijo2Ras.precios );
-
-console.log(" id:  'ras' + idsCristalyRas[4]   :  "   + idsCristalyRas[4]);
-console.log(' precioHijo1Ras  :');
-console.log( prices.precioHijo1Ras.precios );
-
-console.log(" id:  =  +  idsCristalyRas[5]   :  "   +  idsCristalyRas[5]);
-console.log(' precioTitularCristal  :');
-console.log( prices.precioTitularCristal.precios );
-
-if(group== 3 || group == 4) {
-console.log(" id:  =  +  idsCristalyRas[6]   :  "   +  idsCristalyRas[6]);
-console.log(' precioConyugeCristal  :');
-console.log( prices.precioConyugeCristal.precios );
-}
-
-console.log(" id:  =  +  idsCristalyRas[7]   :  "   +  idsCristalyRas[7] );
-console.log(' precioHijo3Cristal  :');
-console.log( prices.precioHijo3Cristal.precios );
 
 
-console.log(" id:  =  +  idsCristalyRas[8]   :  "  +   idsCristalyRas[8] );
-console.log(' precioHijo2Cristal  :');
-console.log( prices.precioHijo2Cristal.precios );
 
-console.log(" id:  =  +  idsCristalyRas[9]   :  "   +  idsCristalyRas[9]);
-console.log(' precioHijo1Cristal  :');
-console.log( prices.precioHijo1Cristal.precios );
+import {valor_Omint, valor_Premedic, valor_SanCor, valor_Galeno, valor_Swiss, valor_Doctored, valor_Prevencion, valor_Avalian, valor_Ras, valor_Cristal, valor_Asmepriv, valor_Asmepriv1,valor_Luispasteur, valor_Bayresplan, valor_Hominis,valor_Medife, valor_Saludcentral } from './index';
 
-console.log(" id:  =  +  idsLuisPasteur[0]  :  "   +  idsLuisPasteur[0] );
-console.log(' precioLuispasteurAdultos  :');
-console.log( prices.precioLuispasteurAdultos.precios );
+export function valor_prepagas(prices,grupo,arrayDeducciones){
 
-console.log(" id:  =  +  idsLuisPasteur[1]  :  "   +  idsLuisPasteur[1] );
-console.log(' precioLuispasteurNieto  :');
-console.log( prices.precioLuispasteurNieto.precios );
+	let	num_adultos = grupo[0];
+	let numhijo1 = grupo[1];
+	let numhijo = grupo[3];
+	let gen = grupo[4];
+	let arrayEdades = grupo[6];
+	let numhijo2 = grupo[2];
+	let numHijos = grupo[3];
+	let grupoFam = grupo[5];
+	let edad_1 = grupo[7];
+	let edad_2 = grupo[8];
 
-console.log(" id:  =  +  idsLuisPasteur[2]  :  "   +  idsLuisPasteur[2] );
-console.log(' precioLuispasteurAdicional  :');
-console.log( prices.precioLuispasteurAdicional.precios );
 
-console.log(" id:  =  +  idsLuisPasteur[3]  :  "   +  idsLuisPasteur[3] );
-console.log(' precioLuispasteurHijo  :');
-console.log( prices.precioLuispasteurHijo.precios );
 
-console.log(" id:  =  +  idsAsmepriv[0]  :  "   +  idsAsmepriv[0] );
-console.log(' precioAsmepriv  :');
-console.log( prices.precioAsmepriv.precios );
+	console.log(' GENERAL  1 : ',edad_1);
+	console.log(' GENERAL  1 : ',edad_2);
+	console.log(' GENERAL  1 : ',numhijo2);
+	console.log(' GENERAL  1 : ',numHijos);
+	console.log(' GENERAL  1 : ',grupoFam);
 
-console.log(" id:  =  +  idsAsmepriv[1]  :  "   +  idsAsmepriv[1] );
-console.log(' precioAdmenorUno  :');
-console.log( prices.precioAdmenorUno.precios );
 
-console.log(" id:  =  +  idsAsmepriv[2]  :  "   +  idsAsmepriv[2] );
-console.log(' precioAsmeprivHijoHasta21  :');
-console.log( prices.precioAsmeprivHijoHasta21.precios );
 
-console.log(" id:  =  +  idsAsmepriv[3]  :  "   +  idsAsmepriv[3] );
-console.log(' precioAsmeprivRecargoHijo21a29  :');
-console.log( prices.precioAsmeprivRecargoHijo21a29.precios );
-
-console.log(" id:  =  +  idsBayresPlan[0]  :  "   +  idsBayresPlan[0] );
-console.log(' precioBayresAdultos  :');
-console.log( prices.precioBayresAdultos.precios );
-
-console.log(" id:  =  +  idsBayresPlan[1]  :  "   +  idsBayresPlan[1] );
-console.log(' precioBayresHijoHasta25  :');
-console.log( prices.precioBayresHijoHasta25.precios );
-
-console.log(" id:  =  +  idsBayresPlan[2]  :  "   +  idsBayresPlan[2] );
-console.log(' precioBayresAd18a49  :');
-console.log( prices.precioBayresAd18a49.precios );
-
-console.log(" id:  =  +  idsBayresPlan[3]  :  "   +  idsBayresPlan[3] );
-console.log(' precioBayresJovenSinMaternidad  :');
-console.log( prices.precioBayresJovenSinMaternidad.precios );
-
-console.log(" id:  =  +  idsBayresPlan[4]  :  "   +  idsBayresPlan[4] );
-console.log(' precioBayresInd18a29  :');
-console.log( prices.precioBayresInd18a29.precios );
-
-console.log(" id:  =  +  precioHominis  :  "   +  idsHominis );
-console.log(' precioHominis  :');
-console.log( prices.precioHominis.precios );
-}
-
-// Función de búsqueda de coeficientes (sin tipos de TypeScript)
-function buscar_mi_coeficiente(type, coeficientesCopia) {
-	return coeficientesCopia[type]; // Devuelve el coeficiente correspondiente
-  }
-
-import { valorOmint, valor_Premedic, valor_SanCor, valor_Galeno, valor_Swiss, valor_Doctored, valor_Prevencion, valor_Avalian, valor_Ras, valor_Cristal, valor_Asmepriv, valor_Luispasteur, valor_Bayresplan, valor_Hominis } from './index';
-
-export function valor_prepagas(aporte_OS,edad_2,numHijos,numhijo2,prices,idOmint,afinidad,bonAfinidad,group,grupo,edadIdPremedic,edad_1,grupoFam,segvida,segvida1,supras,gen,numkids,coeficientesCopia){
-// console.log('valor_prepagas')
-	let omint = valorOmint(aporte_OS,edad_2,numHijos,numhijo2,prices.precio_titular_Omint.precios,prices.precio_conyuge_Omint.precios,prices.precio_hijo1_Omint.precios,prices.precio_hijo2_Omint.precios,idOmint[0],afinidad,bonAfinidad,buscar_mi_coeficiente('OMINT', coeficientesCopia),group);
-	// console.log(' valor_OMINT ' ,omint)
-	 let Premedic = valor_Premedic(aporte_OS,buscar_mi_coeficiente('Premedic', coeficientesCopia),grupo[3],prices.priceAdultosPr.precios,prices.pricePrHijoMenir25.precios,prices.pricePrHijoMenir1.precios,edadIdPremedic,afinidad,bonAfinidad,group)
-	// console.log(' valor_Premedic ' , Premedic)
-	 let SanCor = valor_SanCor(aporte_OS,buscar_mi_coeficiente('SanCor Salud', coeficientesCopia),edad_1,edad_2,grupo[3],prices.precioSanCor1Hijo.precios,prices.precioSanCor2Hijo.precios,prices.precioSanCorTitular.precios,prices.precioConyugeSanCor.precios,numhijo2,grupoFam,segvida,segvida1,supras,afinidad,bonAfinidad,gen);
-	// console.log(' valor_SanCor ' , SanCor)
-	 let Galeno = valor_Galeno(aporte_OS,prices.priceGrupoGaleno.precios,buscar_mi_coeficiente('Galeno', coeficientesCopia));    
-	// console.log(' valor_Galeno ' , Galeno)
-	 let Swiss = valor_Swiss(aporte_OS,edad_2,numkids,numhijo2,prices.precioTitularSwiss.precios,prices.precioConyugeSwiss.precios,prices.precioHijo1Swiss.precios,prices.precioHijo2Swiss.precios,buscar_mi_coeficiente('Swiss Medical', coeficientesCopia),group)
-	// console.log(' valor_Swiss ' , Swiss)
-	 let Doctored = valor_Doctored(aporte_OS,buscar_mi_coeficiente('Doctored', coeficientesCopia),grupo[3],prices.precioDoctoredGrupo.precios,prices.precioDoctoredHijo3.precios,group)
-	// console.log(' valor_Doctored ' , Doctored)
-	 let Prevencion = valor_Prevencion(aporte_OS,buscar_mi_coeficiente('Prevencion', coeficientesCopia),grupo[3],prices.precioPrevencion.precios,group)
-	// console.log(' valor_Prevencion ' , Prevencion)
-	 let Avalian = valor_Avalian(aporte_OS,buscar_mi_coeficiente('Avalian', coeficientesCopia),edad_1,edad_2,grupo[3], grupoFam,afinidad,bonAfinidad, prices.precioAvalianTitular.precios,prices.precioAvalianConyuge.precios,prices.precioAvalianHijo1.precios,prices.precioAvalianHijo2.precios,prices.precioAvalianHijo3.precios,prices.precioAvalianHijo25.precios);
-	// console.log(' valor_Avalian ' , Avalian)
-
-	// let Ras = valor_Ras(aporte_OS,buscar_mi_coeficiente('Ras', coeficientesCopia),edad_1, edad_2,numHijos, group, grupo, afinidad, bonAfinidad, prices.precioTitularRas.precios, prices.precioHijo1Ras.precios, prices.precioHijo2Ras.precios, prices.precioHijo3Ras.precios);
-	let Ras = valor_Ras(aporte_OS,buscar_mi_coeficiente('RAS', coeficientesCopia),edad_1, edad_2,numHijos, group, grupo, afinidad, bonAfinidad, prices.precioTitularRas.precios, prices.precioHijo1Ras.precios, prices.precioHijo2Ras.precios, prices.precioHijo3Ras.precios, prices.precioConyugeRas.precios);
-
-	// console.log(' valor_Ras ' , Ras)// No code was selected, so I will provide a// No code was selected, so I will provide a general improvement to the code
-		 let Cristal = valor_Cristal(aporte_OS,buscar_mi_coeficiente('Cristal', coeficientesCopia),edad_1, edad_2,numHijos, group, grupo, afinidad, bonAfinidad, prices.precioTitularCristal.precios, prices.precioHijo1Cristal.precios, prices.precioHijo2Cristal.precios, prices.precioHijo3Cristal.precios, prices.precioConyugeCristal.precios);
-		
-		
-		
-		 let Asmepriv = valor_Asmepriv(aporte_OS,buscar_mi_coeficiente('Asmepriv', coeficientesCopia),edad_1, edad_2,numHijos, group,  grupo, afinidad,bonAfinidad, prices.precioAsmepriv.precios, prices.precioAdmenorUno.precios, prices.precioAsmeprivHijoHasta21.precios,prices.precioAsmeprivRecargoHijo21a29.precios);
-	//  // console.log(' valor_Asmepriv ' , Asmepriv)
-
-	 console.log(' precio 1   :  ' ); console.log(prices.precioLuispasteurAdultos.precios);
-	 console.log(' precio 1   :  ' ); console.log(prices.precioLuispasteurNieto.precios);
-	 console.log(' precio 1   :  ' ); console.log(prices.precioLuispasteurAdicional.precios);
-	 console.log(' precio 1   :  ' ); console.log(prices.precioLuispasteurHijo.precios);
-	 let Luispasteur = valor_Luispasteur(aporte_OS,buscar_mi_coeficiente('Luis Pasteur', coeficientesCopia),edad_1, edad_2,numHijos, group,  grupo, afinidad,bonAfinidad, prices.precioLuispasteurAdultos.precios, prices.precioLuispasteurNieto.precios, prices.precioLuispasteurAdicional.precios, prices.precioLuispasteurHijo.precios );
+	console.log('arrayDeducciones   :',arrayDeducciones)
+	console.log(prices)
 	
-	//  // console.log(' valor_Luispasteur ' , Luispasteur);
-	//  let Bayresplan = valor_Bayresplan(aporte_OS,buscar_mi_coeficiente('Bayresplan', coeficientesCopia), group, bonAfinidad, prices.precioBayresAdultos.precios, prices.precioBayresHijoHasta25.precios, prices.precioBayresAd18a49.precios, prices.precioBayresJovenSinMaternidad.precios, prices.precioBayresInd18a29.precios );
-	//  // console.log(' valor_Bayresplan ' , Bayresplan)
-	//  let Hominis = valor_Hominis(aporte_OS,buscar_mi_coeficiente('Hominis', coeficientesCopia), group, bonAfinidad, prices.precioHominis.precios );
-	//  // console.log(' valor_Hominis ' , Hominis)
-	let concat = omint.concat(SanCor, Premedic,Galeno,Swiss,Doctored,Prevencion, Avalian, Ras, Cristal, Asmepriv, Luispasteur);
-	
-	
+	let omint = [];
+	omint = valor_Omint(prices,grupo,arrayDeducciones);
+	console.log(' valor_OMINT ' ,omint);
+
+	let Premedic = [];
+	Premedic = valor_Premedic(prices,grupo,arrayDeducciones);
+	console.log(' valor_Premedic ' , Premedic)
+
+	let SanCor = [];
+	SanCor = valor_SanCor(prices,grupo,arrayDeducciones);
+	console.log(' valor_SanCor ' , SanCor);
+
+	let Galeno = [];
+	Galeno = valor_Galeno(prices,arrayDeducciones);    
+	console.log(' valor_Galeno ' , Galeno)
+
+	let Swiss = [];
+	Swiss = valor_Swiss(prices,grupo,arrayDeducciones)
+	console.log(' valor_Swiss ' , Swiss);
+
+	let Doctored = [];
+	Doctored = valor_Doctored(prices,grupo,arrayDeducciones)
+	console.log(' valor_Doctored ' , Doctored);
+
+	let Prevencion = []
+	Prevencion = valor_Prevencion(prices,arrayDeducciones)
+	console.log(' valor_Prevencion ' , Prevencion);
+
+	let Avalian = [];
+
+	Avalian = valor_Avalian(prices,grupo,arrayDeducciones);
+	console.log(' valor_Avalian ' , Avalian);
+
+	let Ras = [];
+	Ras = valor_Ras(prices,grupo,arrayDeducciones);
+	console.log(' valor_Ras ' , Ras);
+
+    let Cristal = [];
+	Cristal = valor_Cristal( prices,grupo,arrayDeducciones);
+	console.log(' valor_Cristal ' , Cristal);
+
+	let Luispasteur = [];
+	Luispasteur = valor_Luispasteur(prices,grupo,arrayDeducciones);
+	console.log(' valor_Luispasteur ' , Luispasteur);
+
+	let Bayresplan = [];
+	Bayresplan = valor_Bayresplan( prices,grupo, arrayDeducciones);
+	console.log(' valor_Bayresplan ' , Bayresplan);
+
+	let Hominis = [];
+	Hominis = valor_Hominis( prices ,grupo,arrayDeducciones);
+	console.log(' valor_Hominis ' , Hominis);
+
+	let Asmepriv = [];
+	Asmepriv = valor_Asmepriv(prices,grupo,arrayDeducciones);
+	console.log(' valor_Asmepriv ' , Asmepriv);
+
+	let Medife = [];
+	Medife = valor_Medife(prices,grupo,arrayDeducciones);
+	console.log(' valor_Medife ' ,Medife )
+
+	let Saludcentral = [];
+	Saludcentral = valor_Saludcentral( prices,grupo,arrayDeducciones);
+	console.log(' valor_Saludcentral ' , Saludcentral);
+
+    let concat = [];
+	concat = omint.concat(Premedic,SanCor,Galeno,Swiss,Doctored,Prevencion,Avalian,Ras,Cristal,Asmepriv, Luispasteur, Bayresplan,Hominis, Medife,Saludcentral);
+	console.log(' concat  : ' , concat)
+
 	return concat
-
-
  };
 
-// // <! ----------SANCOR---------------------------------------------------->
-import { productID, productIdOmint, productIdGaleno, productIdPremedic, productIdSwiss, productIdMedife, productIdPrevencion, productIdDoctored, productIdAvalian, productIdRasCristal, productIdLuisPasteur,productIdAsmepriv, productIBayres,productIdHominis } from './index';
-export function ids_prepagas(edad_1, edad_2, tipo, numHijos,numkids,group,tipo_IngresoPDMI){
+import { productIDSancor, productIdOmint, productIdGaleno, productIdSwiss, productIdMedife, productIdPrevencion, productIdDoctored, productIdAvalian, productIdRasCristal, productIdLuisPasteur,productIdAsmepriv, productIBayres,productIdHominis,productIdSaludcentral, productIdPremedic } from './index';
+export function ids_prepagas(grupo,arrayDeducciones){
+    // <! ----------SANCOR---------------------------------------------------->
+	let idSancor  = productIDSancor(grupo,arrayDeducciones);  console.log(idSancor);
+	// <! -----------------------------OMINT---------------------------------------------------->
+	let idOmint  = productIdOmint(grupo,arrayDeducciones);  console.log(idOmint);
+	// <! -----------------------------GALENO--------------------------------------------------->
+	let idGaleno  = productIdGaleno(grupo,arrayDeducciones); console.log(idGaleno);
+	// <! ----------SWISS----------------------------------------------------------------------->
+	let idSwiss  = productIdSwiss(grupo,arrayDeducciones);  console.log(idSwiss);
+	// <! ----------MEDIFE---------------------------------------------------->
+	let idsMedife  = productIdMedife(grupo,arrayDeducciones);  console.log(idsMedife);
+	// <! ----------PREVENCION---------------------------------------------------->
+	let idPrevencion  = productIdPrevencion(grupo,arrayDeducciones);  console.log(idPrevencion);
+	// <! ----------DOCTORED---------------------------------------------------->
+	let IdDoctored  = productIdDoctored(grupo,arrayDeducciones);  console.log(IdDoctored);
+	// <! ----------AVALIAN---------------------------------------------------->
+	let IdsAvalian  = productIdAvalian(grupo,arrayDeducciones);  console.log(IdsAvalian);
+	// <! ----------CRISTAL y RAS---------------------------------------------------->
+	let idsCristalyRas  = productIdRasCristal(grupo,arrayDeducciones);  console.log(idsCristalyRas);
+	// <! ----------LUIS PASTEUR---------------------------------------------------->
+	let idsLuisPasteur  = productIdLuisPasteur(grupo,arrayDeducciones);  console.log(idsLuisPasteur);
+	// <! ----------ASMEPRIV---------------------------------------------------->
+	let idsAsmepriv  = productIdAsmepriv(grupo,arrayDeducciones);  console.log(idsAsmepriv);
+	// <! ----------BAYRES PLAN---------------------------------------------------->
+	let idsBayresPlan  = productIBayres(grupo);  console.log(idsBayresPlan);
+	// <! ----------HOMINIS---------------------------------------------------->
+	let idsHominis  = productIdHominis(grupo,arrayDeducciones);  console.log(idsHominis);
+	// <! ----------SALUD CENTRAL---------------------------------------------------->
+	let idsSaludcentral  = productIdSaludcentral(grupo);  console.log(idsSaludcentral);
+	// <! ----------PREMEDIC---------------------------------------------------->
+	let idsPremedic  = productIdPremedic(grupo,arrayDeducciones);  console.log(' idsPremedic : ',idsPremedic);
+	let ids = [];
+	// console.log('ids :',ids)
 
-let idSancor = productID(edad_1, tipo, gen, 'titular', numHijos,group);
-let idSancor1 = productID(edad_2, tipo, gen, 'conyuge', numHijos,group);
-let idSancorConyuge = "";
-let ids = [];
-if (grupo[0] == 2) {
-  idSancorConyuge = idSancor1[1];
-// console.log(idSancorConyuge)
-}else {idSancorConyuge
-  =idSancor[0]
-}
-// console.log(idSancorConyuge)
-
-// <! -----------------------------OMINT---------------------------------------------------->
-let idOmint =  productIdOmint(edad_1, tipo, 'titular',group);
-// <! -----------------------------GALENO--------------------------------------------------->
-let idGaleno = productIdGaleno(edad_1, edad_2, tipo, numHijos,group);
-// <! ----------PREMEDIC-------------------------------------------------------------------->
-let edadIdPremedic = productIdPremedic(edad_1, edad_2, tipo, numHijos,group);
-// <! ----------SWISS----------------------------------------------------------------------->
-let idTitularSwiss = productIdSwiss(edad_1, tipo_IngresoPDMI,group);
-let idConyugeSwiss = productIdSwiss(edad_2, tipo_IngresoPDMI,group);
-
-// <! ----------MEDIFE---------------------------------------------------->
-let idAdultosMedife = productIdMedife(edad_1,edad_2, tipo_IngresoPDMI);
-// <! ----------PREVENCION---------------------------------------------------->
-let idPrevencion = productIdPrevencion(edad_1,edad_2, numkids, tipo_IngresoPDMI);
-// <! ----------DOCTORED---------------------------------------------------->
-let IdDoctored = productIdDoctored(edad_1, edad_2, tipo_IngresoPDMI, numkids,group);
-// <! ----------AVALIAN---------------------------------------------------->
-let IdsAvalian = productIdAvalian(edad_1, edad_2, tipo_IngresoPDMI, group);
-// <! ----------CRISTAL y RAS---------------------------------------------------->
-let idsCristalyRas = productIdRasCristal(edad_1, edad_2, tipo_IngresoPDMI, group);  
-// <! ----------LUIS PASTEUR---------------------------------------------------->
-let idsLuisPasteur = productIdLuisPasteur(edad_1, edad_2,numkids, tipo_IngresoPDMI, group)
-// <! ----------ASMEPRIV---------------------------------------------------->
-let idsAsmepriv = productIdAsmepriv(edad_1, edad_2,numkids, tipo_IngresoPDMI, group)
-// <! ----------BAYRES PLAN---------------------------------------------------->
-let idsBayresPlan = productIBayres(edad_1, edad_2, group)
-// <! ----------HOMINIS---------------------------------------------------->
-let idsHominis = productIdHominis(edad_1, edad_2, tipo_IngresoPDMI, numkids, group)
-
-ids.push(idSancor, idSancor1, idSancorConyuge, idOmint, idGaleno, edadIdPremedic, idTitularSwiss, idConyugeSwiss, idAdultosMedife, idPrevencion, IdDoctored, IdsAvalian, idsCristalyRas, idsLuisPasteur, idsAsmepriv, idsBayresPlan, idsHominis);
-
+ids.push(idSancor,idOmint, idGaleno,idSwiss, idsMedife, idPrevencion, IdDoctored, IdsAvalian, idsCristalyRas, idsLuisPasteur, idsAsmepriv, idsBayresPlan, idsHominis,idsSaludcentral,idsPremedic);
+// console.log('ids :',ids)
 return ids
 
 }
 
-
-// export function promoDescuento(valor_plan, promo_Porcentaje, afiche){
-
-// 	// console.log('valor_plan  :' + valor_plan)
-// 	// console.log('promo_Porcentaje  :' + promo_Porcentaje)
-// 	// console.log('afiche  :' + afiche)
-// 	let bonAfinidad = 0;
-// 	let valor_total_plan = 0;
-// 	let bonAfinidadporcentaje = promo_Porcentaje;
-// 	if (afiche === true) {
-// 		bonAfinidad = parseInt(valor_plan) * bonAfinidadporcentaje;
-// 		valor_total_plan = parseInt(valor_plan) - parseInt(bonAfinidad.toFixed());
-// 	} else {
-// 		bonAfinidad = 0;
-// 		valor_total_plan = valor_plan
-// 	}
-// 	// console.log('valor_total_plan  :' + valor_total_plan);
-// 	// console.log('bonAfinidad  :' + bonAfinidad);
-// 	// console.log('bonAfinidadporcentaje  :' + bonAfinidadporcentaje);
-// 	let promo = [];
-// 	promo.push(valor_total_plan,bonAfinidad,bonAfinidadporcentaje);
-// 	return promo;
-// }
-
-
-// export function promoDesc(valor_plan, promo_Porcentaje, afiche) {
-// console.log('valor_plan  :' + valor_plan);
-// console.log('promo_Porcentaje  :' + promo_Porcentaje);
-// console.log('afiche  :' + afiche);
-
-// // Ensure valor_plan and promo_Porcentaje are numbers
-// valor_plan = parseFloat(valor_plan);
-// promo_Porcentaje = parseFloat(promo_Porcentaje);
-
-// let bonAfinidad = 0;
-// let valor_total_plan = 0;
-// let bonAfinidadporcentaje = promo_Porcentaje;
-
-// if (afiche === true) {
-// 	bonAfinidad = valor_plan * bonAfinidadporcentaje;
-// 	valor_total_plan = valor_plan - Math.round(bonAfinidad); // Use Math.round to round to nearest integer
-// } else {
-// 	valor_total_plan = valor_plan;
-// }
-
-// console.log('valor_total_plan  :' + valor_total_plan);
-// console.log('bonAfinidad  :' + bonAfinidad);
-// console.log('bonAfinidadporcentaje  :' + bonAfinidadporcentaje);
-
-// // Return an object instead of an array for better readability
-// return {
-// 	valor_total_plan: valor_total_plan,
-// 	bonAfinidad: bonAfinidad,
-// 	bonAfinidadporcentaje: bonAfinidadporcentaje
-// };
-// }
+export function buscarPorLetra(letra, valores) {
+	// Iteramos sobre el arreglo de objetos
+	for (let i = 0; i < valores.length; i++) {
+	  // Cada valor es un objeto con una sola clave-valor
+	  const objeto = valores[i];
+	  // Si la clave del objeto coincide con la letra, devolvemos el valor
+	  if (objeto[letra] !== undefined) {
+		return objeto[letra];
+	  }
+	}
+	// Si no encontramos la letra, retornamos undefined
+	return undefined;
+  }
+  

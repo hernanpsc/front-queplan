@@ -1,49 +1,84 @@
 import * as functions from './functions';
+// Swiss = valor_Swiss(aporte_OS,edad_2,numHijos,numhijo2,prices.precioTitularSwiss.precios,prices.precioConyugeSwiss.precios,prices.precioHijo1Swiss.precios,prices.precioHijo2Swiss.precios,afinidad,factores,grupo[0],arrayDeducciones)
 
 export function valor_Swiss(
-    aportesOS,
-    edad_1, 
-    edad_2, 
-    numHijos, 
-    numhijo2,
-    titular,
-    conyuge,
-    hijo_1,
-    hijo2,
-    coeficiente,
-    group
+
+    prices,
+    grupo,
+    arrayDeducciones
     ){
 
-        let edad1 = edad_1;
-        let edad2  = edad_2;
-        let hijos  = numHijos;
-        let hijo1 = hijo_1;
-        if(group == 1  || group == 3){
-            hijos==0;
+    
+
+
+        let edad2  = grupo[8];
+        console.log(' SWISS edad2 ',edad2);
+
+        let hijos  = grupo[3];
+        console.log(' SWISS hijos ',hijos);
+
+        let restoHijos = grupo[2];
+
+        let hijo1 = prices.precioHijo1Swiss.precios.precios || {};
+        console.log(' SWISS hijo1',hijo1);
+
+        let hijo2 = prices.precioHijo2Swiss.precios.precios || {};
+        console.log(' SWISS hijo2',hijo2);
+
+        let empresa = 'Swiss Medical';
+        console.log(' SWISS empresa  ',empresa);
+   
+        let familia = grupo[9];
+
+
+        let precioTitular = prices.precioTitularSwiss.precios.precios;
+        console.log(' SWISS precioTitular  ',precioTitular);
+
+        let precioConyuge = prices.precioConyugeSwiss.precios.precios;
+        console.log(' SWISS precioConyuge  ',precioConyuge);
+        console.log(' SWISS  familia :  ',familia );
+
+        
+        if (familia === 1 || familia === 3) {
+            hijos = 0;  // Correct assignment
         }
+        
        let adultos = {};
        let precios = {};
-       //   
+       
+       console.log('LINEA 26 swiss arrayDeducciones : ',arrayDeducciones);
 
-    let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])
-	let array = [];
+       let factores = arrayDeducciones.find(item => item.name === empresa);
+       let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
+       let promociones = factores.bonificaciones;
+       console.log(' SWISS promociones  ',promociones);
+
+       let bonAfinidad = promociones[promociones[0]];
+       let con_afinidad = false;
+     if (promociones[0] >= 1 ){
+         con_afinidad === true;
+     }
+       console.log('LINEA 26 omint factores : ',factores);
+    console.log(' SWISS tipoAsociado  ',tipoAsociado);
+       let array = [];
    
 
 	
 
-    if (edad2 > 17) {
-        adultos = Object.entries(conyuge).reduce((acc, [key, value]) => // matrimonio
+    if (familia >= 3) {
+        adultos = Object.entries(precioConyuge).reduce((acc, [key, value]) => // matrimonio
             ({
                 ...acc,
                 [key]: parseInt((acc[key]) || 0) + parseInt(value)
             }), {
-                ...titular
+                ...precioTitular
             });
     } else {
-        adultos = titular
+        adultos = precioTitular
        
 
-       
+        // console.log(' SWISS adultos ',adultos);
+
     }
     if (hijos == 1) {
         precios = Object.entries(hijo1).reduce((acc, [key, value]) => ({
@@ -56,7 +91,7 @@ export function valor_Swiss(
             hijo1 = Object.entries(hijo2).reduce((acc, [key, value]) => // dis hijos o mas
             ({
                 ...acc,
-                [key]: parseInt((acc[key]) || 0) + parseInt(value * numhijo2)
+                [key]: parseInt((acc[key]) || 0) + parseInt(value * restoHijos)
             }), {
                 ...hijo1 // caca me dice que hijo uno no esta inicilizado
             });
@@ -71,7 +106,8 @@ export function valor_Swiss(
        
        
 
-       
+        // console.log(' SWISS precios ',precios);
+
        
 
     }
@@ -80,36 +116,47 @@ export function valor_Swiss(
     for (let j in precios) {
        
 
-			
-        let conPromo = false;
-        let promocion = 0;   
-        let empresaPlan = [j][0];
-       
-        let _id = empresaPlan;
-       
+        let _id = [j][0];
 
-        let nombre = empresaPlan.substring(3);
-       
-        let promo = functions.promoDescuento(precios[j],promocion, conPromo)[2];
-        let descPromo = functions.promoDescuento(precios[j],promo, conPromo)[1]
-        let precioTotal = functions.promoDescuento(precios[j],promo, conPromo)[0]
-        let precio = functions.final(aportesOS[0],descOS,precioTotal);
+        let nombre = _id.substring(3);
+        let confirmaSiTieneBonificaciones = con_afinidad;
+        let porcentajeBonificado = bonAfinidad;
+        let precioInicial = precios[j];
+        
+        
+        // Llamar a la función y desestructurar el array devuelto
+        let [valor_total_plan, valorBonificacion] = functions.promoDescuento(precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones);
+        
+        // Asignar los valores a nuevas variables
+        let precioTotal = valor_total_plan;
+        let bonificacionAplicada = valorBonificacion;
+        
+        // Mostrar los resultados en consola
+        // console.log(' SWISS precioTotal :');
+        // console.log(precioTotal);
+        
+        // console.log(' SWISS bonificacionAplicada :');
+        // console.log(bonificacionAplicada);
+        
+        
+        
+        // let precio = precioTotal;
 
-
-       
-
-       
-
-	//	<!--------------------Crear Objeto SWISS end------------------------------>																            			
-    var plan = new Object();
-    plan.item_id = _id;
-    plan.name = 'Swiss-Medical ' + nombre;
-     plan.precio = precio;
-//    plan.promoPorcentaje = promo;
-//    plan.promoDescuento = descPromo;
-   plan.valorLista = precios[j];
-   plan.aporteOS = descOS;
-   array.push(plan);	
+        
+        
+        let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
+        
+        //	<!--------------------Crear Objeto SWISS end------------------------------>																            			
+        var plan = new Object();
+                 plan.item_id = _id
+                 plan.name = 'Swiss Medical ' + nombre;
+                plan.precio = precio;
+                plan.promoPorcentaje = porcentajeBonificado;
+                plan.promoDescuento = bonificacionAplicada;
+                plan.valorLista = precioInicial;
+                plan.aportes_OS = factores.deduction;
+                array.push(plan);	
+              
 }
 //	<!-----------------------Bucle SANCOR end------------------------>											
 

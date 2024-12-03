@@ -4,40 +4,55 @@ import * as functions from './functions';
 
 
 export function valor_Doctored(
-    aporte_OS,
-    porcentajeParaAporte,
-    numkids,
-    precioGrupo,
-    precioHijo3,
-    grupo
+    prices,
+    grupo,
+    arrayDeducciones
 ){
-let aporteOS = aporte_OS;
-let coeficiente = porcentajeParaAporte;
-let hijos = numkids;
-let precio_Grupo = precioGrupo;
-let precio_3hijo = precioHijo3;
-let group = grupo;
-// console.log('aporteOS   :' + aporteOS);
-// console.log('coeficiente   :' + coeficiente);
-// console.log('hijos   :' + hijos);
-// console.log('precio_Grupo   :' + precio_Grupo);
-// console.log('precio_3hijo   :' + precio_3hijo);
-// console.log('group   :' + group);
-if(group === 1 || group === 3 ){
-    hijos = 0;
-    precio_3hijo = 0;
-}
-if(group === 1 || group === 2 ){
-    hijos = 0;
-    precio_3hijo = 0;
-}
+
+
+let hijos = grupo[3];
+console.log('hijos   :',hijos);
+let precio_Grupo = prices.precioDoctoredGrupo.precios.precios;
+console.log('precio grupo  :',precio_Grupo);
+
+
+let precio_3hijo = prices.precioDoctoredHijo3.precios.precios;
+console.log('precio_3hijo ',precio_3hijo);
+let empresa = 'Doctored';
+console.log('Doctored');
+
+let familia = grupo[9];
+console.log('familia   :' ,familia);
+
+if(familia === 1 || familia === 3 ){
+    precio_3hijo = {};
+} 
+
 
 let precios = {};
-let descOS = functions.calculodescOS(aporteOS[0],aporteOS[2],aporteOS[3],coeficiente,aporteOS[4],aporteOS[5],aporteOS[1])
+
+let factores = arrayDeducciones.find(item => item.name === empresa);
+console.log('factores   :' ,factores);
+
+let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
+console.log('tipoAsociado   :' ,tipoAsociado);
+
+let promociones = factores.bonificaciones;
+console.log('promociones   :' ,promociones);
+
+let bonAfinidad = promociones[promociones[0]];
+console.log('bonAfinidad   :' ,bonAfinidad);
+
+let con_afinidad = false;
+console.log('con_afinidad   :' ,con_afinidad);
+if (promociones[0] >= 1 ){
+  con_afinidad === true;
+}
+
 let array = [];
 
     if (hijos > 0 ) {
-        precios = Object.entries(precioHijo3).reduce((acc, [key, value]) => // tres hijos o mas
+        precios = Object.entries(precio_3hijo).reduce((acc, [key, value]) => // tres hijos o mas
             ({
                 ...acc,
                 [key]: parseInt((acc[key]) || 0) + parseInt(value * hijos)
@@ -48,30 +63,41 @@ let array = [];
     } else {
         precios = precio_Grupo;
     }
+    console.log('precios   :' ,precios);
+
 //Funcion para el calculo de aportes
 //	<!-----------------------Bucle PREMEDIC start------------------------>
     for ( let j in precios) {
-        let empresaPlan = [j][0];
+        
+        let _id = [j][0];
 
-        let _id = empresaPlan;
-        let nombre = empresaPlan.substring(3);
-        // let promo = functions.promoDescuento(precios[j],promocion, conPromo)[2];
-        // let descPromo = functions.promoDescuento(precios[j],promo,conPromo)[1];
-        let precioTotal = precios[j];
+        let nombre = _id.substring(3);
+        let confirmaSiTieneBonificaciones = con_afinidad;
+        let porcentajeBonificado = bonAfinidad;
+        let precioInicial = precios[j];
+        
+        
+        // Llamar a la función y desestructurar el array devuelto
+        let [valor_total_plan, valorBonificacion] = functions.promoDescuento(precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones);
+        
+        // Asignar los valores a nuevas variables
+        let precioTotal = valor_total_plan;
+        let bonificacionAplicada = valorBonificacion;
+        let empresaPlan = [j][0];
+        console.log('empresaPlan   :' ,empresaPlan);
+
 
         //funcion para que impacten los descuentos y bonificaciones
-        // let precio = functions.final(aporteOS[0],descOS,precioTotal);
+        let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
         var plan = new Object();
                         plan.item_id = _id;
                         plan.name = 'Doctored ' + nombre;
-                        plan.precio = precioTotal;
-                        // plan.valorLista = precios[j];
-                        // plan.promoPorcentaje = promo;
-                        // plan.promoDescuento = descPromo;
-                        // plan.valorLista = precios[j];
-                        // plan.aporteOS = descOS;
-                        array.push(plan);
-                    
+                        plan.precio = precio;
+                        plan.promoPorcentaje = porcentajeBonificado;
+                        plan.promoDescuento = bonificacionAplicada;
+                        plan.valorLista = precioInicial;
+                        plan.aportes_OS = factores.deduction;
+                        array.push(plan);	      
                     }
     //	<!-----------------------Bucle PREMEDIC end------------------------>								
     // console.log( 'array PREMEDIC')	

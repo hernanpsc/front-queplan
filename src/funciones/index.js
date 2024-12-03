@@ -18,7 +18,7 @@ export * from './hominis';
 export * from './medife';
 
 export * from './functions';
-
+export * from './saludcentral';
 
 
 

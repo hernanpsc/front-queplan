@@ -1,47 +1,56 @@
 import * as functions from './functions';
 
 export function valor_Prevencion(
-    aporte_OS,
-    coeficiente,
-    grupo,
-    precioPrevencion,
-    group
+     prices,
+    arrayDeducciones
 ){
-   let aportesOS = aporte_OS
-   let mi_coeficiente = coeficiente;
-   let grup = grupo;
-   let precios = precioPrevencion;
-   let grou = group;
+     // console.log('precios   :',precioPrevencion);
+
+
+
+   let empresa = 'Prevencion Salud';
+
+
+   let precios = prices.precioPrevencion.precios.precios;
    
    let array = [];
-   let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])
-
-
+   let factores = arrayDeducciones.find(item => item.name === empresa);
+   let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
+   let promociones = factores.bonificaciones;
+let bonAfinidad = promociones[promociones[0]];
+let con_afinidad = false;
+if (promociones[0] >= 1 ){
+  con_afinidad === true;
+}
+  
+   // console.log('precios   :',precioPrevencion);
+   // console.log('factores   : ',factores);
 
    for ( let j in precios) {
     let empresaPlan = [j][0];
     let _id = empresaPlan;
     let nombre = empresaPlan.substring(3);
+    nombre = nombre.replace(/_/g, ' '); // Reemplaza todos los guiones bajos por un espacio        nombre = nombre.replace(/_/g, ' '); // Reemplaza todos los guiones bajos por un espacio
+
     let precioTotal = precios[j];
  
- // console.log(aportesOS[0])
- // console.log(descOS)
+ // console.log(factores)
  // console.log(precioTotal)
  
  
     //funcion para que impacten los descuentos y bonificaciones
-    let precio = functions.final(aportesOS[0],descOS,precioTotal);
+    let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
  
      var plan = new Object();
                          plan.item_id = _id;
                          plan.name = 'Prevencion-Salud  ' + nombre;
                          plan.precio = precio;
                          plan.valorLista = precios[j]
-                         plan.aportesOS = descOS;
+                         plan.aportes_OS = factores.deduction;
                          array.push(plan);					
                      }
- //	<!-----------------------Bucle GALENO end------------------------>	
-     // console.log( 'array Galeno')
+ //	<!-----------------------Bucle PREVENCIO SALUD end------------------------>	
+     // console.log( 'array PREVENCIO SALUD')
      // console.log(array)													
              return array					
  }

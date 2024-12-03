@@ -1,61 +1,63 @@
 import * as functions from './functions';
 
-export function valor_Luispasteur(aportes_OS, valorCoeficiente,edad_1, edad_2,numHijos, group,  grupo, con_afinidad,bonAfinidad,Adultos, Nieto, Adicional, Hijo ){
+export function valor_Luispasteur( prices,grupo,arrayDeducciones ){
     
 
-    let edad1 = edad_1;
-	let edad2  = edad_2;
-	let hijos  = numHijos;
-	let grupoFam = group;    
-    let aportesOS = aportes_OS;
-    let coeficiente = valorCoeficiente;
-    let precioPrincipal = Adultos;
-    let precioNieto = Nieto;
-    let precioAdicional = Adicional;
-    let precioHijo = Hijo;
-    let descuento_promo = bonAfinidad;
-    let grupo_array = grupo;
-    
-    console.log('aportesOS Luis_Pasteur :  '  + aportesOS);
-    console.log('coeficiente Luis_Pasteur :  '  + coeficiente);
-    console.log('edad1 Luis_Pasteur :  '  + edad1);
-    console.log('edad2 Luis_Pasteur :  '  + edad2);
-    console.log('grupoFam Luis_Pasteur :  '  + grupoFam);
-    console.log('hijos Luis_Pasteur :  '  + hijos);
-    console.log('precioPrincipal Luis_Pasteur :  '  );console.log(precioPrincipal);
-    console.log('precioNieto Luis_Pasteur :  '  );console.log(precioNieto);
-    console.log('precioAdicional Luis_Pasteur :  '  );console.log(precioAdicional);
-    console.log('precioHijo Luis_Pasteur :  '  );console.log(precioHijo);
+    let edad_1 = grupo[7];
+	  let edad_2  = grupo[8];
+	  let hijos  = grupo[3];
+    let precioPrincipal = prices.precioLuispasteurAdultos.precios.precios;
+    let precioNieto = prices.precioLuispasteurNieto.precios.precios;
+    let precioAdicional = prices.precioLuispasteurAdicional.precios.precios;
+    let precioHijo = prices.precioLuispasteurHijo.precios.precios;
+    let empresa = 'Luis Pasteur';
+    let familia = grupo[9];
+    // console.log('aportesOS Luis_Pasteur :  '  + aportesOS);
+    // console.log('edad_1 Luis_Pasteur :  '  + edad_1);
+    // console.log('edad_2 Luis_Pasteur :  '  + edad_2);
+    // console.log('hijos Luis_Pasteur :  '  + hijos);
+    // console.log('precioPrincipal Luis_Pasteur :  '  );// console.log(precioPrincipal);
+    // console.log('precioNieto Luis_Pasteur :  '  );// console.log(precioNieto);
+    // console.log('precioAdicional Luis_Pasteur :  '  );// console.log(precioAdicional);
+    // console.log('precioHijo Luis_Pasteur :  '  );// console.log(precioHijo);
   
-    console.log('descuento_promo Luis_Pasteur :  '  + descuento_promo);
-    console.log('grupo_array Luis_Pasteur :  '  + grupo_array);
+    // console.log('descuento_promo Luis_Pasteur :  '  + descuento_promo);
+    // console.log('grupo_array Luis_Pasteur :  '  + grupo_array);
 
     
-    if(grupoFam === 1 ){
-		edad2 = 0;
+    if(familia === 1 ){
+		edad_2 = 0;
 		precioNieto = [];
         precioAdicional = [];
         precioHijo = [];
 		hijos =0;
-        console.log('hijos 45 Luis Pasteur :  '  + hijos);
+        // console.log('hijos 45 Luis Pasteur :  '  + hijos);
 
-	} else if (grupoFam === 2 ) {
-		edad2 = 0;
-	  } else if ( grupoFam === 3){
+	} else if (familia === 2 ) {
+		edad_2 = 0;
+	  } else if ( familia === 3){
 		hijos =0;
-        console.log('hijos 51 Luis Pasteur :  '  + hijos);
+        // console.log('hijos 51 Luis Pasteur :  '  + hijos);
 
         precioNieto = [];
         precioAdicional = [];
         precioHijo = [];
 
-	  } else if ( grupoFam ==4){
+	  } else if ( familia ==4){
     }
    
     let precio_LuisPasteur = {};
     let precios = {};
 
-    let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])
+    let factores = arrayDeducciones.find(item => item.name === empresa);
+    let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
+    let promociones = factores.bonificaciones;
+    let bonAfinidad = promociones[promociones[0]];
+    let con_afinidad = false;
+    if (promociones[0] >= 1 ){
+      con_afinidad === true;
+    }
+    
     let array = [];
 
 
@@ -66,24 +68,24 @@ export function valor_Luispasteur(aportes_OS, valorCoeficiente,edad_1, edad_2,nu
   // // //	<!-----------------------Bucle LUIS PASTEUR start------------------------>							
                 
   for (let j in precios) {
-      console.log('imprimir j')
+      // console.log('imprimir j')
 
-      console.log(j)
+      // console.log(j)
 
 
               
               let conPromo = con_afinidad;
               let promocion = bonAfinidad;
 
-              console.log('promocion Luis Pasteur :  '  + promocion);
+              // console.log('promocion Luis Pasteur :  '  + promocion);
           
               let empresaPlan = [j][0];
 
               let _id = empresaPlan;
               let nombre = empresaPlan.substring(3);
 
-              console.log('conPromo : ' + conPromo)
-              console.log('precios[j] : ' + precios[j])
+              // console.log('conPromo : ' + conPromo)
+              // console.log('precios[j] : ' + precios[j])
 
               // let promo = functions.promoDescuento(precios[j],promocion, conPromo)[2];
               // console.log('promo : ' + promo)
@@ -94,17 +96,15 @@ export function valor_Luispasteur(aportes_OS, valorCoeficiente,edad_1, edad_2,nu
               // let precioTotal = functions.promoDescuento(precios[j],promo, conPromo)[0];
               let precioTotal = precios[j];
 
-               console.log('precioTotal  >');
-               console.log(precioTotal)
+               // console.log('precioTotal  >');
+               // console.log(precioTotal)
              
-              //  console.log('descOS');
-              //   console.log(descOS)
+              //  console.log('factores');
+              //   console.log(factores)
        
 
-              //  console.log('aportes_OS[0]');
-              //  console.log(aportesOS[0])
 
-              // let precio = functions.final(aportesOS[0],descOS,precioTotal);
+              // let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
               // console.log('precio ')
               // console.log(precio)
 
@@ -117,7 +117,7 @@ export function valor_Luispasteur(aportes_OS, valorCoeficiente,edad_1, edad_2,nu
                       // plan.promoPorcentaje = promo;
                       // plan.promoDescuento = descPromo;
                       // plan.valorLista = precios[j];
-                      // plan.aporteOS = descOS;
+                      plan.aportes_OS = factores.deduction;
                       array.push(plan);
                   
                   }

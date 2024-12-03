@@ -1,39 +1,35 @@
 import * as functions from './functions';
 
-export function valor_Avalian(aportes_OS,coeficiente,edad_1,edad_2,numHijos, grupo_Fam,con_afinidad,promocion, Titular,Conyuge,Hijo1,Hijo2,Hijo3,Hijo25)
-{
-    let edad1 = edad_1;
-	let edad2  = edad_2;
-	let hijos  = numHijos;
-    let aportesOS = aportes_OS;
-	let grupoFam = grupo_Fam;
-    let precioTitular = Titular;
-    let precioConyuge = Conyuge;
-    let precioHijo1 = Hijo1;
-    let precioHijo2 = Hijo2;
-    let precioHijo3 = Hijo3;
-    let precioHijo4 = Hijo25;
-    
-    // console.log('aportesOS :  '  + aportes_OS);
-    // console.log('grupoFam :  '  + grupoFam);
-    // console.log('hijos :  '  + numHijos);
-    // console.log('precioTitular :  '  + Titular);
-    // console.log('precioConyuge :  '  + Conyuge);
-    // console.log('precioHijo1 :  '  + Hijo1);
-    // console.log('precioHijo2 :  '  + Hijo2);
-    // console.log('precioHijo3 :  '  + Hijo3);
-    // console.log('precioHijo4 :  '  + Hijo25);
+export function valor_Avalian( prices,grupo,arrayDeducciones){
+
+	let hijos  = grupo[3];console.log('1 avalian');
+    let precioTitular = prices.precioAvalianTitular.precios.precios;console.log('1 avalian');
+    let precioConyuge = prices.precioAvalianConyuge.precios.precios;console.log('1 avalian');
+    let precioHijo1 = prices.precioAvalianHijo1.precios.precios;console.log('1 avalian');
+    let precioHijo2 = prices.precioAvalianHijo2.precios.precios;console.log('1 avalian');
+    let precioHijo3 = prices.precioAvalianHijo3.precios.precios;console.log('1 avalian');
+    let precioHijo4 = prices.precioAvalianHijo25.precios.precios;console.log('1 avalian');
+    let empresa = 'Avalian';console.log('1 avalian');
+    let familia = grupo[9];console.log('1 avalian');
+
+
+    console.log('familia :  ' , familia);
+    console.log('hijos :  ' , hijos);
+    console.log('precioTitular :  ' , precioTitular);
+    console.log('precioConyuge :  ' , precioConyuge);
+    console.log('precioHijo1 :  ' , precioHijo1);
+    console.log('precioHijo2 :  ' , precioHijo2);
+    console.log('precioHijo3 :  ' , precioHijo3);
+    console.log('precioHijo4 :  ' , precioHijo4);
 
 
 
-    if(grupoFam === 1 ){
-		edad2 = 0;
+    if(familia === 1 ){
 		precioConyuge = 0;
 		hijos =0;
-	} else if (grupoFam == 2 ) {
+	} else if (familia == 2 ) {
 		precioConyuge = 0;
-		edad2 = 0;
-	  } else if ( grupoFam ==3){
+	  } else if ( familia ==3){
 		hijos =0;
 	  }
 	  let precio_adultos_Avalian = {};
@@ -41,10 +37,17 @@ export function valor_Avalian(aportes_OS,coeficiente,edad_1,edad_2,numHijos, gru
 
       
 
-      let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])
+      let factores = arrayDeducciones.find(item => item.name === empresa);
+      let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
+      let promociones = factores.bonificaciones;
+      let bonAfinidad = promociones[promociones[0]];
+      let con_afinidad = false;
+    if (promociones[0] >= 1 ){
+        con_afinidad === true;
+    }
       let array = [];
-
-      if (grupoFam >=  3) {
+console.log(' factores:',factores)
+      if (familia >=  3) {
         precio_adultos_Avalian = Object.entries(precioConyuge).reduce((acc, [key, value]) => // matrimonio
             ({
                 ...acc,
@@ -98,20 +101,15 @@ export function valor_Avalian(aportes_OS,coeficiente,edad_1,edad_2,numHijos, gru
                 let nombre = empresaPlan.substring(3);
 
                 // console.log('conPromo : ' + conPromo)
-                let promo = functions.promoDescuento(precios[j],promocion, conPromo)[2];
+                let promo = functions.promoDescuento(precios[j],bonAfinidad, conPromo)[2];
                 let descPromo = functions.promoDescuento(precios[j],promo, conPromo)[1];
                 let precioTotal = functions.promoDescuento(precios[j],promo, conPromo)[0];
                 //  console.log('precioTotal');
                 //  console.log(precioTotal)
                
-                //  console.log('descOS');
-                //   console.log(descOS)
-         
 
-                //  console.log('aportes_OS[0]');
-                //  console.log(aportesOS[0])
 
-                let precio = functions.final(aportesOS[0],descOS,precioTotal);
+                let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
                 // console.log('precio ')
                 // console.log(precio)
 
@@ -123,7 +121,7 @@ export function valor_Avalian(aportes_OS,coeficiente,edad_1,edad_2,numHijos, gru
                         plan.promoPorcentaje = promo;
                         plan.promoDescuento = descPromo;
                         plan.valorLista = precios[j];
-                        plan.aportesOS = descOS;
+                        plan.aportes_OS = factores.deduction;
                         array.push(plan);	
                     }
          //	<!-----------------------Bucle AVALIAN end------------------------>											

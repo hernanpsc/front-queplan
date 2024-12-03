@@ -1,476 +1,336 @@
-export function grupoFamiliar(age0, age1, kids,group) {
-    let edad0 = age0;
-    let edad1 = age1;
-    let num_adultos = 1;
-    let numhijo1 = 0;
-    let numhijo2 = 0;
-    let gen = '';
-    let grupoFam = 0;
-    let numhijos = kids;
-    let numhijo = 0;
-	if( group === 1){
-		edad1 = 0;
-		numhijos = 0;
-	} else if( group === 2){
-		edad1 = 0;
-	}else if (group === 3  ){
-		numhijos = 0;
-
-	}else{}
-
-
-    if (kids === null) {
-        numhijos = 0;
-    }
-    if (age1 === null) {
-        edad1 = 0;
-    }
-
-	if (edad1 == 0 && numhijos == 0) {
-		num_adultos = 1;
-		numhijo1 = 0;
-		numhijo2 = 0;
-		numhijos = 0;
-	} else if (edad1 > 0 && numhijos == 0) {
-		num_adultos = 2;
-		numhijo1 = 0;
-		numhijo2 = 0;
-		numhijos = 0;
-	} else if (edad1 == 0 && numhijos >= 1) {
-		num_adultos = 1;
-		numhijo1 = 1;
-		numhijo2 = numhijos - 1;
-		numhijos = numhijos;
-	} else if (edad1 > 0 && numhijos >= 1) {
-		num_adultos = 2;
-		numhijo1 = 1;
-		numhijo2 = numhijos - 1;
-		numhijos = numhijos;
-	}
-	grupoFam = parseInt(num_adultos) + parseInt(numhijos);
-    numhijo = parseInt(numhijos);
-    if (edad0 <= 35 && edad1 <= 35) {
-        gen = 'GEN';
-    } else {
-        gen = '';
-    }
-	// console.log(grupoFam)
-    return [num_adultos, numhijo1, numhijo2, numhijo, gen, grupoFam];
-}
-
-
-export function tipoAsociado(_tipo) {
-	let tipoAsoc = '';
-	let tipo = _tipo;
-	if (tipo === "M" || tipo === "D") {
-		tipoAsoc = "D";
-	} else if (tipo === "I" || tipo === "P") {
-		tipoAsoc = "P"
-	};
-	return tipoAsoc
-}
-
 
 // <!----------------------Funcion PRODUCT ID SANCOR start---------------------------->     
-export function productID(_edad, tipoAsoc, gen, miembro, numHijos,group) { 
-	let edadId = '';
-	let grupoSigla = '';
-	let tipo = tipoAsoc;
-	let edadID1 = '';
-	let edadID2 = '';
-	let hijoId = '';
-	let hijo2Id = '';
-	let edad = _edad;
-	
-	// if (gen == 'GEN' && numHijos > 0) {
-	// 	grupoSigla = 'GF'
-	// };
-	if (18 <= edad && edad <= 25) {
-		edadId = 'sancor1' + tipo;
-		hijoId = 'sancor1H' + tipo;
-		hijo2Id = 'sancor2H' + tipo;
-	} else if (26 <= edad && edad <= 29) {
-		edadId = 'sancor2' + tipo;
-		hijoId = 'sancor1H' + tipo;
-		hijo2Id = 'sancor2H' + tipo;
-	} else if (30 <= edad && edad <= 35) {
-		edadId = 'sancor3' + tipo;
-		hijoId = 'sancor1H' + tipo;
-		hijo2Id = 'sancor2H' + tipo;
-	} else if (36 <= edad && edad <= 39) {
-		edadId = 'sancor4' + tipo;
-		hijoId = 'sancor1HH' + tipo;
-		hijo2Id = 'sancor2HH' + tipo;
-	} else if (40 <= edad && edad <= 45) {
-		edadId = 'sancor5' + tipo;
-		hijoId = 'sancor1HH' + tipo;
-		hijo2Id = 'sancor2HH' + tipo;
-	} else if (46 <= edad && edad <= 49) {
-		edadId = 'sancor6' + tipo;
-		hijoId = 'sancor1HH' + tipo;
-		hijo2Id = 'sancor2HH' + tipo;
-	} else if (50 <= edad && edad <= 59) {
-		edadId = 'sancor7' + tipo;
-		hijoId = 'sancor1HH' + tipo;
-		hijo2Id = 'sancor2HH' + tipo;
-	} else if (60 <= edad && edad <= 69) {
-		edadId = 'sancor8' + tipo;
-		hijoId = 'sancor1HH' + tipo;
-		hijo2Id = 'sancor2HH' + tipo;
-	} else if (70 <= edad) {
-		edadId = 'sancor9' + tipo;
-		hijoId = 'sancor1HH' + tipo;
-		hijo2Id = 'sancor2HH' + tipo;
-	}
-	if (miembro === 'titular') {
-		edadID1 = edadId + grupoSigla
-	} else {
-		edadID2 = edadId + grupoSigla
-	};
+export function productIDSancor(grupo,tipo){
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
+	let edad_1 = grupo[7];
+	let edad_2 = grupo[8];
+
+
+    const ageRanges = [
+        { min: 18, max: 25, label: '1', label_2: 'H' },
+        { min: 26, max: 29, label: '2', label_2: 'H' },
+        { min: 30, max: 35, label: '3', label_2: 'H' },
+        { min: 36, max: 39, label: '4', label_2: 'HH' },
+        { min: 40, max: 45, label: '5', label_2: 'HH' },
+        { min: 46, max: 49, label: '6', label_2: 'HH' },
+        { min: 50, max: 59, label: '7', label_2: 'HH' },
+        { min: 60, max: 69, label: '8', label_2: 'HH' },
+        { min: 70, max: Infinity, label: '9', label_2: 'HH' }
+    ];    
+    
+        // Function to map age to range
+        function getAgeRange(age) {
+            if (isNaN(age) || age < 0) {
+                return '';  // Return empty string for invalid age values
+            }
+            for (const range of ageRanges) {
+                // console.log('sancor age :'+age);
+                // console.log('sancor range :');console.log(range)
+    
+                if (age >= range.min && age <= range.max) {
+                    return [range.label,range.label_2];
+                }
+            }
+            return ''; // If no range matches
+        }
+
+    let rangoEtario_1 = getAgeRange(edad_1);
+    let rangoEtario_2 = getAgeRange(edad_2);
+
+    // Generate IDs based on the age range and association type
+    let edadID1 = 'sancor' + rangoEtario_1[0] + tipoAsociado;
+    let edadID2 = 'sancor' + rangoEtario_2[0] + tipoAsociado;
+    let hijoId = 'sancor' + '1' + rangoEtario_1[1] + tipoAsociado;
+    let hijo2Id = 'sancor' + '2' + rangoEtario_1[1] + tipoAsociado;
 	return [edadID1, edadID2, hijoId, hijo2Id]
 };
+
+
+
+
 // <!----------------------Funcion PRODUCT ID SANCOR end---------------------------->   
-// <!----------------------Funcion PRODUCT ID GALENO start---------------------------->        
-export function productIdGaleno(anios_1, anios_2, tipoAsoc, num_Hijos,group) {
+// <!----------------------Funcion PRODUCT ID GALENO start---------------------------->   
 
-let numHijos = num_Hijos
-let tipoGaleno = tipoAsoc + 'S';
-	let grupoSiglaGaleno = 'IND';
-	let edadIdGaleno = '';
-	let anios2 = anios_2;
-	let anios = anios_1;
-	if(group === 1)
-{
-	anios2=0;
-	numHijos=0;
-}else if(group === 2)
-{
-	anios2=0;
-}else if(group === 3)
-{
-	numHijos=0;
-}else {}
-	if (anios2 > anios) {
-		anios2 = anios_1;
-		anios = anios_2
-	};
-	if (anios2 >= 18) {
-		grupoSiglaGaleno = 'MAT';
-		anios2 = anios2;
-		anios = anios;
-	}
-	if (anios <= 25) {
-		edadIdGaleno = tipoGaleno + grupoSiglaGaleno + 25 + '+' + numHijos + 'h';
-	} else if (anios <= 36) {
-		edadIdGaleno = tipoGaleno + grupoSiglaGaleno + 36 + '+' + numHijos + 'h';
-	} else if (anios <= 64) {
-		edadIdGaleno = tipoGaleno + grupoSiglaGaleno + 64 + '+' + numHijos + 'h';
-	} else if (anios <= 65) {
-		edadIdGaleno = tipoGaleno + grupoSiglaGaleno + 65 + '+' + numHijos + 'h';
-	};
-	return edadIdGaleno;
-};
-// // <!----------------------Funcion PRODUCT ID GALENO end---------------------------->
-// // <!----------------------Funcion PRODUCT ID PREMEDIC start----------------------------> 
-export function productIdPremedic(edad_1, edad_2, tipoAsoc, num_Hijos,group) {
+export function productIdGaleno(grupo,tipo) {
+    let grupoSigla = 'IND';  // Default group to 'IND'
+    let edadIdGaleno = '';
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D + 'S';
+    let familia = grupo[9];
+	let edad_1 = grupo[7] ?? 0;
+	let edad_2 = grupo[8] ?? 0;
+    let numHijos =  grupo[3] ?? 0;  // Default to 0 if num_Hijos is null or undefined
 
-	let edadIdPremedic = '';
-	let age2 = edad_2;
-	let age = edad_1;
-    let numHijos = num_Hijos;
-	if(group === 1)
-{
-	age2=0;
-	numHijos=0;
-}else if(group === 2)
-{
-	age2=0;
-}else if(group === 3)
-{
-	numHijos=0;
-}else {}
-
-	if (edad_2 === null) {
-        age2 = 0;
+    // Set 'MAT' if age2 is 18 or older
+    if (edad_2 >= 18) {
+        grupoSigla = 'MAT';
     }
 
-	if (age2 > age) {
-		age2 = age;
-		age = edad_2;
-	};
-	if (age2 >= 18) {
-		if (age <= 29) {
-			edadIdPremedic = tipoAsoc + 'MAT' + 29 + '+' + numHijos + 'h';
-		} else if (age <= 39 && age >= 30) {
-			edadIdPremedic = tipoAsoc + 'MAT' + 39 + '+' + numHijos + 'h';
-		} else if (age <= 49 && age >= 40) {
-			edadIdPremedic = tipoAsoc + 'MAT' + 49 + '+' + numHijos + 'h';
-		} else if (age <= 59 && age >= 50) {
-			edadIdPremedic = tipoAsoc + 'MAT' + 59 + '+' + numHijos + 'h';
-		}
-	} else if (age2 == 0) {
-		if (age <= 29) {
-			edadIdPremedic = tipoAsoc + 'IND' + 29 + '+0h';
-		} else if (age <= 39 && age >= 30) {
-			edadIdPremedic = tipoAsoc + 'IND' + 39 + '+0h';
-		} else if (age <= 49 && age >= 40) {
-			edadIdPremedic = tipoAsoc + 'IND' + 49 + '+0h';
-		} else if (age <= 59 && age >= 50) {
-			edadIdPremedic = tipoAsoc + 'IND' + 59 + '+0h';
-		} else {
-			edadIdPremedic = '';
-		}
-	}
-	return edadIdPremedic;
+    // Determine the age range and create the corresponding ID
+    if (edad_1 <= 25) {
+        edadIdGaleno = 'galeno' + tipoAsociado + grupoSigla + '25+' + numHijos + 'h'
+    } else if (edad_1 <= 36) {
+        edadIdGaleno = 'galeno' + tipoAsociado + grupoSigla + '36+' + numHijos + 'h'
+    } else if (edad_1 <= 64) {
+        edadIdGaleno = 'galeno' + tipoAsociado + grupoSigla + '64+' + numHijos + 'h'
+    } else if (edad_1 <= 65) {
+        edadIdGaleno = 'galeno' + tipoAsociado + grupoSigla + '65+' + numHijos + 'h'
+    }
+
+    let id = []
+    id.push(edadIdGaleno);
+    return id
 }
+
+// // <!----------------------Funcion PRODUCT ID GALENO end---------------------------->
+// // <!----------------------Funcion PRODUCT ID PREMEDIC start----------------------------> 
+export function productIdPremedic(grupo,tipo) {
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
+	let edad_1 = grupo[7];
+    let numHijos =  grupo[3];  // Default to 0 if num_Hijos is null or undefined
+    let grupoSigla = grupo[10];  // Default group to 'IND'
+    let id_premedic = '';
+    let id_hijo_hasta_1 = 'premedic' + tipoAsociado + 'AD-1anio';
+    let id_hijo_hasta_25 = 'premedic' + tipoAsociado + 'AD-25' ;
+
+        // Matched edad_1 group ranges for parents (MAT)
+        if (edad_1 <= 29) {
+            id_premedic = 'premedic' + tipoAsociado + grupoSigla + '29+' + numHijos + 'h';
+        } else if (edad_1 <= 39) {
+            id_premedic = 'premedic' + tipoAsociado + grupoSigla + '29+' + numHijos + 'h';
+        } else if (edad_1 <= 49) {
+            id_premedic = 'premedic' + tipoAsociado + grupoSigla + '29+' + numHijos + 'h';
+        } else if (edad_1 <= 59) {S
+            id_premedic = 'premedic' + tipoAsociado + grupoSigla + '29+' + numHijos + 'h';
+        }
+
+    return [id_premedic,id_hijo_hasta_1,id_hijo_hasta_25]
+}
+
 // <!----------------------Funcion PRODUCT ID PREMEDIC END---------------------------->    
 // <!----------------------Funcion PRODUCT ID OMINT start---------------------------->        
-export function productIdOmint(anios, tipoAsoc, miembro,group) {
-	// console.log("variable anios : " + anios + "- variable tipoAsoc : " + tipoAsoc + " - variable miembro : " + miembro) 
-	let edadID = '';
-	let tipo = tipoAsoc;
-	let edad = anios;
-	let edadID1OMINT = '';
-	let edadID2OMINT = '';
-	let hijoIdOMINT = 'omint' + tipo + 'H1';
-	let hijo2IdOMINT =  'omint' + tipo + 'H2';
-	if(group === 1 && miembro !== 'titular')
-{
-	edad=0;
-}else if(group === 2)
-{
-	edad=0;
-}else{}
+export function productIdOmint(grupo,tipo) {
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
+ 
+    // Helper function to generate ID based on age
+    const generateEdadID = (edad, tipoAsociado) => {
+        if (edad >= 18 && edad <= 25) {
+            return 'omint' + tipoAsociado + 25;
+        } else if (edad >= 26 && edad <= 35) {
+            return 'omint' + tipoAsociado + 35;
+        } else if (edad >= 36 && edad <= 54) {
+            return 'omint' + tipoAsociado + 54;
+        } else if (edad >= 55 && edad <= 59) {
+            return 'omint' + tipoAsociado + 59;
+        } else {
+            return 'omint' + tipoAsociado + 60;
+        }
+    };
 
-	
-	if (edad >= 18 && edad <= 25) {
-		edadID = tipo + 25;
-	} else if (edad >= 26 && edad <= 35) {
-		edadID = tipo + 35;
-	} else if (edad >= 36 && edad <= 54) {
-		edadID = tipo + 54;
- 
-	} else if (edad >= 55 && edad <= 59) {
-		edadID = tipo + 59;
- 
-	} else {
-		edadID = tipo + 60;
- 
-	}
-	if (miembro === 'titular') {
-		edadID1OMINT =  'omint' + edadID
-	} else {
-		edadID2OMINT =  'omint' + edadID
-	};
-	
-	// console.log("edadID1OMINT=" + edadID1OMINT + "; edadID2OMINT =" + edadID2OMINT + "; hijoIdOMINT ="+ hijoIdOMINT + "; hijo2IdOMINT =" + hijo2IdOMINT)
-	return [edadID1OMINT, edadID2OMINT, hijoIdOMINT, hijo2IdOMINT]
-};
+    // Assigning variables
+    let edad_1 = grupo[7];
+    let edad_2 = grupo[8];
+    let id_hijo_1 = 'omint' + tipoAsociado + 'H1';
+    let id_hijo_2 = 'omint' + tipoAsociado + 'H2';
+
+
+    // Generate IDs for both titular and conyuge (person 1 and person 2)
+    let id_titular = generateEdadID(edad_1, tipoAsociado);
+    let id_conyuge = generateEdadID(edad_2, tipoAsociado);
+
+    // Logging for debugging (you can remove it once done)
+    // console.log("id_titular=" + id_titular + "; id_conyuge=" + id_conyuge + "; id_hijo_1=" + id_hijo_1 + "; id_hijo_2=" + id_hijo_2);
+
+    // Return the generated IDs
+    return [id_titular, id_conyuge, id_hijo_1, id_hijo_2];
+}
+
 // <!----------------------Funcion PRODUCT ID OMINT end---------------------------->
 
 
 // <!----------------------Funcion PRODUCT ID SWISS start---------------------------->        
-export function productIdSwiss(anios, tipoAsoc,group) {
-	let edadID = '';
-	let tipo = tipoAsoc;
-	let edad = anios;
-	if(group === 1 )
-{
-	edad=0;
-}else if(group === 2)
-{
-	edad=0;
-}else{}
-
-	
-
-	if (edad >= 18 && edad <= 25) {
-		edadID = tipo + 25;
-	} else if (edad >= 26 && edad <= 35) {
-		edadID = tipo + 35;
-	} else if (edad >= 36 && edad <= 40) {
-		edadID = tipo + 40;
-	} else if (edad >= 41 && edad <= 45) {
-		edadID = tipo + 45;
-	} else if (edad >= 46 && edad <= 50) {
-		edadID = tipo + 50;
-	} else if (edad >= 51 && edad <= 55) {
-		edadID = tipo + 55;
-	} else if (edad >= 56 && edad <= 60) {
-		edadID = tipo + 60;
-	} else if (edad >= 61 && edad <= 63) {
-		edadID = tipo + 63;
-	} else {
-		edadID = tipo + 60;
-	}
-return edadID
-}
-// <!----------------------Funcion PRODUCT ID END start----------------------------> 
-
-// <!----------------------Funcion PRODUCT ID MEDIFE start----------------------------> 
+export function productIdSwiss(grupo,tipo) {
+    // Reset age for specific groups (reset edad_1 or edad_2, not a non-existent 'edad')
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
+    let familia = grupo[9];
+	let edad_1 = grupo[7] ?? 0;
+	let edad_2 = grupo[8] ?? 0;
+    let rangoEtario_2 = "";
+    let rangoEtario_1 = "";
 
 
-export function productIdMedife(edad_1, edad_2, tipoAsoc,group) {
+    // Age range definitions
+    const ageRanges = [
+        { min: 18, max: 25, label: '25' },
+        { min: 26, max: 35, label: '35' },
+        { min: 36, max: 40, label: '40' },
+        { min: 41, max: 45, label: '45' },
+        { min: 46, max: 50, label: '50' },
+        { min: 51, max: 55, label: '55' },
+        { min: 56, max: 60, label: '60' },
+        { min: 61, max: 63, label: '63' },
+        { min: 64, max: Infinity, label: '' }
+    ];
 
-	let edadIdMedife = '';
-	let age2 = edad_2;
-	let age = edad_1;
-if(group === 1){
-	age2 = 0;
-}else if(group === 2){
-	age2 = 0;}
-	else{}
+    // Function to map age to range
+    function getAgeRange(age) {
+        if (isNaN(age) || age < 0) {
+            return '';  // Return empty string for invalid age values
+        }
+        for (const range of ageRanges) {
+            // console.log('idswiss age :'+age);
+            // console.log('idswiss range :');console.log(range)
 
-
-	if (edad_2 === null) {
-        age2 = 0;
+            if (age >= range.min && age <= range.max) {
+                return range.label;
+            }
+        }
+        return ''; // If no range matches
+    }
+    if (familia === 1 || familia === 2) {
+        rangoEtario_1 = getAgeRange(edad_1);
+    } else {
+        rangoEtario_2 = getAgeRange(edad_2);
+        rangoEtario_1 = getAgeRange(edad_1);
     }
 
-	if (age2 > age) {
-		age2 = age;
-		age = edad_2;
-	};
-	if (age2 >= 18) {
-		if (age <= 25) {
-			edadIdMedife = tipoAsoc + 'MAT-JOV' + 0.25;
-		} else if (age <= 35 && age >= 26) {
-			edadIdMedife = tipoAsoc + 'MAT-JOV' + 26.35;
-		} else if (age <= 40 && age >= 36) {
-			edadIdMedife = tipoAsoc + 'MAT' + 36.40;
-		} else if (age <= 50 && age >= 41) {
-			edadIdMedife = tipoAsoc + 'MAT' + 41-50;
-		} else if (age <= 60 && age >= 51) {
-			edadIdMedife = tipoAsoc + 'MAT' + 51.60;
-		} else if (age <= 65 && age >= 61) {
-			edadIdMedife = tipoAsoc + 'MAT' + 61.65;
-		}
-	} else if (age2 == 0) {
-		if (age <= 25) {
-			edadIdMedife = tipoAsoc + 'IND-JOV' + 0.25;
-		} else if (age <= 35 && age >= 26) {
-			edadIdMedife = tipoAsoc + 'IND-JOV' + 26.35;
-		} else if (age <= 40 && age >= 36) {
-			edadIdMedife = tipoAsoc + 'IND' + 36.40;
-		} else if (age <= 45 && age >= 41) {
-			edadIdMedife = tipoAsoc + 'IND' + 42.45;
-		}else if (age <= 50 && age >= 46) {
-			edadIdMedife = tipoAsoc + 'IND' + 46.50;
-		} else if (age <= 60 && age >= 51) {
-			edadIdMedife = tipoAsoc + 'IND' + 51.60;
-		}  else if (age <= 60 && age >= 51) {
-			edadIdMedife = tipoAsoc + 'IND' + 61.65;
-	}else {
-			edadIdMedife = '';
-		}
-	}
-	return edadIdMedife;
+    // Determine the age ranges for both ages
+
+
+
+
+    // Generate IDs based on the age range and association type
+    let id_titular = 'swiss' + tipoAsociado + rangoEtario_1;
+    let id_conyuge = 'swiss' + tipoAsociado + rangoEtario_2;
+    let id_hijo_1 = 'swiss' + tipoAsociado + '1h';
+    let id_hijo_2 = 'swiss' + tipoAsociado + '2h';
+    // console.log('Ids Swiss  :');
+
+// console.log(id_titular, id_conyuge, id_hijo_1, id_hijo_2);
+    // Return the generated product IDs
+    return [id_titular, id_conyuge, id_hijo_1, id_hijo_2];
+}
+
+
+// <!----------------------Funcion PRODUCT ID END start----------------------------> 
+
+// <!----------------------Funcion PRODUCT ID MEDIFE start---------------------------->
+export function productIdMedife(grupo,tipo) {
+    let idMedife = '';
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
+	let edad_1 = grupo[7] ?? 0;
+    let grupoSigla = grupo[10];
+
+
+    // Generate ID based on age ranges
+    if (edad_1 >= 18 && edad_1 <= 25) {
+        idMedife = 'medife' + tipoAsociado + grupoSigla + '0-25';
+    } else if (edad_1 >= 26 && edad_1 <= 35) {
+        idMedife = 'medife' + tipoAsociado + grupoSigla + '26-35';
+    } else if (edad_1 >= 36 && edad_1 <= 40) {
+        idMedife = 'medife' + tipoAsociado + grupoSigla + '36-40';
+    } else if (edad_1 >= 41 && edad_1 <= 50) {
+        idMedife = 'medife' + tipoAsociado + grupoSigla + '41-50';
+    } else if (edad_1 >= 51 && edad_1 <= 60) {
+        idMedife = 'medife' + tipoAsociado + grupoSigla + '51-60';
+    } else if (edad_1 >= 61 && edad_1 <= 65) {
+        idMedife = 'medife' + tipoAsociado + grupoSigla + '61-65';
+    } else {
+        idMedife = ''; // No valid age range
+    }
+
+    // IDs for specific family roles
+    const Hijo0a1 = 'medife' + tipoAsociado + 'HIJO0a1';
+    const Hijo0a20 = 'medife' + tipoAsociado + 'HIJO2a20';
+    const HIJO21a29 = 'medife' + tipoAsociado + 'HIJO21a29';
+
+    // Return all IDs in an array
+    return [idMedife, Hijo0a1, Hijo0a20, HIJO21a29];
 }
 
 // <!----------------------Funcion PRODUCT ID MEDIFE end----------------------------> 
 // <!----------------------Funcion PRODUCT ID PREVENCION SALUD start----------------------------> 
-
-export function productIdPrevencion(edad_1, edad_2,hijos, tipoAsoc){
-	let edadIdPrevencion = '';
-	let age2 = edad_2;
-	let age = edad_1;
-	let kids = '+'+ hijos +'H';
-	let tipo = tipoAsoc;
-    let grupoSiglaPrevencion = '';
+export function productIdPrevencion(grupo,tipo) {
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
+	let edad_1 = grupo[7] ?? 0;
+	let edad_2 = grupo[8] ?? 0;
+    let grupoSigla = 'IND';
+    let edadIdPrevencion = '';
+    let numHijos = (grupo[3] > 0) ? '+' + grupo[3] + 'H' : '';  // If hijos is 0 or less, leave it empty
     let zona = 'Z4';
-	if (edad_2 === null) {
-        age2 = 0;
-    }
-	if (hijos === null || hijos === 0 ) {
-        kids = '';
-    }
-	if (age2 > age) {
-		age2 = age;
-		age = edad_2;
-	};
-	
-	if (age2 >= 18) {
-		grupoSiglaPrevencion = 'MAT';
-	} else {
-		grupoSiglaPrevencion = 'IND';
-	}
-		if (age <= 25) {
-			edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '0-25';
-		} else if (age <= 30 && age >= 26) {
-			edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '26-30';
-		} else if (age <= 35 && age >= 31) {
-			edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '31-35';
-		} else if (age <= 40 && age >= 36) {
-			edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '36-40';
-		} else if (age <= 45 && age >= 41) {
-			edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '41-45';
-		} else if (age <= 50 && age >= 46) {
-			edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '46-50';
-		} else if (age <= 55 && age >= 51) {
-			edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '51-55';
-		} else if (age <= 60 && age >= 56) {
-			edadIdPrevencion = tipo + zona + grupoSiglaPrevencion + kids + '56-60';
-		}
+    let rangoEtario_1 = '';
 
-		return edadIdPrevencion
-	} 
-	
+    // Logging for debugging (corrected the typo)
+    // console.log('Prevencion edad_2', edad_2);
+    // console.log('Prevencion edad_1', edad_1);
+    // console.log('Prevencion numHijos', numHijos);
+    // console.log('Prevencion tipo', tipoAsociado);
+
+ 
+    // Define the edad_1 range to append
+    const ageRanges = [
+        { max: 25, label: '0-25' },
+        { max: 30, label: '26-30' },
+        { max: 35, label: '31-35' },
+        { max: 40, label: '36-40' },
+        { max: 45, label: '41-45' },
+        { max: 50, label: '46-50' },
+        { max: 55, label: '51-55' },
+        { max: 60, label: '56-60' }
+    ];
+
+    function getAgeRange(age) {
+        for (const range of ageRanges) {
+            if (age <= range.max) {
+                // console.log('edad : '+age)
+                // console.log('range : ');console.log(range)
+
+
+                return range.label;
+            }
+        }
+        return ''; // If no range matches
+    }
+    rangoEtario_1 = getAgeRange(edad_1);
+    edadIdPrevencion = 'prevencion' + tipoAsociado + zona + grupoSigla + numHijos + rangoEtario_1;
+
+    // Log the result
+    // console.log('Id en el archivo id:', edadIdPrevencion);
+    let id = []
+    id.push(edadIdPrevencion);
+    return id
+}
+
+
 // <!----------------------Funcion PRODUCT ID PREVENCION SALUD end----------------------------> 
 // // <!----------------------Funcion PRODUCT ID DOCTORED start----------------------------> 
-export function productIdDoctored(edad_1, edad_2, tipoAsoc, num_Hijos,group) {
-	
-	let age2 = edad_2;
-	let age = edad_1;
-	let hijos1y2 =num_Hijos;
-	let indOMat = "IND";
+export function productIdDoctored(grupo,tipo) {
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
+	let edad_1 = grupo[7] ?? 0;
+	let numHijos =grupo[3];
+	let grupoSigla = grupo[10];
+    if (numHijos > 2){
+        numHijos = 2;
+    } else {}
     let rangoEtario = '18-25';
-    let tipo = tipoAsoc;
-	let idDoctored = 'doctored' + indOMat + tipoAsoc + rangoEtario + '+' + hijos1y2 + 'h';
-	let idDoctoredHijo3 = 'doctored' + tipo + 'HIJO';
-	let idDoctoredAd = 'doctoredAD' + tipo + rangoEtario;
+	let idDoctored = 'doctored' + grupoSigla + tipoAsociado + rangoEtario + '+' + numHijos + 'h';
+	let idDoctoredHijo3 = 'doctored' + tipoAsociado + 'HIJO';
+	let idDoctoredAd = 'doctoredAD' + tipoAsociado + rangoEtario;
 
-if (hijos1y2 > 2){
-    hijos1y2 = 2;
-} else {}
-if (tipo == 'I'){
-    tipo = 'P';
-} else if ( tipo == 'M'){
-	tipo = 'D'
-} else {}
-	if(group === 1)
-{
-	age2=0;
-	hijos1y2=0;
-} else if(group === 2)
-{
-	age2=0;
-}else if(group === 3)
-{
-	hijos1y2=0;
-}else {}
 
-	if (edad_2 === null) {
-        age2 = 0;
-    }
 
-	if (age2 > age) {
-		age2 = age;
-		age = edad_2;
-		indOMat = 'MAT';
-	};
-
-		if (age <= 25) {
+		if (edad_1 <= 25) {
 			rangoEtario =  '18-25+';
-		} else if (age <= 35 && age >= 26) {
+		} else if (edad_1 <= 35 && edad_1 >= 26) {
 			rangoEtario =  '25-35+';
-		} else if (age <= 45 && age >= 36) {
+		} else if (edad_1 <= 45 && edad_1 >= 36) {
 			rangoEtario =  '35-45+';
-		} else if (age <= 55 && age >= 46) {
+		} else if (edad_1 <= 55 && edad_1 >= 46) {
 			rangoEtario =  '46-55+';
-		} else if (age <= 60 && age >= 56) {
+		} else if (edad_1 <= 60 && edad_1 >= 56) {
 			rangoEtario =  '56-60+';
-		} else if (age <= 69 && age >= 61) {
+		} else if (edad_1 <= 69 && edad_1 >= 61) {
 		    rangoEtario =  '61-69+';
-		} else if (age <= 79 && age >= 70) {
+		} else if (edad_1 <= 79 && edad_1 >= 70) {
 		    rangoEtario =  '70-79+';	
 	}
 
@@ -479,8 +339,15 @@ if (tipo == 'I'){
 // <!----------------------Funcion PRODUCT ID DOCTORED END----------------------------> 
  
 // <!----------------------Funcion PRODUCT ID RAS y CRISTAL start---------------------------->        
-export function productIdRasCristal(anios1, anios2, tipoAsoc, group) {
+export function productIdRasCristal(grupo,tipo) {
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
+    let familia = grupo[9];
+	let edad_1 = grupo[7] ?? 0;
+	let edad_2 = grupo[8] ?? 0;
+
 	let ids = [];
+    let rangoEtario_1 = '';
+    let rangoEtario_2 = '';
     const ageRanges = [
         { min: 8, max: 17, label: '08-17' },
         { min: 18, max: 25, label: '18-25' },
@@ -500,77 +367,83 @@ export function productIdRasCristal(anios1, anios2, tipoAsoc, group) {
     function getAgeRange(age) {
         for (const range of ageRanges) {
             if (age >= range.min && age <= range.max) {
+                // console.log('edad : '+age)
+                // console.log('range : ');console.log(range)
+
+
                 return range.label;
             }
         }
         return ''; // If no range matches
     }
+  
 
-    // Adjust the 'tipo' (type) based on the input
-    let tipo = tipoAsoc;
-    if (tipo === "M") tipo = "D";
-    else if (tipo === "I") tipo = "P";
-
+// console.log('familia  rasid:'+familia)
     // Determine the age ranges
-    const rangoEtario_1 = getAgeRange(anios1);
-    const rangoEtario_2 = getAgeRange(anios1);
-    
-    if (group === 3 || group === 4) {
-        rangoEtario_2 = getAgeRange(anios2);
+    if (familia === 1 || familia === 2) {
+
+        rangoEtario_1 = getAgeRange(edad_1);
+
+    } else {
+        // console.log('edad_1 ',edad_1)
+        // console.log('edad_2 ',edad_2)
+
+        rangoEtario_2 = getAgeRange(edad_2);
+        rangoEtario_1 = getAgeRange(edad_1);
     }
 
+
     // Create IDs for titular, conyuge, and hijos
-    const idTitularRas  = "ras" + tipo + rangoEtario_1;
-    const idConyugeRas  = "ras" +  tipo + rangoEtario_2;
-    const idHijo1Ras  = "ras" +  tipo + "1H";
-    const idHijo2Ras  = "ras" +  tipo + "2H";
-    const idHijo3Ras  = "ras" +  tipo + "3H";
-
-	const idTitularCristal = "cristal" +  tipo + rangoEtario_1;
-    const idConyugeCristal = "cristal" +  tipo + rangoEtario_2;
-    const idHijo1Cristal = "cristal" +  tipo + "1H";
-    const idHijo2Cristal = "cristal" +  tipo + "2H";
-    const idHijo3Cristal = "cristal" +  tipo + "3H";
+    let idTitularRas  = "ras" + tipoAsociado + rangoEtario_1;
+    let idConyugeRas  = "ras" +  tipoAsociado + rangoEtario_2;
+    let idHijo1Ras  = "ras" +  tipoAsociado + "1H";
+    let idHijo2Ras  = "ras" +  tipoAsociado + "2H";
+    let idHijo3Ras  = "ras" +  tipoAsociado + "3H";
+	let idTitularCristal = "cristal" +  tipoAsociado + rangoEtario_1;
+    let idConyugeCristal = "cristal" +  tipoAsociado + rangoEtario_2;
+    let idHijo1Cristal = "cristal" +  tipoAsociado + "1H";
+    let idHijo2Cristal = "cristal" +  tipoAsociado + "2H";
+    let idHijo3Cristal = "cristal" +  tipoAsociado + "3H";
 	    // Store the IDs in an array
-
+  
 	ids.push(idTitularRas, idConyugeRas, idHijo3Ras, idHijo2Ras, idHijo1Ras,idTitularCristal, idConyugeCristal, idHijo3Cristal, idHijo2Cristal, idHijo1Cristal)
-
+// console.log('ids ',ids)
     return ids;
 }
 
 // <!----------------------Funcion PRODUCT ID RAS y CRISTAL end---------------------------->    
 
 // <!----------------------Funcion PRODUCT ID BAYRES PLAN start---------------------------->        
-export function productIBayres(edad_1, edad_2, group) {
-	let age_1 = edad_1;
-	let age_2 = edad_2;
+export function productIBayres(grupo) {
+    let familia = grupo[9];
+	let edad_1 = grupo[7] ?? 0;
+	let edad_2 = grupo[8] ?? 0;
+    let grupoSigla = grupo[10];
+
 	let kids = ""; 
-	let grupo = group;
 	let rangoEtario = "";
 	let ids = [];
 	let idAdultos = "";
+    // Ensure edad_2 is not greater than edad_1
+    if (edad_2 > edad_1) {
+        [edad_1, edad_2] = [edad_2, edad_1];  // Swap values if edad_2 is greater than edad_1
+    }
 
-	if (grupo === 1 || grupo === 2  ) {
-		age_2 = 0;
+	if (grupoSigla === 'IND'  ) {
 		
-		   if(grupo === 1){
+		   if(familia === 1){
 			kids = "";
-		   } else if(grupo === 2){
+		   } else if(familia === 2){
 			kids = "+1Hhasta25";
 		   }	  
-		   grupo = 'IND'; 
-	} else if (grupo === 3 || grupo === 4) {
-		
-		if (age_2 > age_1) {
-			age_1 = age_2;
-			age_2 = edad_1;
-		} else if  (grupo === 3){
+	
+	} else if (grupoSigla === 'MAT') {
 			kids = "";
-		} else if  (grupo === 4){
+		} else if  (familia === 4){
 			kids = "+1H";
 		}	
-		grupo = 'MAT';
-	}
+	
+
 
 	const getAgeRange = (age) =>  {
 		if (age <= 49) return '0-49';
@@ -584,13 +457,13 @@ export function productIBayres(edad_1, edad_2, group) {
 	};
 
 	    // Determine ranges for both individuals
-	rangoEtario = getAgeRange(age_1);
+	rangoEtario = getAgeRange(edad_1);
 
 	
 	if( rangoEtario === 0-49 || rangoEtario === 50-59 ){
-		idAdultos =	"bayres" + grupo + kids + rangoEtario
+		idAdultos =	"bayres" + grupoSigla + kids + rangoEtario
 	}else {
-		idAdultos =	"bayres" + grupo + "-" + rangoEtario
+		idAdultos =	"bayres" + grupoSigla + "-" + rangoEtario
 	}
 
 
@@ -607,73 +480,90 @@ return ids
 }
 // <!----------------------Funcion PRODUCT ID BAYRES PLAN end----------------------------> 
 // <!----------------------Funcion PRODUCT ID ASMEPRIV start---------------------------->        
-export function productIdAsmepriv(edad_1, edad_2,hijos, tipoAsoc, group) {
+export function productIdAsmepriv(grupo,tipo){
 
-let age_1 = edad_1;
-let age_2 = edad_2;
-let tipo = tipoAsoc
-let kids = "+" + hijos + "H"; 
-let grupo = group;
+
+// console.log('Asmepriv llgan : ',grupo[7]);
+// console.log('Asmepriv llgan : ',grupo[8]);
+// console.log('Asmepriv llgan : ',grupo[3]);
+// console.log('Asmepriv llgan : ',tipo[1].tipo_Ingreso_P_D_Monotributo);
+
+let familia = grupo[9];
+let edad_1 = grupo[7] ?? 0;
+let edad_2 = grupo[8] ?? 0;
+let grupoSigla = grupo[10];
+
+
+let tipoAsociado = tipo[1].tipo_Ingreso_P_D_Monotributo;
+let kids = "+" + grupo[3] + "H"; 
+
 let rangoEtario = "";
 let ids = [];
 
 if (edad_2 === null) {
-	age_2 = 0;
+	edad_2 = 0;
 }
 
-if (grupo === 1 || grupo === 2  ) {
-	age_2 = 0;
-	   if(grupo === 1){
-		kids = "+0H";
-	   }	
-	   
-	grupo = 'IND';	   
-} else if (grupo === 3 || grupo === 4) {
-	
-	if (age_2 > age_1) {
-		age_1 = age_2;
-		age_2 = edad_1;
-	} else if   (grupo === 3){
-		kids = "+0H";
-	   }	
-	   grupo = 'MAT';
-	}
+if (grupoSigla === 'IND' ) {
 
+	   if(grupo === 1){
+		kids = "";
+	   }else if (grupo === 1 && tipoAsociado != "D"){
+        kids = "-SINMAT";
+       }  
+} else if (familia === 3) {
+		kids = "";	
+	
+	}
 const getAgeRange = (age) =>  {
 	if (age < 18) return;
-	if (age <= 29) return '-SMAT18-29';
+    if (age <= 29) return '18-29';
 	if (age <= 39) return '30-39';
 	if (age <= 49) return '40-49';
 	if (age <= 59) return '50-59';
-	if (age <= 64) return '60-64';
-	if (age <= 64) return '65-69';
-	if (age <= 54) return '70-71';
+    if(tipoAsociado === "P"){
+        if (age <= 64) return '60-64';
+        if (age <= 64) return '65-69';
+        if (age <= 54) return '70-71';
+    }
+
 		return;
 };
 
-rangoEtario = getAgeRange(age_1);
+rangoEtario = getAgeRange(edad_1);
 
-if ( tipo != "P" && rangoEtario === '60-64' || tipo != "P" && rangoEtario === '65-69' ||  tipo != "P" && rangoEtario === '70-71'  ){
-	rangoEtario = ""
-} else if ( rangoEtario === '60-64' || rangoEtario === '65-69' ||  rangoEtario === '70-71'  ){
+if ( rangoEtario === '60-64' || rangoEtario === '65-69' ||  rangoEtario === '70-71'  ){
 	kids = "";
 }
 
 
-let idAsmepriv = "asmepriv" + tipo + grupo + kids + rangoEtario;
+let idAsmepriv = "asmepriv" + tipoAsociado + grupoSigla + kids + rangoEtario;
 
-let idAdmenorUno = "asmepriv" + tipo +"ADH-1"; // adicional menor d eun año
-let idHijoHasta21 = "asmepriv" + tipo + "H-21"; // hijo hasta 21 años
-let idRecargoHijo21a29 = "asmepriv" + tipo + "RECH21A29";  // recargo hijo de 21 a 29 años
-let idModuloMat = "asmepriv" + tipo + "MODMAT"; // modulo maternidad
+let idAdmenorUno = "asmepriv" + tipoAsociado +"ADH-1"; // adicional menor d eun año
+let idHijoHasta21 = "asmepriv" + tipoAsociado + "H-21"; // hijo hasta 21 años
 
-ids.push(idAsmepriv, idAdmenorUno, idHijoHasta21, idRecargoHijo21a29, idModuloMat)
+let idRecargoHijo21a29 = "";
+let idModuloMat = "";
+
+ids.push(idAsmepriv, idAdmenorUno, idHijoHasta21)
+
 // console.log("idAsmepriv :" + idAsmepriv);
 // console.log("idAdmenorUno :" + idAdmenorUno);
 // console.log("idHijoHasta21 :" + idHijoHasta21);
+
+if(tipoAsociado != "D"){
+idRecargoHijo21a29 = "asmepriv" + tipoAsociado + "RECH21A29";  // recargo hijo de 21 a 29 años
+idModuloMat = "asmepriv" + tipoAsociado + "MODMAT"; // modulo maternidad
+ids.push(idRecargoHijo21a29, idModuloMat)
+} else {
+    idRecargoHijo21a29 = "";  // recargo hijo de 21 a 29 años
+    idModuloMat = ""; // modulo maternidad
+    ids.push(idRecargoHijo21a29, idModuloMat)
+
+}
+
 // console.log("idRecargoHijo21a29 :" + idRecargoHijo21a29);
 // console.log("idModuloMat :" + idModuloMat);
-
 
 return ids;
 
@@ -681,38 +571,26 @@ return ids;
 // <!----------------------Funcion PRODUCT ID ASMEPRIV end---------------------------->
 // <!----------------------Funcion PRODUCT ID LUIS PASTEUR start---------------------------->
 
-export function productIdLuisPasteur(edad_1, edad_2,hijos, tipoAsoc, group) {
+export function productIdLuisPasteur(grupo,tipo) {
 
+    let familia = grupo[9];
+    let edad_1 = grupo[7] ?? 0;
+    let grupoSigla = grupo[10];
+    
+    
+    let tipoAsociado = tipo[1].tipo_Ingreso_P_D_Monotributo;
+    
 
-	let grupo = group;
-	let age2 = edad_2;
-	let age = edad_1;
-	let kids = 'y'+ hijos;
-	let tipo = tipoAsoc;
+	let kids = 'y'+ grupo[3];
+
 	let ids = [];
 
 
-	if (grupo === 1 || grupo === 2  ) {
-        age2 = 0;
-	
-           if(grupo === 1){
+
+           if(familia === 1 || familia === 1 || grupo[3] === null || grupo[3] === 0){
 			kids = "";
 		   }
-		   grupo = 'IND';		   
-    } else if (grupo === 3 || grupo === 4) {
-		
-		if ( age2 > age ) {
-			 age = age2;
-			age2 = edad_1;
-		} else if   (grupo ===3){
-			kids = "";
-		   }	
-		   grupo = 'MAT';
-		}
 
-	if (hijos === null || hijos === 0 ) {
-        kids = '';
-    }
 
 
 	// console.log('grupo : ' + grupo);
@@ -730,18 +608,18 @@ export function productIdLuisPasteur(edad_1, edad_2,hijos, tipoAsoc, group) {
 	};
 	
 
-    let rangoEtario = getAgeRange(age);
+    let rangoEtario = getAgeRange(edad_1);
 	// console.log('grupo : ' + grupo);
-	// console.log('tipo : ' + tipo);
+	// console.log('tipoAsociado : ' + tipoAsociado);
 	// console.log('rangoEtario : ' + rangoEtario);
 	// console.log('hijos : ' + kids);
 
-	let idLuispasteur =	"luispasteur"  + grupo + tipo + rangoEtario + kids;
+	let idLuispasteur =	"luispasteur"  + grupoSigla + tipoAsociado + rangoEtario + kids;
 	// console.log('idLuispasteur : ' + idLuispasteur);
 
-	let idNieto = "luispasteur" + "NIETO" + tipo 
-	let idAd =	"luispasteur" + "AD" + tipo
-	let idHijo = "luispasteur" + "HIJO" + tipo
+	let idNieto = "luispasteur" + "NIETO" + tipoAsociado 
+	let idAd =	"luispasteur" + "AD" + tipoAsociado
+	let idHijo = "luispasteur" + "HIJO" + tipoAsociado
 	// console.log('idNieto : ' + idNieto);
 	// console.log('idAd : ' + idAd);
 	// console.log('idHijo : ' + idHijo);
@@ -756,15 +634,15 @@ export function productIdLuisPasteur(edad_1, edad_2,hijos, tipoAsoc, group) {
 
 
 // <!----------------------Funcion PRODUCT ID AVALIAN  start----------------------------> 
-export function productIdAvalian(anios1, anios2, tipoAsoc, group) {
+export function productIdAvalian(grupo,tipo) {
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
+    let familia = grupo[9];
+	let edad_1 = grupo[7];
+	let edad_2 = grupo[8];
 
-    let age_1 = anios1;
-    let age_2 = anios2;
-    let grupo = group;
     let rangoEtario_1 = "";
     let rangoEtario_2 = "";
     let zonaComercial = ["BA", "E", "P"];
-    let tipo = tipoAsoc;
     let idTitular = "";
     let idConyuge = "";
     let idHijo1 = "";
@@ -773,14 +651,6 @@ export function productIdAvalian(anios1, anios2, tipoAsoc, group) {
     let idHijo25 = "";
     let ids = [];
 
-    // Correct comparison operators (== or ===) instead of assignment (=)
-    if (tipo === "M") {
-        tipo = "D";
-    } else if (tipo === "I") {
-        tipo = "P";
-    }
-
-    // console.log("ID AVALIAN EN CURSO - tipo: " + tipo);
 
     // Function to determine age range
     const getAgeRange = (age) => {
@@ -797,11 +667,11 @@ export function productIdAvalian(anios1, anios2, tipoAsoc, group) {
     };
 
     // Determine ranges for both individuals
-    rangoEtario_1 = getAgeRange(age_1);
+    rangoEtario_1 = getAgeRange(edad_1);
 
     // For the group 3 or 4, we calculate age for both people
-    if (grupo === 3 || grupo === 4) {
-        rangoEtario_2 = getAgeRange(age_2);
+    if (familia === 3 || familia === 4) {
+        rangoEtario_2 = getAgeRange(edad_2);
     } else {
         rangoEtario_2 = rangoEtario_1; // Same range as the first person
     }
@@ -810,12 +680,12 @@ export function productIdAvalian(anios1, anios2, tipoAsoc, group) {
     // console.log("rangoEtario_2: " + rangoEtario_2);
 
     // Generate IDs for each role
-    idTitular = "avalian" +  "Z" + zonaComercial[0] + tipo + rangoEtario_1;
-    idConyuge = "avalian" +  "Z" + zonaComercial[0] + tipo + rangoEtario_2;
-    idHijo3 = "avalian" +  "Z" + zonaComercial[0] + tipo + "3H";
-    idHijo2 = "avalian" +  "Z" + zonaComercial[0] + tipo + "2H";
-    idHijo1 = "avalian" +  "Z" + zonaComercial[0] + tipo + "1H";
-    idHijo25 = "avalian" +  "Z" + zonaComercial[0] + tipo + "25";
+    idTitular = "avalian" +  "Z" + zonaComercial[0] + tipoAsociado + rangoEtario_1;
+    idConyuge = "avalian" +  "Z" + zonaComercial[0] + tipoAsociado + rangoEtario_2;
+    idHijo3 = "avalian" +  "Z" + zonaComercial[0] + tipoAsociado + "3H";
+    idHijo2 = "avalian" +  "Z" + zonaComercial[0] + tipoAsociado + "2H";
+    idHijo1 = "avalian" +  "Z" + zonaComercial[0] + tipoAsociado + "1H";
+    idHijo25 = "avalian" +  "Z" + zonaComercial[0] + tipoAsociado + "25";
 
 	ids.push(idTitular, idConyuge, idHijo3, idHijo2, idHijo1, idHijo25);
 
@@ -827,22 +697,14 @@ export function productIdAvalian(anios1, anios2, tipoAsoc, group) {
 
 
 // <!----------------------Funcion PRODUCT ID HOMINIS  start----------------------------> 
-export function productIdHominis(edad_1, edad_2, tipoAsoc, numHijos, group) {
-
-    let age_1 = edad_1;
-    let age_2 = edad_2;
-    let grupo = group;
-	let kids = "+" + numHijos + "H";
+export function productIdHominis(grupo,tipo) {
+    let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
+    let familia = grupo[9];
+	let edad_1 = grupo[7];
+    let grupoSigla = grupo[10];
+	let kids = "+" + grupo[3] + "H";
     let rangoEtario = "";
-    let tipo = tipoAsoc;
-    // Correct comparison operators (== or ===) instead of assignment (=)
-    if (tipo === "M") {
-        tipo = "D";
-    } else if (tipo === "I") {
-        tipo = "P";
-    }
 
-// console.log("hominis Grupo   :" + grupo)
     // Function to determine age range
     const getAgeRange = (age) => {
         if (age <= 39) return '18-39';
@@ -851,36 +713,80 @@ export function productIdHominis(edad_1, edad_2, tipoAsoc, numHijos, group) {
         return '65';
     };
 
-	rangoEtario = getAgeRange(age_1)
-	if (grupo === 1 || grupo === 2  ) {
-        age_2 = 0;
+	rangoEtario = getAgeRange(edad_1)
+	if (familia === 1 || familia === 2  ) {
 	
-           if(grupo === 1	){
+           if(familia === 1	){
 			kids = "+0H";
-		   } else if (grupo === 1 && age_1 <= 25 ){
+		   } else if (familia === 1 && edad_1 <= 25 ){
 			rangoEtario = "18-25";
 
-		   } else {rangoEtario = getAgeRange(age_1);
+		   } else {rangoEtario = getAgeRange(edad_1);
 		   } 
-		   grupo = 'IND';
-    } else if (grupo === 3 || grupo === 4) {
-		if ( age_2 > age_1 ) {
-			 age_1 = age_2;
-			age_2 = edad_1;
-		} else if   (grupo === 3){
+    } else if (familia === 3 || familia === 4) {
+	if   (familia === 3){
 			kids = "+0H";
-		   }else if (grupo === 3 && age_1 <= 25 ){
+		   }else if (familia === 3 && edad_1 <= 25 ){
 			rangoEtario = "18-25";
-		   } else {rangoEtario = getAgeRange(age_1);
+		   } else {rangoEtario = getAgeRange(edad_1);
 		   }  	
-		   grupo = 'MAT';
+		   
 		}
-		let idHominis = "hominis" + grupo + kids + tipo + rangoEtario;
-
-    return idHominis;
+		let idHominis = "hominis" + grupoSigla + kids + tipoAsociado + rangoEtario;
+        let id = []
+        id.push(idHominis);
+        return id
+   
 }
 
 // <!----------------------Funcion PRODUCT ID HOMINIS end----------------------------> 
+
+
+// <!----------------------Funcion PRODUCT ID SALUD CENTRAL  start----------------------------> 
+export function productIdSaludcentral(grupo) {
+    let edad_1 = grupo[7];
+    let edad_2 = grupo[8];
+
+    if (typeof edad_1 !== 'number' || typeof edad_2 !== 'number' || edad_1 < 0 || edad_2 < 0) {
+        console.error('Invalid ages provided');
+        return [];
+    }
+
+    // Helper function to determine the age range
+    const getAgeRange = (age) => {
+        const ranges = [
+            { max: 29, range: '18-29' },
+            { max: 35, range: '30-35' },
+            { max: 40, range: '36-40' },
+            { max: 50, range: '41-50' },
+            { max: 60, range: '51-60' },
+            { max: 65, range: '61-65' },
+            { max: 70, range: '66-70' },
+            { max: 75, range: '71-75' },
+            { max: 79, range: '76-79' },
+            { max: 85, range: '80-85' }
+        ];
+
+        return ranges.find(r => age <= r.max)?.range || 'Unknown';
+    };
+
+    let rangoEtario_1 = getAgeRange(edad_1);
+    let rangoEtario_2 = getAgeRange(edad_2);
+
+    let idSaludcentralTitular = 'saludcentral' + rangoEtario_1;
+    let idSaludcentralConyuge = 'saludcentral' + rangoEtario_2;
+
+    const idHijo1 = 'saludcentral1H';
+    const idHijo2 = 'saludcentral2H';
+
+    const ids = [idSaludcentralTitular, idSaludcentralConyuge, idHijo1, idHijo2];
+
+    // console.log('ids salud central:', ids);
+    return ids;
+}
+
+// <!----------------------Funcion PRODUCT ID SALUD CENTRAL end----------------------------> 
+
 
 
 
