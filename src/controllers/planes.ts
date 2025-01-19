@@ -48,6 +48,22 @@ const updateItem = async ({ params, body }: Request, res: Response) => {
 }
 };
 
+const  updateClinicas = async (req: Request, res: Response) => {
+  console.log(' Hola uno')
+
+  try {
+    const  response = await getPlanes();
+    console.log(' Hola dos')
+
+    res.status(200).send(response);
+  } catch (e) {
+    handleHttp(res,'ERROR_GET_CLINICAS')
+  }
+};
+
+
+export default updateClinicas;
+
 const  deleteItem = async ({ params }: Request, res: Response) => {
   try {
     const { id } = params
@@ -76,4 +92,4 @@ const searchItem = async ({ params }: Request, res: Response) => {
 };
 };
 
-export { getItems, getItemById, createItem, updateItem, deleteItem, searchItem  }
+export { getItems, getItemById, createItem, updateItem, deleteItem, searchItem, updateClinicas  }

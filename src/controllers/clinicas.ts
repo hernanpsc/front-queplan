@@ -41,6 +41,7 @@ const  createItem = async (req: Request, res: Response) => {
  
 const updateItem = async ({ params, body }: Request, res: Response) => {
   try {
+   
     const { id }  = params;
   const response = await updateProduct(  id, body );
   res.send( response )

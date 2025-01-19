@@ -1,16 +1,23 @@
   // <!----------------------Funcion VALOR DEL PLAN OMINT start----------------------------> 
 import * as functions from './functions';
-
-// return [num_adultos, primerhijo, restohijos, totalhijos, gen, capitas,arrayEdadesHijos,edad_1,edad_2,familia,grupoSigla];
-
-  export function valor_Omint(prices,grupo,arrayDeducciones) {
- 
- 
-    let empresa = 'OMINT';
+export function valor_Omint(prices,grupo,arrayDeducciones) {
+ //	<!------------------------------ VARIABLES DE prices start------------------------------------>							
+      let  precio_titular = prices.precio_titular_Omint.precios.precios;
+          // console.log('precio_titular  :',precio_titular);
+      let  precio_conyuge = prices.precio_conyuge_Omint.precios.precios;
+          // console.log('precio_conyuge  :',precio_conyuge);
+      let  precio_hijo_1 = prices.precio_hijo1_Omint.precios.precios;
+          // console.log('precio_hijo_1  :',precio_hijo_1);
+      let  precio_hijo_2 = prices.precio_hijo2_Omint.precios.precios;
+          // console.log('precio_hijo_2  :',precio_hijo_2);
+//	<!------------------------------ VARIABLES DE prices end------------------------------------>							
+//	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
+    let numHijos = grupo[3];
     let familia = grupo[9];
-    
 
-
+//	<!------------------------------ VARIABLES DE grupo end------------------------------------>							
+//	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							
+    let empresa = 'OMINT';
     let factores = arrayDeducciones.find(item => item.name === empresa);
     let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
     let promociones = factores.bonificaciones;
@@ -19,41 +26,33 @@ import * as functions from './functions';
   if (promociones[0] >= 1 ){
       con_afinidad === true;
   }
+//	<!------------------------------ CALCULO DE DEDUCCIONES end arrayDeducciones------------------------------------>							
+//	<!------------------------------ AJUSTES DE familia start-------------------------------------->							
+
+    switch (familia) {
+      case 1:
+        precio_hijo_1 = {};
+        precio_hijo_2 = {};
+        precio_conyuge = {};
+          break;
+      case 2:
+        precio_conyuge = {};
+          break;
+      case 3:
+        precio_hijo_1 = {};
+        precio_hijo_2 = {};
+          break;
+      case 4:
+          // No changes here, maybe you want to add logic for case 4?
+          break;
+      default:
+          // Handle unknown group cases, if necessary
+          break;
+  }
+//	<!------------------------------ AJUSTES DE familia end-------------------------------------->							
 
 
-    let  precio_titular = prices.precio_titular_Omint.precios.precios;
-    let  precio_conyuge = prices.precio_conyuge_Omint.precios.precios;
-    let  precio_hijo_1 = prices.precio_hijo1_Omint.precios.precios;
-    let  precio_hijo_2 = prices.precio_hijo2_Omint.precios.precios;
-    let numHijos = grupo[3];
-    // console.log('familia 36 omint  : ');
-
-    if (familia === 1) {
-      // No hay hijos, ni cónyuge, solo titular
-
-      precio_hijo_1 = {};
-      precio_hijo_2 = {};
-      precio_conyuge = {};
-    } else if (familia === 2) {
-      // titular con hijos
-
-      precio_conyuge = {};
-    } else if (familia === 3) {
-      // Familia con titular y cónyuge, no hay hijos
-      precio_hijo_1 = {};
-      precio_hijo_2 = {};
-    } else {
-            // Familia con titular y cónyuge y tambien hijos
-
-      // Caso para otros grupos (por ejemplo, grupo con hijos)
-      // Deja los objetos de hijos como están, si es necesario puedes agregarlos aquí
-    }
-    // console.log('familia 60 omint  : ');
-    // console.log('precio_titular  : ' );console.log(precio_titular);
-    // console.log('precio_conyuge  : ' );console.log(precio_conyuge);
-    // console.log('precio_hijo_1  : ' );console.log(precio_hijo_1);
-    // console.log('precio_hijo_2  : ' );console.log(precio_hijo_2);
-    let array = [];
+   
 
     let precios = {}
 
@@ -76,7 +75,6 @@ Object.keys(precio_titular).forEach(key => {
   if (precio_hijo_2 && precio_hijo_2[key] !== undefined) {
     total += (numHijos - 2) * (parseInt(precio_hijo_2[key]) || 0); // Multiplica por los hijos adicionales
   }
-
   // Asignar el valor calculado al objeto precios
   precios[key] = total;
 });
@@ -104,52 +102,33 @@ Object.keys(precio_titular).forEach(key => {
 
   
 // <!---------------------Funcion VALOR DEL PLAN OMINT end----------------------------> 
-for ( let j in precios) {
-        let confirmaSiTieneBonificaciones = con_afinidad;
-        let porcentajeBonificado = bonAfinidad;
-
-        let precioInicial = precios[j];
-        // console.log('precioInicial :');console.log(precioInicial)
-        let _id = [j][0];
-        // console.log('_id :');console.log(_id)
-        let nombre = _id.substring(3);
-        // console.log('nombre :');console.log(nombre)
-
-
-        // Llamar a la función y desestructurar el array devuelto
-        let [valor_total_plan, valorBonificacion] = functions.promoDescuento(precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones);
-
-        // Asignar los valores a nuevas variables
-        let precioTotal = valor_total_plan;
-        let bonificacionAplicada = valorBonificacion;
-
-        // Mostrar los resultados en consola
-        // console.log('precioTotal :');
-         // console.log('precioTotal);
-
-        // console.log('bonificacionAplicada :');
-         // console.log('bonificacionAplicada);
-        // console.log('tipoIngreso aportes_OS[0]  :',aportes_OS[0]);
-        // console.log('bonificacion por aportes factores.deduction  :',factores.deduction);
-
-        let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
-        // console.log('precio :');console.log(precio)
-
-
-var plan = new Object();
-                plan.item_id = _id;
-                plan.name = 'OMINT  ' + nombre;
-                plan.precio = precio;
-                plan.promoPorcentaje = bonificacionAplicada;
-                plan.promoDescuento = porcentajeBonificado;
-                plan.valorLista = precios[j];
-                plan.aporteOS = factores.deduction;
-                array.push(plan);		
+let array = [];
+for (let j in precios) {
+  let _id = [j][0];
+  let nombre = _id.substring(3);
+  nombre = nombre.replace(/_/g, ' '); // Reemplaza todos los guiones bajos por un espacio        nombre = nombre.replace(/_/g, ' '); // Reemplaza todos los guiones bajos por un espacio
+  let confirmaSiTieneBonificaciones = con_afinidad;
+  let porcentajeBonificado = bonAfinidad;
+  let precioInicial = precios[j];  
+  // Llamar a la función y desestructurar el array devuelto
+  let [valor_total_plan, valorBonificacion] = functions.promoDescuento(precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones);
+  // Asignar los valores a nuevas variables
+  let precioTotal = valor_total_plan;
+  let bonificacionAplicada = valorBonificacion;
+  let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
+  
+  //	<!--------------------Crear Objeto SWISS start------------------------------>																            			
+  var plan = new Object();
+          plan.item_id = _id
+          plan.name = empresa + ' ' + nombre;
+          plan.precio = precio;
+          plan.promoPorcentaje = porcentajeBonificado;
+          plan.promoDescuento = bonificacionAplicada;
+          plan.valorLista = precioInicial;
+          plan.aportes_OS = factores.deduction;
+          array.push(plan);	      
             }
 //	<!-----------------------Bucle OMINT end------------------------>								
-// console.log('array OMINT : ');console.log(array);
-
-
         return array					
-        }
+  }
 // <!----------------------Funcion VALOR DEL PLAN OMINT end---------------------------->

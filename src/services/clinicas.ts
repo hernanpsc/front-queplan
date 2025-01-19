@@ -63,7 +63,8 @@ const getProduct = async (id: string) => {
 };
 
 const updateProduct = async (id: string, data: any) => {
-  console.log("id: string : ",id, "data: any ", data)
+  console.log('hola updateProduct clinicas', id, data)
+  // console.log("id: string : ",id, "data: any ", data)
    // Manejar valores null
    for (const key in data) {
     if (data[key] === null) {
@@ -71,6 +72,7 @@ const updateProduct = async (id: string, data: any) => {
     }
   }
   const responseUpdate = await ClinicasModel.findOneAndUpdate({_id:id},data,{new: true})
+  console.log('responseUpdate ',responseUpdate)
   return responseUpdate
 };
 
@@ -93,4 +95,4 @@ const getPlanes = async () => {
 
   return responseGet
 }; 
-export { createProduct, getProducts, getProduct, updateProduct, deleteProduct, searchProducts ,getPlanes};
+export { createProduct, getProducts, getProduct, updateProduct, deleteProduct, searchProducts ,getPlanes,organizarClinicasPorRegiones};

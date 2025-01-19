@@ -2,7 +2,9 @@ import { Request, Response } from 'express';
 import * as servicios from './index'; 
 import * as functions from '../funciones';
 import PreciosModel from '../models/precios'; 
-import { getProduct } from './precios'
+import { getProduct } from './precios';
+import { getPlanes, organizarClinicasPorRegiones } from './clinicas'
+
 import { handleHttp } from '../utils/error.handle';
 import { Document } from 'mongoose';
 import { Clinicas } from '../interfaces/clinicas';
@@ -230,6 +232,7 @@ const imprimirPrices = functions.imprimirPrecios(prices,ids)
    let concatenarPrecios = functions.valor_prepagas(prices,grupo,arrayDeducciones);
 
 
+   console.log( ' valor_prepagas :  235');
 
 
 let empresas: string[] = [];
@@ -240,8 +243,16 @@ async function obtenerEmpresasDisponibles() {
     return empresas;
   }
 empresas = await obtenerEmpresasDisponibles();
+  console.log( ' funcion en linea 245 empresas  :',empresas)
+  let allPlanes = await PlanesModel.find({});
 
-let allPlanes = await PlanesModel.find({}); 
+
+
+let clinicasPorRegiones = fetchClinicasPorRegiones();
+async function fetchClinicasPorRegiones() {
+  return await organizarClinicasPorRegiones();
+}
+
 
 // console.log('allPlanes  : ' + allPlanes)
 // console.log('concatenarPrecios  : ' + concatenarPrecios)
@@ -297,9 +308,11 @@ const resultado = combinedPlans.filter((plan: { precio: number; }) => {
        return true;
        });
    
-// console.log('resultado   :')
-// console.log(resultado)
- res.status(200).json(resultado)
+console.log('resultado   :')
+console.log(resultado)
+ res.status(200).json({ resultado: resultado,
+                        clincasPorRegiones : clinicasPorRegiones  
+ })
       } catch(e) {
         handleHttp(res, 'ERROR_GET_ITEMS'); 
       }

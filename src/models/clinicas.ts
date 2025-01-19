@@ -21,6 +21,7 @@ const clinicasSchema = new Schema<Clinicas>(
         cartillas: [String],
         coberturas: [coberturaSchema], // Cambiado de [String] a [Cobertura]
         item_id: String,
+        
         ubicacion: {
             calle_y_numero:String,
             telefono:String,
