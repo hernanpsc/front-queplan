@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.organizarClinicasPorRegiones = exports.getPlanes = exports.searchProducts = exports.deleteProduct = exports.updateProduct = exports.getProduct = exports.getProducts = exports.createProduct = void 0;
+exports.getPlanes = exports.searchProducts = exports.deleteProduct = exports.updateProduct = exports.getProduct = exports.getProducts = exports.createProduct = void 0;
+exports.organizarClinicasPorRegiones = organizarClinicasPorRegiones;
 const clinicas_1 = __importDefault(require("./../models/clinicas"));
 const planes_1 = require("./planes");
 let regiones = [];
@@ -31,7 +32,6 @@ async function organizarClinicasPorRegiones() {
     }
     return clinicasPorRegiones;
 }
-exports.organizarClinicasPorRegiones = organizarClinicasPorRegiones;
 // Llama a la función para organizar las clínicas por regiones
 organizarClinicasPorRegiones();
 const createProduct = async (item) => {

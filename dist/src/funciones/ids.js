@@ -1,6 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.productIdSaludcentral = exports.productIdHominis = exports.productIdAvalian = exports.productIdLuisPasteur = exports.productIdAsmepriv = exports.productIBayres = exports.productIdRasCristal = exports.productIdDoctored = exports.productIdPrevencion = exports.productIdMedife = exports.productIdSwiss = exports.productIdOmint = exports.productIdPremedic = exports.productIdGaleno = exports.productIDSancor = void 0;
+exports.productIDSancor = productIDSancor;
+exports.productIdGaleno = productIdGaleno;
+exports.productIdPremedic = productIdPremedic;
+exports.productIdOmint = productIdOmint;
+exports.productIdSwiss = productIdSwiss;
+exports.productIdMedife = productIdMedife;
+exports.productIdPrevencion = productIdPrevencion;
+exports.productIdDoctored = productIdDoctored;
+exports.productIdRasCristal = productIdRasCristal;
+exports.productIBayres = productIBayres;
+exports.productIdAsmepriv = productIdAsmepriv;
+exports.productIdLuisPasteur = productIdLuisPasteur;
+exports.productIdAvalian = productIdAvalian;
+exports.productIdHominis = productIdHominis;
+exports.productIdSaludcentral = productIdSaludcentral;
 // <!----------------------Funcion PRODUCT ID SANCOR start---------------------------->     
 function productIDSancor(grupo, tipo) {
     let tipoAsociado = tipo[1].tipo_Ingreso_Original_P_D;
@@ -40,7 +54,6 @@ function productIDSancor(grupo, tipo) {
     let hijo2Id = 'sancor' + '2' + rangoEtario_1[1] + tipoAsociado;
     return [edadID1, edadID2, hijoId, hijo2Id];
 }
-exports.productIDSancor = productIDSancor;
 ;
 // <!----------------------Funcion PRODUCT ID SANCOR end---------------------------->   
 // <!----------------------Funcion PRODUCT ID GALENO start---------------------------->   
@@ -73,7 +86,6 @@ function productIdGaleno(grupo, tipo) {
     id.push(edadIdGaleno);
     return id;
 }
-exports.productIdGaleno = productIdGaleno;
 // // <!----------------------Funcion PRODUCT ID GALENO end---------------------------->
 // // <!----------------------Funcion PRODUCT ID PREMEDIC start----------------------------> 
 function productIdPremedic(grupo, tipo) {
@@ -100,7 +112,6 @@ function productIdPremedic(grupo, tipo) {
     }
     return [id_premedic, id_hijo_hasta_1, id_hijo_hasta_25];
 }
-exports.productIdPremedic = productIdPremedic;
 // <!----------------------Funcion PRODUCT ID PREMEDIC END---------------------------->    
 // <!----------------------Funcion PRODUCT ID OMINT start---------------------------->        
 function productIdOmint(grupo, tipo) {
@@ -136,7 +147,6 @@ function productIdOmint(grupo, tipo) {
     // Return the generated IDs
     return [id_titular, id_conyuge, id_hijo_1, id_hijo_2];
 }
-exports.productIdOmint = productIdOmint;
 // <!----------------------Funcion PRODUCT ID OMINT end---------------------------->
 // <!----------------------Funcion PRODUCT ID SWISS start---------------------------->        
 function productIdSwiss(grupo, tipo) {
@@ -191,7 +201,6 @@ function productIdSwiss(grupo, tipo) {
     // Return the generated product IDs
     return [id_titular, id_conyuge, id_hijo_1, id_hijo_2];
 }
-exports.productIdSwiss = productIdSwiss;
 // <!----------------------Funcion PRODUCT ID END start----------------------------> 
 // <!----------------------Funcion PRODUCT ID MEDIFE start---------------------------->
 function productIdMedife(grupo, tipo) {
@@ -228,7 +237,6 @@ function productIdMedife(grupo, tipo) {
     // Return all IDs in an array
     return [idMedife, Hijo0a1, Hijo0a20, HIJO21a29];
 }
-exports.productIdMedife = productIdMedife;
 // <!----------------------Funcion PRODUCT ID MEDIFE end----------------------------> 
 // <!----------------------Funcion PRODUCT ID PREVENCION SALUD start----------------------------> 
 function productIdPrevencion(grupo, tipo) {
@@ -274,7 +282,6 @@ function productIdPrevencion(grupo, tipo) {
     id.push(edadIdPrevencion);
     return id;
 }
-exports.productIdPrevencion = productIdPrevencion;
 // <!----------------------Funcion PRODUCT ID PREVENCION SALUD end----------------------------> 
 // // <!----------------------Funcion PRODUCT ID DOCTORED start----------------------------> 
 function productIdDoctored(grupo, tipo) {
@@ -313,7 +320,6 @@ function productIdDoctored(grupo, tipo) {
     }
     return [idDoctored, idDoctoredHijo3, idDoctoredAd];
 }
-exports.productIdDoctored = productIdDoctored;
 // <!----------------------Funcion PRODUCT ID DOCTORED END----------------------------> 
 // <!----------------------Funcion PRODUCT ID RAS y CRISTAL start---------------------------->        
 function productIdRasCristal(grupo, tipo) {
@@ -376,7 +382,6 @@ function productIdRasCristal(grupo, tipo) {
     // console.log('ids ',ids)
     return ids;
 }
-exports.productIdRasCristal = productIdRasCristal;
 // <!----------------------Funcion PRODUCT ID RAS y CRISTAL end---------------------------->    
 // <!----------------------Funcion PRODUCT ID BAYRES PLAN start---------------------------->        
 function productIBayres(grupo) {
@@ -438,7 +443,6 @@ function productIBayres(grupo) {
     ids.push(idAdultos, idHijohasta25, idAdicional18a49, idSinMaternidad, idIND18a29);
     return ids;
 }
-exports.productIBayres = productIBayres;
 // <!----------------------Funcion PRODUCT ID BAYRES PLAN end----------------------------> 
 // <!----------------------Funcion PRODUCT ID ASMEPRIV start---------------------------->        
 function productIdAsmepriv(grupo, tipo) {
@@ -516,7 +520,6 @@ function productIdAsmepriv(grupo, tipo) {
     // console.log("idModuloMat :" + idModuloMat);
     return ids;
 }
-exports.productIdAsmepriv = productIdAsmepriv;
 // <!----------------------Funcion PRODUCT ID ASMEPRIV end---------------------------->
 // <!----------------------Funcion PRODUCT ID LUIS PASTEUR start---------------------------->
 function productIdLuisPasteur(grupo, tipo) {
@@ -565,7 +568,6 @@ function productIdLuisPasteur(grupo, tipo) {
     ids.push(idLuispasteur, idNieto, idAd, idHijo);
     return ids;
 }
-exports.productIdLuisPasteur = productIdLuisPasteur;
 // <!----------------------Funcion PRODUCT ID LUIS PASTEUR end----------------------------> 
 // <!----------------------Funcion PRODUCT ID AVALIAN  start----------------------------> 
 function productIdAvalian(grupo, tipo) {
@@ -627,7 +629,6 @@ function productIdAvalian(grupo, tipo) {
     // Return array of ids
     return ids;
 }
-exports.productIdAvalian = productIdAvalian;
 // <!----------------------Funcion PRODUCT ID AVALIAN end----------------------------> 
 // <!----------------------Funcion PRODUCT ID HOMINIS  start----------------------------> 
 function productIdHominis(grupo, tipo) {
@@ -675,7 +676,6 @@ function productIdHominis(grupo, tipo) {
     id.push(idHominis);
     return id;
 }
-exports.productIdHominis = productIdHominis;
 // <!----------------------Funcion PRODUCT ID HOMINIS end----------------------------> 
 // <!----------------------Funcion PRODUCT ID SALUD CENTRAL  start----------------------------> 
 function productIdSaludcentral(grupo) {
@@ -711,6 +711,5 @@ function productIdSaludcentral(grupo) {
     // console.log('ids salud central:', ids);
     return ids;
 }
-exports.productIdSaludcentral = productIdSaludcentral;
 // <!----------------------Funcion PRODUCT ID SALUD CENTRAL end----------------------------> 
 //# sourceMappingURL=ids.js.map

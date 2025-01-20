@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtenerPlanesConClinicas = exports.getPlanes = exports.searchProducts = exports.deleteProduct = exports.updateProduct = exports.getProduct = exports.getProducts = exports.createProduct = void 0;
+exports.getPlanes = exports.searchProducts = exports.deleteProduct = exports.updateProduct = exports.getProduct = exports.getProducts = exports.createProduct = void 0;
+exports.obtenerPlanesConClinicas = obtenerPlanesConClinicas;
 const clinicas_1 = __importDefault(require("./../models/clinicas"));
 const planes_1 = __importDefault(require("./../models/planes"));
 // async function addClinicas() {
@@ -81,7 +82,6 @@ async function obtenerPlanesConClinicas() {
     const planesConClinicas = await addClinicas();
     return planesConClinicas;
 }
-exports.obtenerPlanesConClinicas = obtenerPlanesConClinicas;
 // Use the models as needed
 // import { ClinicasModel, CotizacionModel, EmployeesModel, EmpresasModel,ItemModel,PlanesModel,UsersModel,PlanesModel} from '../models';
 const createProduct = async (item) => {

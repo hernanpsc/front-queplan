@@ -1,6 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buscarPorLetra = exports.ids_prepagas = exports.valor_prepagas = exports.buscar_valores = exports.imprimirPrecios = exports.suprasSalud = exports.planNombre = exports.segVidaPlus = exports.final = exports.promoDescuento = exports.calculodescOS = exports.agruparYTransformarPlanes = exports.combinePlansWithPrices = exports.grupoFamiliar = void 0;
+exports.grupoFamiliar = grupoFamiliar;
+exports.combinePlansWithPrices = combinePlansWithPrices;
+exports.agruparYTransformarPlanes = agruparYTransformarPlanes;
+exports.calculodescOS = calculodescOS;
+exports.promoDescuento = promoDescuento;
+exports.final = final;
+exports.segVidaPlus = segVidaPlus;
+exports.planNombre = planNombre;
+exports.suprasSalud = suprasSalud;
+exports.imprimirPrecios = imprimirPrecios;
+exports.buscar_valores = buscar_valores;
+exports.valor_prepagas = valor_prepagas;
+exports.ids_prepagas = ids_prepagas;
+exports.buscarPorLetra = buscarPorLetra;
 function grupoFamiliar(age0, age1, kids, family, edadh1, edadh2, edadh3, edadh4, edadh5) {
     let edad_1 = age0;
     let edad_2 = age1;
@@ -90,7 +103,6 @@ function grupoFamiliar(age0, age1, kids, family, edadh1, edadh2, edadh3, edadh4,
     // console.log(capitas)
     return [num_adultos, primerhijo, restohijos, totalhijos, gen, capitas, arrayEdadesHijos, edad_1, edad_2, familia, grupoSigla];
 }
-exports.grupoFamiliar = grupoFamiliar;
 //	<!----------------------FUNCIONES QUE SE USAN EL CONTROLADOR CORIZACION ANTES DE ENTREGAR EL RESULTADO------------------------>							
 function combinePlansWithPrices(planes, precios) {
     const combinedArray = [];
@@ -113,7 +125,6 @@ function combinePlansWithPrices(planes, precios) {
     });
     return combinedArray;
 }
-exports.combinePlansWithPrices = combinePlansWithPrices;
 // Función para agrupar y transformar elementos de omintPlanes
 function agruparYTransformarPlanes(omintPlanes) {
     // Crear un objeto para agrupar los elementos por los primeros 7 caracteres de item_id
@@ -143,7 +154,6 @@ function agruparYTransformarPlanes(omintPlanes) {
     const planesAgrupados = Object.values(grupos);
     return planesAgrupados;
 }
-exports.agruparYTransformarPlanes = agruparYTransformarPlanes;
 //	<!-----------------------FUNCIONES QUE SE USAN EN LOS ARCHIVOS DE ESTA MISMA CARPETA PARA EL CALCULO DELOS PRECIOS------------------------>							
 // let descOS = functions.calculodescOS(aportesOS[0],aportesOS[2],aportesOS[3],coeficiente,aportesOS[4],aportesOS[5],aportesOS[1])
 function calculodescOS(aportes_OS, empresa) {
@@ -208,7 +218,6 @@ function calculodescOS(aportes_OS, empresa) {
     console.log('linea functions 132 deduccionOS', deduccionOS);
     return [deduccionOS, tipo_IngresoPDMI, bonificaciones];
 }
-exports.calculodescOS = calculodescOS;
 function promoDescuento(valor_plan, porcentajeBonificado, confirmaSiTienePromo) {
     let descuentoAplicado = 0;
     let nuevoValor = valor_plan;
@@ -227,7 +236,6 @@ function promoDescuento(valor_plan, porcentajeBonificado, confirmaSiTienePromo) 
     // Devolver un array con el valor final y el descuento
     return [nuevoValor, descuentoAplicado];
 }
-exports.promoDescuento = promoDescuento;
 function final(tipo_IngresoPDMI, deduccionAportesObraSocial, valor_total_plan) {
     let tipoIngresoPDMI = tipo_IngresoPDMI;
     console.log('tipo_IngresoPDMI :', tipo_IngresoPDMI);
@@ -254,7 +262,6 @@ function final(tipo_IngresoPDMI, deduccionAportesObraSocial, valor_total_plan) {
     console.log('precio_final_a_pagar 5 :', precio_final_a_pagar);
     return precio_final_a_pagar;
 }
-exports.final = final;
 //	<!-----------------------ESTAS FUNCIONES LAS USA SOLO SANCOR SALUD------------------------>							
 function segVidaPlus(segVidacheck, segVida2check, edad1, edad2, segVidaPrecio) {
     let segVidaTotal = 0;
@@ -291,7 +298,6 @@ function segVidaPlus(segVidacheck, segVida2check, edad1, edad2, segVidaPrecio) {
     segVidaTotal = segVida + segVida1;
     return segVidaTotal;
 }
-exports.segVidaPlus = segVidaPlus;
 function planNombre(gen, plan_gen, plan_nombre) {
     // console.log('26 0')
     let nombrePlan = "";
@@ -308,7 +314,6 @@ function planNombre(gen, plan_gen, plan_nombre) {
     console.log(nombrePlan);
     return nombrePlan;
 }
-exports.planNombre = planNombre;
 function suprasSalud(supras, gen, plan_nombre, otrosBenPrecios, grupoFam) {
     let otrosBen = 0;
     if (supras === true && gen === '') {
@@ -327,7 +332,6 @@ function suprasSalud(supras, gen, plan_nombre, otrosBenPrecios, grupoFam) {
     }
     return otrosBen;
 }
-exports.suprasSalud = suprasSalud;
 function imprimirPrecios(prices, ids) {
     const claves = [
         { key: 'precioSanCor1Hijo', index: [0, 2] },
@@ -402,7 +406,6 @@ function imprimirPrecios(prices, ids) {
         }
     });
 }
-exports.imprimirPrecios = imprimirPrecios;
 function buscar_valores(arreglo, nombre, cat) {
     // Mapear las letras de categoría a índices
     let orden = '';
@@ -449,7 +452,6 @@ function buscar_valores(arreglo, nombre, cat) {
     // Retornar los valores necesarios
     return [coeficiente, valorMonotributo, bonificaciones];
 }
-exports.buscar_valores = buscar_valores;
 const index_1 = require("./index");
 function valor_prepagas(prices, grupo, arrayDeducciones) {
     let num_adultos = grupo[0];
@@ -523,7 +525,6 @@ function valor_prepagas(prices, grupo, arrayDeducciones) {
     console.log(' concat ', concat);
     return concat;
 }
-exports.valor_prepagas = valor_prepagas;
 ;
 const index_2 = require("./index");
 function ids_prepagas(grupo, arrayDeducciones) {
@@ -578,7 +579,6 @@ function ids_prepagas(grupo, arrayDeducciones) {
     // console.log('ids :',ids)
     return ids;
 }
-exports.ids_prepagas = ids_prepagas;
 function buscarPorLetra(letra, valores) {
     // Iteramos sobre el arreglo de objetos
     for (let i = 0; i < valores.length; i++) {
@@ -592,5 +592,4 @@ function buscarPorLetra(letra, valores) {
     // Si no encontramos la letra, retornamos undefined
     return undefined;
 }
-exports.buscarPorLetra = buscarPorLetra;
 //# sourceMappingURL=functions.js.map

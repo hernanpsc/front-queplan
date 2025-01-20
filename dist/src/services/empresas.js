@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtenerEmpresasDisponibles = exports.getPlanes = exports.searchProducts = exports.deleteProduct = exports.updateProduct = exports.getProduct = exports.getProducts = exports.createProduct = void 0;
+exports.getPlanes = exports.searchProducts = exports.deleteProduct = exports.updateProduct = exports.getProduct = exports.getProducts = exports.createProduct = void 0;
+exports.obtenerEmpresasDisponibles = obtenerEmpresasDisponibles;
 const empresas_1 = __importDefault(require("./../models/empresas"));
 const planes_1 = __importDefault(require("./../models/planes"));
 const planes_2 = require("./planes");
@@ -11,7 +12,6 @@ async function obtenerEmpresasDisponibles() {
     const empresas = await planes_1.default.distinct('empresa');
     return empresas;
 }
-exports.obtenerEmpresasDisponibles = obtenerEmpresasDisponibles;
 const createProduct = async (item) => {
     const responseCreate = await empresas_1.default.create(item);
     return responseCreate;

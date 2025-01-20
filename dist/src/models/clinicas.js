@@ -17,7 +17,7 @@ const clinicasSchema = new mongoose_1.Schema({
     nombre: String,
     entity: String,
     cartillas: [String],
-    coberturas: [coberturaSchema],
+    coberturas: [coberturaSchema], // Cambiado de [String] a [Cobertura]
     item_id: String,
     ubicacion: {
         calle_y_numero: String,
