@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchItem = exports.deleteItem = exports.updateItem = exports.createItem = exports.getItemById = exports.getItems = void 0;
+exports.updateClinicas = exports.searchItem = exports.deleteItem = exports.updateItem = exports.createItem = exports.getItemById = exports.getItems = void 0;
 const error_handle_1 = require("../utils/error.handle");
 const planes_1 = require("../services/planes");
 const getItems = async (req, res) => {
@@ -46,6 +46,19 @@ const updateItem = async ({ params, body }, res) => {
     }
 };
 exports.updateItem = updateItem;
+const updateClinicas = async (req, res) => {
+    console.log(' Hola uno');
+    try {
+        const response = await (0, planes_1.getPlanes)();
+        console.log(' Hola dos');
+        res.status(200).send(response);
+    }
+    catch (e) {
+        (0, error_handle_1.handleHttp)(res, 'ERROR_GET_CLINICAS');
+    }
+};
+exports.updateClinicas = updateClinicas;
+exports.default = updateClinicas;
 const deleteItem = async ({ params }, res) => {
     try {
         const { id } = params;

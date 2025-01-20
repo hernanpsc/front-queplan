@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.calcularPrecio = void 0;
 const functions = __importStar(require("../funciones"));
 const precios_1 = require("./precios");
+const clinicas_1 = require("./clinicas");
 const error_handle_1 = require("../utils/error.handle");
 const planes_1 = __importDefault(require("./../models/planes"));
 const empresas_1 = __importDefault(require("./../models/empresas"));
@@ -211,6 +212,7 @@ const calcularPrecio = async (req, res) => {
         const imprimirPrices = functions.imprimirPrecios(prices, ids);
         //  const ids = functions.imprimirPrecios(prices,tipo_IngresoPDMI,group,idAdultosMedife,ids[5],ids[6],ids[7],ids[8],ids[9],ids[10],ids[11],ids[12])
         let concatenarPrecios = functions.valor_prepagas(prices, grupo, arrayDeducciones);
+        console.log(' valor_prepagas :  235');
         let empresas = [];
         let planesPorEmpresa = {};
         async function obtenerEmpresasDisponibles() {
@@ -218,7 +220,12 @@ const calcularPrecio = async (req, res) => {
             return empresas;
         }
         empresas = await obtenerEmpresasDisponibles();
+        console.log(' funcion en linea 245 empresas  :', empresas);
         let allPlanes = await planes_1.default.find({});
+        let clinicasPorRegiones = fetchClinicasPorRegiones();
+        async function fetchClinicasPorRegiones() {
+            return await (0, clinicas_1.organizarClinicasPorRegiones)();
+        }
         // console.log('allPlanes  : ' + allPlanes)
         // console.log('concatenarPrecios  : ' + concatenarPrecios)
         const combinedPlans = functions.combinePlansWithPrices(allPlanes, concatenarPrecios);
@@ -261,9 +268,11 @@ const calcularPrecio = async (req, res) => {
             }
             return true;
         });
-        // console.log('resultado   :')
-        // console.log(resultado)
-        res.status(200).json(resultado);
+        console.log('resultado   :');
+        console.log(resultado);
+        res.status(200).json({ resultado: resultado,
+            clincasPorRegiones: clinicasPorRegiones
+        });
     }
     catch (e) {
         (0, error_handle_1.handleHttp)(res, 'ERROR_GET_ITEMS');

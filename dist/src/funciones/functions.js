@@ -346,10 +346,10 @@ function imprimirPrecios(prices, ids) {
         { key: 'precioHijo1Swiss', index: [3, 2] },
         { key: 'precioHijo2Swiss', index: [3, 3] },
         { key: 'priceGrupoGaleno', index: [2] },
-        { key: 'precioMedifeAdultos', index: [4, 0] },
-        { key: 'precioMedifeHIJO0a1', index: [4, 1] },
-        { key: 'precioMedifeHIJO2a20', index: [4, 2] },
-        { key: 'precioMedifeHIJO21a29', index: [4, 3] },
+        // { key: 'precioMedifeAdultos', index: [4, 0] },
+        // { key: 'precioMedifeHIJO0a1', index: [4, 1] },
+        // { key: 'precioMedifeHIJO2a20', index: [4, 2] },
+        // { key: 'precioMedifeHIJO21a29', index: [4, 3] },
         { key: 'precioPrevencion', index: [5] },
         { key: 'precioDoctoredGrupo', index: [6, 0] },
         { key: 'precioDoctoredHijo3', index: [6, 1] },
@@ -508,18 +508,19 @@ function valor_prepagas(prices, grupo, arrayDeducciones) {
     let Hominis = [];
     Hominis = (0, index_1.valor_Hominis)(prices, grupo, arrayDeducciones);
     console.log(' valor_Hominis ', Hominis);
-    let Asmepriv = [];
-    Asmepriv = (0, index_1.valor_Asmepriv)(prices, grupo, arrayDeducciones);
-    console.log(' valor_Asmepriv ', Asmepriv);
-    let Medife = [];
-    Medife = (0, index_1.valor_Medife)(prices, grupo, arrayDeducciones);
-    console.log(' valor_Medife ', Medife);
-    let Saludcentral = [];
-    Saludcentral = (0, index_1.valor_Saludcentral)(prices, grupo, arrayDeducciones);
-    console.log(' valor_Saludcentral ', Saludcentral);
+    // let Asmepriv = [];
+    // Asmepriv = valor_Asmepriv(prices,grupo,arrayDeducciones);
+    // console.log(' valor_Asmepriv ' , Asmepriv);
+    // let Medife = [];
+    // Medife = valor_Medife(prices,grupo,arrayDeducciones);
+    // console.log(' valor_Medife ' ,Medife )
+    // let Saludcentral = [];
+    // Saludcentral = valor_Saludcentral( prices,grupo,arrayDeducciones);
+    // console.log(' valor_Saludcentral ' , Saludcentral);
     let concat = [];
-    concat = omint.concat(Premedic, SanCor, Galeno, Swiss, Doctored, Prevencion, Avalian, Ras, Cristal, Asmepriv, Luispasteur, Bayresplan, Hominis, Medife, Saludcentral);
-    console.log(' concat  : ', concat);
+    console.log(' concat ', concat);
+    concat = omint.concat(Premedic, SanCor, Galeno, Swiss, Doctored, Prevencion, Avalian, Ras, Cristal, Luispasteur, Bayresplan, Hominis);
+    console.log(' concat ', concat);
     return concat;
 }
 exports.valor_prepagas = valor_prepagas;

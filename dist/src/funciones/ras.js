@@ -25,40 +25,40 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.valor_Ras = void 0;
 const functions = __importStar(require("./functions"));
-// export function valor_Ras(con_afinidad,  bonAfinidad,Titular, Hijo1, Hijo2, Hijo3, Conyuge,grupo,arrayDeducciones){
 function valor_Ras(prices, grupo, arrayDeducciones) {
-    let uno = 'Ras';
+    //	<!------------------------------ VARIABLES DE prices start------------------------------------>							
     let precioTitular = prices.precioTitularRas.precios.precios;
     let precioConyuge = prices.precioConyugeRas.precios.precios;
     let precioHijo1 = prices.precioHijo1Ras.precios.precios;
     let precioHijo2 = prices.precioHijo2Ras.precios.precios;
     let precioHijo3 = prices.precioHijo3Ras.precios.precios;
-    let empresa = 'RAS';
+    // console.log('precioTitular :  '  , precioTitular);
+    // console.log('precioConyuge :  '  , precioConyuge);
+    // console.log('precioHijo1 :  '  , precioHijo1);
+    // console.log('precioHijo2 :  '  , precioHijo2);
+    // console.log('precioHijo3 :  '  , precioHijo3);
+    //	<!------------------------------ VARIABLES DE prices end------------------------------------>							
+    //	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
     let hijos = grupo[3];
     let edad_1 = grupo[7];
     let edad_2 = grupo[8];
     let familia = grupo[9];
-    console.log('empresa :  ');
-    console.log('edad1 :  ', edad_1);
-    console.log('edad_2 :  ', edad_2);
-    console.log('familia :  ', familia);
-    console.log('hijos :  ', hijos);
-    console.log('precioTitular :  ', precioTitular);
-    console.log('precioConyuge :  ', precioConyuge);
-    console.log('precioHijo1 :  ', precioHijo1);
-    console.log('precioHijo2 :  ', precioHijo2);
-    console.log('precioHijo3 :  ', precioHijo3);
-    // console.log('descuento_promo :  '  , descuento_promo);
+    // console.log('edad1 :  '  , edad_1);
+    // console.log('edad_2 :  '  , edad_2);
+    // console.log('familia :  '  , familia);
+    // console.log('hijos :  '  , hijos);
+    //	<!------------------------------ VARIABLES DE grupo end------------------------------------>							
+    //	<!------------------------------ AJUSTES DE familia start-------------------------------------->							
     if (familia === 1) {
         precioConyuge = {};
     }
     else if (familia === 2) {
         precioConyuge = {};
     }
-    else {
-    }
-    let precio_adultos_Ras = {};
-    let precios = {};
+    else { }
+    //	<!------------------------------ AJUSTES DE familia end-------------------------------------->							
+    //	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							    
+    let empresa = 'RAS';
     let factores = arrayDeducciones.find(item => item.name === empresa);
     let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
     let promociones = factores.bonificaciones;
@@ -67,7 +67,10 @@ function valor_Ras(prices, grupo, arrayDeducciones) {
     if (promociones[0] >= 1) {
         con_afinidad === true;
     }
-    let array = [];
+    //	<!------------------------------ CALCULO DE DEDUCCIONES end arrayDeducciones------------------------------------>							    
+    //	<!------------------------------ COTIZACION START ------------------------------------>							
+    let precio_adultos_Ras = {};
+    let precios = {};
     if (familia >= 3) {
         precio_adultos_Ras = Object.entries(precioConyuge).reduce((acc, [key, value]) => // matrimonio
          ({
@@ -107,47 +110,34 @@ function valor_Ras(prices, grupo, arrayDeducciones) {
     else {
         precios = precio_adultos_Ras;
     }
-    // //	<!-----------------------Bucle RAS start------------------------>							
+    //	<!------------------------------ COTIZACION END ------------------------------------>							
+    //	<!------------------------------ Bucle start ------------------------------------>							
+    let array = [];
     for (let j in precios) {
-        //     console.log('imprimir j')
-        //     console.log(j)
-        let conPromo = con_afinidad;
-        let promocion = bonAfinidad;
-        // console.log('promocion :  '  + promocion);
-        let empresaPlan = [j][0];
-        let _id = empresaPlan;
-        let nombre = empresaPlan.substring(3);
-        // console.log('conPromo : ' + conPromo)
-        // console.log('precios[j] : ' + precios[j])
-        // let promo = functions.promoDescuento(precios[j],promocion, conPromo)[2];
-        // console.log('promo : ' + promo)
-        // let descPromo = functions.promoDescuento(precios[j],promo, conPromo)[1];
-        // console.log('descPromo  >');
-        // console.log(descPromo)
-        // let precioTotal = functions.promoDescuento(precios[j],promo, conPromo)[0];
-        let precioTotal = precios[j];
-        //  console.log('precioTotal  >');
-        //  console.log(precioTotal)
-        //  console.log('factores');
-        //   console.log(factores)
-        // let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
-        // console.log('precio ')
-        // console.log(precio)
-        //	<!--------------------Crear Objeto RAS end------------------------------>																            			
+        let _id = [j][0];
+        let nombre = _id.substring(3);
+        nombre = nombre.replace(/_/g, ' '); // Reemplaza todos los guiones bajos por un espacio        nombre = nombre.replace(/_/g, ' '); // Reemplaza todos los guiones bajos por un espacio
+        let confirmaSiTieneBonificaciones = con_afinidad;
+        let porcentajeBonificado = bonAfinidad;
+        let precioInicial = precios[j];
+        // Llamar a la función y desestructurar el array devuelto
+        let [valor_total_plan, valorBonificacion] = functions.promoDescuento(precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones);
+        // Asignar los valores a nuevas variables
+        let precioTotal = valor_total_plan;
+        let bonificacionAplicada = valorBonificacion;
+        let precio = functions.final(tipoAsociado, factores.deduction, precioTotal);
+        //	<!--------------------Crear Objeto RAS end--------------------------------------->																            			
         var plan = new Object();
         plan.item_id = _id;
-        plan.name = 'RAS ' + nombre;
-        plan.precio = precioTotal;
-        // plan.valorLista = precios[j];
-        // plan.promoPorcentaje = promo;
-        // plan.promoDescuento = descPromo;
-        // plan.valorLista = precios[j];
+        plan.name = empresa + ' ' + nombre;
+        plan.precio = precio;
+        plan.promoPorcentaje = porcentajeBonificado;
+        plan.promoDescuento = bonificacionAplicada;
+        plan.valorLista = precioInicial;
         plan.aportes_OS = factores.deduction;
         array.push(plan);
     }
-    //	<!-----------------------Bucle RAS end------------------------>											
-    //                 console.log( 'array RAS')							
-    //                 console.log(array)							
+    //	<!------------------------------ Bucle end ----------------------------------------->							
     return array;
 }
 exports.valor_Ras = valor_Ras;
