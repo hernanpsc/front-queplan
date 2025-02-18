@@ -244,7 +244,7 @@ async function obtenerEmpresasDisponibles() {
   }
 empresas = await obtenerEmpresasDisponibles();
   console.log( ' funcion en linea 245 empresas  :',empresas)
-  let allPlanes = await PlanesModel.find({});
+  let allPlanes = await PlanesModel.find({}); 
 
 
 
@@ -304,15 +304,19 @@ const resultadoFinal = otrasEmpresasPlanes.concat(planesOmintAgrupados);
 const resultado = combinedPlans.filter((plan: { precio: number; }) => {
      if (tipo === 'P' && plan.precio === 0){
        return false;
-       }
+       } 
        return true;
        });
    
 console.log('resultado   :')
 console.log(resultado)
- res.status(200).json({ resultado: resultado,
-                        clincasPorRegiones : clinicasPorRegiones  
- })
+ res.status(200).json({
+  resultado: resultado,
+  clinicasPorRegiones: clinicasPorRegiones
+}
+ 
+ )
+
       } catch(e) {
         handleHttp(res, 'ERROR_GET_ITEMS'); 
       }
