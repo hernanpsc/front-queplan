@@ -280,8 +280,9 @@ const calcularPrecio = async (req, res) => {
         });
         console.log('resultado   :');
         console.log(resultado);
-        res.status(200).json({ resultado: resultado,
-            clincasPorRegiones: clinicasPorRegiones
+        res.status(200).json({
+            resultado: resultado,
+            clinicasPorRegiones: clinicasPorRegiones
         });
     }
     catch (e) {
