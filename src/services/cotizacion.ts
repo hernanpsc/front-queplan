@@ -43,7 +43,7 @@ if(formCotizar.supras = "test")
   formCotizar.supras=false,
   formCotizar.segvida=false,
   formCotizar.segvida1=false
-}else if(!formCotizar.supras)
+}else if(!formCotizar)
   {
     formCotizar.grupo=2,
     formCotizar.empresa_prepaga=0,
