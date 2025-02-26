@@ -24,8 +24,8 @@ export function productIDSancor(grupo,tipo){
                 return '';  // Return empty string for invalid age values
             }
             for (const range of ageRanges) {
-                // console.log('sancor age :'+age);
-                // console.log('sancor range :');console.log(range)
+                // // console.log('sancor age :'+age);
+                // // console.log('sancor range :');// console.log(range)
     
                 if (age >= range.min && age <= range.max) {
                     return [range.label,range.label_2];
@@ -138,7 +138,7 @@ export function productIdOmint(grupo,tipo) {
     let id_conyuge = generateEdadID(edad_2, tipoAsociado);
 
     // Logging for debugging (you can remove it once done)
-    // console.log("id_titular=" + id_titular + "; id_conyuge=" + id_conyuge + "; id_hijo_1=" + id_hijo_1 + "; id_hijo_2=" + id_hijo_2);
+    // // console.log("id_titular=" + id_titular + "; id_conyuge=" + id_conyuge + "; id_hijo_1=" + id_hijo_1 + "; id_hijo_2=" + id_hijo_2);
 
     // Return the generated IDs
     return [id_titular, id_conyuge, id_hijo_1, id_hijo_2];
@@ -177,8 +177,8 @@ export function productIdSwiss(grupo,tipo) {
             return '';  // Return empty string for invalid age values
         }
         for (const range of ageRanges) {
-            // console.log('idswiss age :'+age);
-            // console.log('idswiss range :');console.log(range)
+            // // console.log('idswiss age :'+age);
+            // // console.log('idswiss range :');// console.log(range)
 
             if (age >= range.min && age <= range.max) {
                 return range.label;
@@ -203,9 +203,9 @@ export function productIdSwiss(grupo,tipo) {
     let id_conyuge = 'swiss' + tipoAsociado + rangoEtario_2;
     let id_hijo_1 = 'swiss' + tipoAsociado + '1h';
     let id_hijo_2 = 'swiss' + tipoAsociado + '2h';
-    // console.log('Ids Swiss  :');
+    // // console.log('Ids Swiss  :');
 
-// console.log(id_titular, id_conyuge, id_hijo_1, id_hijo_2);
+// // console.log(id_titular, id_conyuge, id_hijo_1, id_hijo_2);
     // Return the generated product IDs
     return [id_titular, id_conyuge, id_hijo_1, id_hijo_2];
 }
@@ -260,10 +260,10 @@ export function productIdPrevencion(grupo,tipo) {
     let rangoEtario_1 = '';
 
     // Logging for debugging (corrected the typo)
-    // console.log('Prevencion edad_2', edad_2);
-    // console.log('Prevencion edad_1', edad_1);
-    // console.log('Prevencion numHijos', numHijos);
-    // console.log('Prevencion tipo', tipoAsociado);
+    // // console.log('Prevencion edad_2', edad_2);
+    // // console.log('Prevencion edad_1', edad_1);
+    // // console.log('Prevencion numHijos', numHijos);
+    // // console.log('Prevencion tipo', tipoAsociado);
 
  
     // Define the edad_1 range to append
@@ -281,8 +281,8 @@ export function productIdPrevencion(grupo,tipo) {
     function getAgeRange(age) {
         for (const range of ageRanges) {
             if (age <= range.max) {
-                // console.log('edad : '+age)
-                // console.log('range : ');console.log(range)
+                // // console.log('edad : '+age)
+                // // console.log('range : ');// console.log(range)
 
 
                 return range.label;
@@ -294,7 +294,7 @@ export function productIdPrevencion(grupo,tipo) {
     edadIdPrevencion = 'prevencion' + tipoAsociado + zona + grupoSigla + numHijos + rangoEtario_1;
 
     // Log the result
-    // console.log('Id en el archivo id:', edadIdPrevencion);
+    // // console.log('Id en el archivo id:', edadIdPrevencion);
     let id = []
     id.push(edadIdPrevencion);
     return id
@@ -367,8 +367,8 @@ export function productIdRasCristal(grupo,tipo) {
     function getAgeRange(age) {
         for (const range of ageRanges) {
             if (age >= range.min && age <= range.max) {
-                // console.log('edad : '+age)
-                // console.log('range : ');console.log(range)
+                // // console.log('edad : '+age)
+                // // console.log('range : ');// console.log(range)
 
 
                 return range.label;
@@ -378,15 +378,15 @@ export function productIdRasCristal(grupo,tipo) {
     }
   
 
-// console.log('familia  rasid:'+familia)
+// // console.log('familia  rasid:'+familia)
     // Determine the age ranges
     if (familia === 1 || familia === 2) {
 
         rangoEtario_1 = getAgeRange(edad_1);
 
     } else {
-        // console.log('edad_1 ',edad_1)
-        // console.log('edad_2 ',edad_2)
+        // // console.log('edad_1 ',edad_1)
+        // // console.log('edad_2 ',edad_2)
 
         rangoEtario_2 = getAgeRange(edad_2);
         rangoEtario_1 = getAgeRange(edad_1);
@@ -407,7 +407,7 @@ export function productIdRasCristal(grupo,tipo) {
 	    // Store the IDs in an array
   
 	ids.push(idTitularRas, idConyugeRas, idHijo3Ras, idHijo2Ras, idHijo1Ras,idTitularCristal, idConyugeCristal, idHijo3Cristal, idHijo2Cristal, idHijo1Cristal)
-// console.log('ids ',ids)
+// // console.log('ids ',ids)
     return ids;
 }
 
@@ -483,10 +483,10 @@ return ids
 export function productIdAsmepriv(grupo,tipo){
 
 
-// console.log('Asmepriv llgan : ',grupo[7]);
-// console.log('Asmepriv llgan : ',grupo[8]);
-// console.log('Asmepriv llgan : ',grupo[3]);
-// console.log('Asmepriv llgan : ',tipo[1].tipo_Ingreso_P_D_Monotributo);
+// // console.log('Asmepriv llgan : ',grupo[7]);
+// // console.log('Asmepriv llgan : ',grupo[8]);
+// // console.log('Asmepriv llgan : ',grupo[3]);
+// // console.log('Asmepriv llgan : ',tipo[1].tipo_Ingreso_P_D_Monotributo);
 
 let familia = grupo[9];
 let edad_1 = grupo[7] ?? 0;
@@ -547,9 +547,9 @@ let idModuloMat = "";
 
 ids.push(idAsmepriv, idAdmenorUno, idHijoHasta21)
 
-// console.log("idAsmepriv :" + idAsmepriv);
-// console.log("idAdmenorUno :" + idAdmenorUno);
-// console.log("idHijoHasta21 :" + idHijoHasta21);
+// // console.log("idAsmepriv :" + idAsmepriv);
+// // console.log("idAdmenorUno :" + idAdmenorUno);
+// // console.log("idHijoHasta21 :" + idHijoHasta21);
 
 if(tipoAsociado != "D"){
 idRecargoHijo21a29 = "asmepriv" + tipoAsociado + "RECH21A29";  // recargo hijo de 21 a 29 años
@@ -562,8 +562,8 @@ ids.push(idRecargoHijo21a29, idModuloMat)
 
 }
 
-// console.log("idRecargoHijo21a29 :" + idRecargoHijo21a29);
-// console.log("idModuloMat :" + idModuloMat);
+// // console.log("idRecargoHijo21a29 :" + idRecargoHijo21a29);
+// // console.log("idModuloMat :" + idModuloMat);
 
 return ids;
 
@@ -593,7 +593,7 @@ export function productIdLuisPasteur(grupo,tipo) {
 
 
 
-	// console.log('grupo : ' + grupo);
+	// // console.log('grupo : ' + grupo);
 
 	const getAgeRange = (age) =>  {
 		if (age < 18) return;
@@ -609,20 +609,20 @@ export function productIdLuisPasteur(grupo,tipo) {
 	
 
     let rangoEtario = getAgeRange(edad_1);
-	// console.log('grupo : ' + grupo);
-	// console.log('tipoAsociado : ' + tipoAsociado);
-	// console.log('rangoEtario : ' + rangoEtario);
-	// console.log('hijos : ' + kids);
+	// // console.log('grupo : ' + grupo);
+	// // console.log('tipoAsociado : ' + tipoAsociado);
+	// // console.log('rangoEtario : ' + rangoEtario);
+	// // console.log('hijos : ' + kids);
 
 	let idLuispasteur =	"luispasteur"  + grupoSigla + tipoAsociado + rangoEtario + kids;
-	// console.log('idLuispasteur : ' + idLuispasteur);
+	// // console.log('idLuispasteur : ' + idLuispasteur);
 
 	let idNieto = "luispasteur" + "NIETO" + tipoAsociado 
 	let idAd =	"luispasteur" + "AD" + tipoAsociado
 	let idHijo = "luispasteur" + "HIJO" + tipoAsociado
-	// console.log('idNieto : ' + idNieto);
-	// console.log('idAd : ' + idAd);
-	// console.log('idHijo : ' + idHijo);
+	// // console.log('idNieto : ' + idNieto);
+	// // console.log('idAd : ' + idAd);
+	// // console.log('idHijo : ' + idHijo);
 
 
 	ids.push(idLuispasteur, idNieto, idAd, idHijo)
@@ -676,8 +676,8 @@ export function productIdAvalian(grupo,tipo) {
         rangoEtario_2 = rangoEtario_1; // Same range as the first person
     }
 
-    // console.log("rangoEtario_1: " + rangoEtario_1);
-    // console.log("rangoEtario_2: " + rangoEtario_2);
+    // // console.log("rangoEtario_1: " + rangoEtario_1);
+    // // console.log("rangoEtario_2: " + rangoEtario_2);
 
     // Generate IDs for each role
     idTitular = "avalian" +  "Z" + zonaComercial[0] + tipoAsociado + rangoEtario_1;
@@ -781,7 +781,7 @@ export function productIdSaludcentral(grupo) {
 
     const ids = [idSaludcentralTitular, idSaludcentralConyuge, idHijo1, idHijo2];
 
-    // console.log('ids salud central:', ids);
+    // // console.log('ids salud central:', ids);
     return ids;
 }
 

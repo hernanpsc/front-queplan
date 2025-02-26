@@ -34,25 +34,25 @@ if (promociones[0] >= 1 ){
 }
 
 for ( let j in precios) {
-	console.log('GALENO j :',j)
-	console.log('GALENO precios :',precios)
+	// // // console.log('GALENO j :',j)
+	// // // console.log('GALENO precios :',precios)
 
    let empresaPlan = [j][0];
-   console.log('GALENO empresaPlan :',empresaPlan)
+   // // // console.log('GALENO empresaPlan :',empresaPlan)
 
    let _id = empresaPlan;
-   console.log('GALENO _id :',_id)
+   // // // console.log('GALENO _id :',_id)
 
    let nombre = empresaPlan.substring(3);
-   console.log('GALENO nombre :',nombre)
+   // // // console.log('GALENO nombre :',nombre)
 
    let precioTotal = precios[j];
-   console.log('GALENO precioTotal :',precioTotal)
+   // // // console.log('GALENO precioTotal :',precioTotal)
 
 
    //funcion para que impacten los descuentos y bonificaciones
    let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
-   console.log('GALENO precio :',precio);
+   // // // console.log('GALENO precio :',precio);
 
 	var plan = new Object();
 						plan.item_id = _id;
@@ -60,12 +60,12 @@ for ( let j in precios) {
 						plan.precio = precio;
 					 	plan.valorLista = precios[j]
 						plan.aportes_OS = factores.deduction;
-						console.log('GALENO plan :',plan)
+						// // // console.log('GALENO plan :',plan)
 						array.push(plan);	
 			
 					}
 //	<!-----------------------Bucle GALENO end------------------------>	
-	// console.log( 'array Galeno')
-	// console.log(array)													
+	// // // // console.log( 'array Galeno')
+	// // // // console.log(array)													
 			return array					
 }

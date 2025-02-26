@@ -3,13 +3,13 @@ import * as functions from './functions';
 export function valor_Omint(prices,grupo,arrayDeducciones) {
  //	<!------------------------------ VARIABLES DE prices start------------------------------------>							
       let  precio_titular = prices.precio_titular_Omint.precios.precios;
-          // console.log('precio_titular  :',precio_titular);
+          // // console.log('precio_titular  :',precio_titular);
       let  precio_conyuge = prices.precio_conyuge_Omint.precios.precios;
-          // console.log('precio_conyuge  :',precio_conyuge);
+          // // console.log('precio_conyuge  :',precio_conyuge);
       let  precio_hijo_1 = prices.precio_hijo1_Omint.precios.precios;
-          // console.log('precio_hijo_1  :',precio_hijo_1);
+          // // console.log('precio_hijo_1  :',precio_hijo_1);
       let  precio_hijo_2 = prices.precio_hijo2_Omint.precios.precios;
-          // console.log('precio_hijo_2  :',precio_hijo_2);
+          // // console.log('precio_hijo_2  :',precio_hijo_2);
 //	<!------------------------------ VARIABLES DE prices end------------------------------------>							
 //	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
     let numHijos = grupo[3];
@@ -98,7 +98,7 @@ Object.keys(precio_titular).forEach(key => {
     // if (aportes_OS[0]==='P') {
     //     precios = precios;
     //   }
-    // console.log('Precios del grupo familiar completo:', precios);
+    // // console.log('Precios del grupo familiar completo:', precios);
 
   
 // <!---------------------Funcion VALOR DEL PLAN OMINT end----------------------------> 

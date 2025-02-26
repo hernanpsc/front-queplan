@@ -6,11 +6,11 @@ export function valor_Ras(prices,grupo,arrayDeducciones){
     let precioHijo1 = prices.precioHijo1Ras.precios.precios;
     let precioHijo2 = prices.precioHijo2Ras.precios.precios;
     let precioHijo3 = prices.precioHijo3Ras.precios.precios;
-    // console.log('precioTitular :  '  , precioTitular);
-    // console.log('precioConyuge :  '  , precioConyuge);
-    // console.log('precioHijo1 :  '  , precioHijo1);
-    // console.log('precioHijo2 :  '  , precioHijo2);
-    // console.log('precioHijo3 :  '  , precioHijo3);
+    // // console.log('precioTitular :  '  , precioTitular);
+    // // console.log('precioConyuge :  '  , precioConyuge);
+    // // console.log('precioHijo1 :  '  , precioHijo1);
+    // // console.log('precioHijo2 :  '  , precioHijo2);
+    // // console.log('precioHijo3 :  '  , precioHijo3);
 //	<!------------------------------ VARIABLES DE prices end------------------------------------>							
 
 //	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
@@ -18,10 +18,10 @@ export function valor_Ras(prices,grupo,arrayDeducciones){
 	let edad_1 = grupo[7];
 	let edad_2 = grupo[8];  
     let familia = grupo[9];
-    // console.log('edad1 :  '  , edad_1);
-    // console.log('edad_2 :  '  , edad_2);
-    // console.log('familia :  '  , familia);
-    // console.log('hijos :  '  , hijos);
+    // // console.log('edad1 :  '  , edad_1);
+    // // console.log('edad_2 :  '  , edad_2);
+    // // console.log('familia :  '  , familia);
+    // // console.log('hijos :  '  , hijos);
 //	<!------------------------------ VARIABLES DE grupo end------------------------------------>							
 
 //	<!------------------------------ AJUSTES DE familia start-------------------------------------->							

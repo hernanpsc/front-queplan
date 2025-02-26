@@ -22,7 +22,7 @@ const {group,empresa_prepaga,edad_1,edad_2,numkids,edadHijo1,
   edadHijo4,
   edadHijo5,
   categoriaMono,plan_type,tipo,agree,aporteOS,sueldo,aporte,monoadic,cantAport,afinidad,bonAfinidad,supras,segvida,segvida1,region,}=formCotizar;
-console.log('formCotizar  : ');console.log(formCotizar)
+// console.log('formCotizar  : ');// console.log(formCotizar)
 
 if(formCotizar.supras = "test")
 {
@@ -94,19 +94,19 @@ const calcularGrupo = (edad_1: number, edad_2: number, numkids: number, group: s
 };
 // Llamada a la función para obtener el grupo
 const grupo = calcularGrupo(edad_1, edad_2, numkids, group);
-console.log('grupo : ',grupo)
+// console.log('grupo : ',grupo)
 
   const beneficiariosF184 = cantAport;
-  console.log('beneficiariosF184 : ',beneficiariosF184)
+  // console.log('beneficiariosF184 : ',beneficiariosF184)
 
   const eleccionSueldoOAporte = aporteOS;
-  console.log('eleccionSueldoOAporte : ',eleccionSueldoOAporte)
+  // console.log('eleccionSueldoOAporte : ',eleccionSueldoOAporte)
 
   const sueldoSueldoOAporte = sueldo;
-  console.log('sueldoSueldoOAporte : ',sueldoSueldoOAporte)
+  // console.log('sueldoSueldoOAporte : ',sueldoSueldoOAporte)
 
   const categoria_Mono = categoriaMono;
-  console.log('categoria_Mono : ',grupo)
+  // console.log('categoria_Mono : ',grupo)
 
 
     
@@ -135,9 +135,9 @@ const factores = companies.map((empresa) => {
 
 //   return {nombre,coeficiente,monotributo,promo};
 // });
-console.log('factores .',factores)
+// console.log('factores .',factores)
 const aporte_OS = [tipo,beneficiariosF184,eleccionSueldoOAporte,sueldoSueldoOAporte,categoria_Mono,factores]
-console.log('aporte_OS .',aporte_OS)
+// console.log('aporte_OS .',aporte_OS)
 
 // Array donde almacenaremos las deducciones
 let arrayDeducciones = [];
@@ -155,15 +155,15 @@ let arrayDeducciones = [];
       tipo_Ingreso_P_D_Monotributo: descOS[1] ?? ''  // Se accede a 'tipo_IngresoPDMI' de forma segura
     });
   }
-console.log(' GENERAL arrayDeducciones  : ',arrayDeducciones)
+// console.log(' GENERAL arrayDeducciones  : ',arrayDeducciones)
 
 const ids = functions.ids_prepagas(grupo,arrayDeducciones);
-console.log(' ids : ',ids);
+// console.log(' ids : ',ids);
 
 
 
 async function fetchProductPrice(id: string) {
-  // console.log( ' funcion en linea 183 : id: ', id)
+  // // console.log( ' funcion en linea 183 : id: ', id)
  return await getProduct(id);
 }
 
@@ -273,7 +273,7 @@ const imprimirPrices = functions.imprimirPrecios(prices,ids)
    let concatenarPrecios = functions.valor_prepagas(prices,grupo,arrayDeducciones);
 
 
-   console.log( ' valor_prepagas :  235');
+   // console.log( ' valor_prepagas :  235');
 
 
 let empresas: string[] = [];
@@ -284,7 +284,7 @@ async function obtenerEmpresasDisponibles() {
     return empresas;
   }
 empresas = await obtenerEmpresasDisponibles();
-  console.log( ' funcion en linea 245 empresas  :',empresas)
+  // console.log( ' funcion en linea 245 empresas  :',empresas)
   let allPlanes = await PlanesModel.find({}); 
 
 
@@ -295,10 +295,10 @@ async function fetchClinicasPorRegiones() {
 }
 
 
-// console.log('allPlanes  : ' + allPlanes)
-// console.log('concatenarPrecios  : ' + concatenarPrecios)
+// // console.log('allPlanes  : ' + allPlanes)
+// // console.log('concatenarPrecios  : ' + concatenarPrecios)
   const combinedPlans = functions.combinePlansWithPrices(allPlanes, concatenarPrecios);
-  // console.log('combinedPlans  : ' + combinedPlans)
+  // // console.log('combinedPlans  : ' + combinedPlans)
 
 
   for (const plan of combinedPlans) {
@@ -349,8 +349,8 @@ const resultado = combinedPlans.filter((plan: { precio: number; }) => {
        return true;
        });
    
-console.log('resultado   :')
-console.log(resultado)
+// console.log('resultado   :')
+// console.log(resultado)
  res.status(200).json({
   resultado: resultado,
   clinicasPorRegiones: clinicasPorRegiones

@@ -2,11 +2,11 @@ import * as functions from './functions';
 export function valor_Asmepriv(prices,grupo,arrayDeducciones){
 //	<!------------------------------ VARIABLES DE prices start------------------------------------>							
             let precioPrincipal = prices.precioAsmepriv.precios.precios;
-            // console.log('precioPrincipal Asmepriv :  ',precioPrincipal  );
+            // // console.log('precioPrincipal Asmepriv :  ',precioPrincipal  );
             let precioAdmenorUnAnio = prices.precioAdmenorUno.precios.precios;
-            // console.log('precioAdmenorUnAnio Asmepriv :  ',precioAdmenorUnAnio  );
+            // // console.log('precioAdmenorUnAnio Asmepriv :  ',precioAdmenorUnAnio  );
             let precioHijoHasta21 = prices.precioAsmeprivHijoHasta21.precios.precios;
-            // console.log('precioHijoHasta21 Asmepriv :  ', precioHijoHasta21 );
+            // // console.log('precioHijoHasta21 Asmepriv :  ', precioHijoHasta21 );
             let precioRecargoHijo21a29 = {};
             let precioModuloMaternidad =    {};
             if(prices.precioAsmeprivRecargoHijo21a29){
@@ -15,15 +15,15 @@ export function valor_Asmepriv(prices,grupo,arrayDeducciones){
 //	<!------------------------------ VARIABLES DE prices end------------------------------------>							
 //	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
             let familia = grupo[9];
-            // console.log('familia Asmepriv :  ' ,familia);
+            // // console.log('familia Asmepriv :  ' ,familia);
             let capitas = grupo[5];
-            // console.log('capitas Asmepriv :  ' ,capitas);
+            // // console.log('capitas Asmepriv :  ' ,capitas);
             let edad_1 = grupo[7];
-            // console.log('edad_1 Asmepriv :  ' ,edad_1);
+            // // console.log('edad_1 Asmepriv :  ' ,edad_1);
             let edad_2  = grupo[8];
-            // console.log('edad_2 Asmepriv :  ' ,edad_2);
+            // // console.log('edad_2 Asmepriv :  ' ,edad_2);
             let hijos  = grupo[3];
-            // console.log('hijos Asmepriv :  ' ,hijos);
+            // // console.log('hijos Asmepriv :  ' ,hijos);
 
 //	<!------------------------------ VARIABLES DE grupo end ------------------------------------>							
 //	<!------------------------------ AJUSTES DE familia start-------------------------------------->							
@@ -69,7 +69,7 @@ export function valor_Asmepriv(prices,grupo,arrayDeducciones){
     
     let precios = {};
     precios = precioPrincipal;
-        // console.log('  precios :',precios)
+        // // console.log('  precios :',precios)
 //	<!------------------------------ Bucle ASMEPRIV start ------------------------------------>							
 
         let array = [];          

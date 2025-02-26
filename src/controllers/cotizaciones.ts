@@ -11,7 +11,7 @@ import CotizacionesModel from '../models/cotizaciones';
 
 
 const  getItems = async (req: Request, res: Response) => {
-  // console.log('hola getItems clinicas')
+  // // console.log('hola getItems clinicas')
   try {
     const  response = await getCotizaciones();
     res.status(200).send(response);
@@ -76,11 +76,11 @@ const  deleteItem = async ({ params }: Request, res: Response) => {
 const searchItem = async ({ params }: Request, res: Response) => {
   try {
     const { query, concept } = params;
-    // console.log("query")
+    // // console.log("query")
 
-    // console.log(query)
-    // console.log("concept")
-    // console.log(concept)
+    // // console.log(query)
+    // // console.log("concept")
+    // // console.log(concept)
 
 
     const response = await searchCotizaciones(query);

@@ -112,8 +112,8 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 dbConnect().then(() => {
     app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:` + PORT + `...`);
-      // console.log(`Web application public URL :  ` + appaddress);
+      // console.log(`Server running at http://localhost:` + PORT + `...`);
+      // // console.log(`Web application public URL :  ` + appaddress);
 
 
     });

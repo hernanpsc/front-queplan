@@ -28,17 +28,17 @@ export function valor_Luispasteur( prices,grupo,arrayDeducciones ){
     let precioHijo = prices.precioLuispasteurHijo.precios.precios;
     let empresa = 'Luis Pasteur';
     let familia = grupo[9];
-    // console.log('aportesOS Luis_Pasteur :  '  + aportesOS);
-    // console.log('edad_1 Luis_Pasteur :  '  + edad_1);
-    // console.log('edad_2 Luis_Pasteur :  '  + edad_2);
-    // console.log('hijos Luis_Pasteur :  '  + hijos);
-    // console.log('precioPrincipal Luis_Pasteur :  '  );// console.log(precioPrincipal);
-    // console.log('precioNieto Luis_Pasteur :  '  );// console.log(precioNieto);
-    // console.log('precioAdicional Luis_Pasteur :  '  );// console.log(precioAdicional);
-    // console.log('precioHijo Luis_Pasteur :  '  );// console.log(precioHijo);
+    // // console.log('aportesOS Luis_Pasteur :  '  + aportesOS);
+    // // console.log('edad_1 Luis_Pasteur :  '  + edad_1);
+    // // console.log('edad_2 Luis_Pasteur :  '  + edad_2);
+    // // console.log('hijos Luis_Pasteur :  '  + hijos);
+    // // console.log('precioPrincipal Luis_Pasteur :  '  );// // console.log(precioPrincipal);
+    // // console.log('precioNieto Luis_Pasteur :  '  );// // console.log(precioNieto);
+    // // console.log('precioAdicional Luis_Pasteur :  '  );// // console.log(precioAdicional);
+    // // console.log('precioHijo Luis_Pasteur :  '  );// // console.log(precioHijo);
   
-    // console.log('descuento_promo Luis_Pasteur :  '  + descuento_promo);
-    // console.log('grupo_array Luis_Pasteur :  '  + grupo_array);
+    // // console.log('descuento_promo Luis_Pasteur :  '  + descuento_promo);
+    // // console.log('grupo_array Luis_Pasteur :  '  + grupo_array);
 
     
     if(familia === 1 ){
@@ -47,13 +47,13 @@ export function valor_Luispasteur( prices,grupo,arrayDeducciones ){
         precioAdicional = [];
         precioHijo = [];
 		hijos =0;
-        // console.log('hijos 45 Luis Pasteur :  '  + hijos);
+        // // console.log('hijos 45 Luis Pasteur :  '  + hijos);
 
 	} else if (familia === 2 ) {
 		edad_2 = 0;
 	  } else if ( familia === 3){
 		hijos =0;
-        // console.log('hijos 51 Luis Pasteur :  '  + hijos);
+        // // console.log('hijos 51 Luis Pasteur :  '  + hijos);
 
         precioNieto = [];
         precioAdicional = [];
@@ -84,45 +84,45 @@ export function valor_Luispasteur( prices,grupo,arrayDeducciones ){
   // // //	<!-----------------------Bucle LUIS PASTEUR start------------------------>							
                 
   for (let j in precios) {
-      // console.log('imprimir j')
+      // // console.log('imprimir j')
 
-      // console.log(j)
+      // // console.log(j)
 
 
               
               let conPromo = con_afinidad;
               let promocion = bonAfinidad;
 
-              // console.log('promocion Luis Pasteur :  '  + promocion);
+              // // console.log('promocion Luis Pasteur :  '  + promocion);
           
               let empresaPlan = [j][0];
 
               let _id = empresaPlan;
               let nombre = empresaPlan.substring(3);
 
-              // console.log('conPromo : ' + conPromo)
-              // console.log('precios[j] : ' + precios[j])
+              // // console.log('conPromo : ' + conPromo)
+              // // console.log('precios[j] : ' + precios[j])
 
               // let promo = functions.promoDescuento(precios[j],promocion, conPromo)[2];
-              // console.log('promo : ' + promo)
+              // // console.log('promo : ' + promo)
 
               // let descPromo = functions.promoDescuento(precios[j],promo, conPromo)[1];
-              // console.log('descPromo  >');
-              // console.log(descPromo)
+              // // console.log('descPromo  >');
+              // // console.log(descPromo)
               // let precioTotal = functions.promoDescuento(precios[j],promo, conPromo)[0];
               let precioTotal = precios[j];
 
-               // console.log('precioTotal  >');
-               // console.log(precioTotal)
+               // // console.log('precioTotal  >');
+               // // console.log(precioTotal)
              
-              //  console.log('factores');
-              //   console.log(factores)
+              //  // console.log('factores');
+              //   // console.log(factores)
        
 
 
               // let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
-              // console.log('precio ')
-              // console.log(precio)
+              // // console.log('precio ')
+              // // console.log(precio)
 
   //         //	<!--------------------Crear Objeto LUIS PASTEUR end------------------------------>																            			
       var plan = new Object();
@@ -140,8 +140,8 @@ export function valor_Luispasteur( prices,grupo,arrayDeducciones ){
                   
           
   //      //	<!-----------------------Bucle LUIS PASTEUR end------------------------>											
-  // //                 console.log( 'array LUIS PASTEUR')							
-  // //                 console.log(array)							
+  // //                 // console.log( 'array LUIS PASTEUR')							
+  // //                 // console.log(array)							
   // return "hola"
 
 

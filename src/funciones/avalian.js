@@ -3,23 +3,23 @@ import * as functions from './functions';
 export function valor_Avalian( prices,grupo,arrayDeducciones){
 //	<!------------------------------ VARIABLES DE prices start------------------------------------>							
 let precioTitular = prices.precioAvalianTitular.precios.precios;
-// console.log('precioTitular :  ' , precioTitular);
+// // console.log('precioTitular :  ' , precioTitular);
 let precioConyuge = prices.precioAvalianConyuge.precios.precios;
-// console.log('precioConyuge :  ' , precioConyuge);
+// // console.log('precioConyuge :  ' , precioConyuge);
 let precioHijo1 = prices.precioAvalianHijo1.precios.precios;
-// console.log('precioHijo1 :  ' , precioHijo1);
+// // console.log('precioHijo1 :  ' , precioHijo1);
 let precioHijo2 = prices.precioAvalianHijo2.precios.precios;
-// console.log('precioHijo2 :  ' , precioHijo2);
+// // console.log('precioHijo2 :  ' , precioHijo2);
 let precioHijo3 = prices.precioAvalianHijo3.precios.precios;
-// console.log('precioHijo3 :  ' , precioHijo3);
+// // console.log('precioHijo3 :  ' , precioHijo3);
 let precioHijo4 = prices.precioAvalianHijo25.precios.precios;
-// console.log('precioHijo4 :  ' , precioHijo4);
+// // console.log('precioHijo4 :  ' , precioHijo4);
 //	<!------------------------------ VARIABLES DE prices end------------------------------------>							
 //	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
 	let hijos  = grupo[3];
-    // console.log('hijos :  ' , hijos);
+    // // console.log('hijos :  ' , hijos);
     let familia = grupo[9];
-    // console.log('familia :  ' , familia);
+    // // console.log('familia :  ' , familia);
 //	<!------------------------------ VARIABLES DE grupo end------------------------------------>							
 //	<!------------------------------ AJUSTES DE familia start-------------------------------------->							
 

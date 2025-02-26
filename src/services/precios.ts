@@ -41,8 +41,8 @@ const getProduct = async (id: string) => {
 
   
   const responseGetOne = await PreciosModel.findOne({_id:id})
-  // console.log( ' responseGetOne : ', id)
-  // console.log( ' responseGetOne : ', responseGetOne)
+  // // console.log( ' responseGetOne : ', id)
+  // // console.log( ' responseGetOne : ', responseGetOne)
 
 
 

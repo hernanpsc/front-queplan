@@ -2,20 +2,20 @@ import * as functions from './functions';
 export function valor_Premedic(prices,grupo,arrayDeducciones){
 //	<!------------------------------ VARIABLES DE prices start------------------------------------>							
 let adultos = prices.priceAdultosPr.precios.precios;
-// console.log('PREMEDIC adultos : ',adultos);
+// // console.log('PREMEDIC adultos : ',adultos);
 let preciohm25 = prices.pricePrHijoMenir25.precios.precios;
-// console.log('PREMEDIC preciohm25 : ',preciohm25);
+// // console.log('PREMEDIC preciohm25 : ',preciohm25);
 let preciohm1 = prices.pricePrHijoMenir1.precios.precios;
-// console.log('PREMEDIC preciohm1 : ',preciohm1);
+// // console.log('PREMEDIC preciohm1 : ',preciohm1);
 let idprecio = prices.priceAdultosPr.precios._id;
-// console.log('PREMEDIC idprecio : ',idprecio);
+// // console.log('PREMEDIC idprecio : ',idprecio);
 //	<!------------------------------ VARIABLES DE prices end------------------------------------>							
 
 //	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
 let hijos = grupo[3];
-// console.log('PREMEDIC hijos : ',hijos);
+// // console.log('PREMEDIC hijos : ',hijos);
 let familia = grupo[9];
-// console.log('PREMEDIC familia : ',familia);
+// // console.log('PREMEDIC familia : ',familia);
 //	<!------------------------------ VARIABLES DE grupo end------------------------------------>							
 
 //	<!------------------------------ AJUSTES DE familia start-------------------------------------->							

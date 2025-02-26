@@ -2,22 +2,22 @@ import * as functions from './functions';
 export function valor_Doctored( prices,grupo,arrayDeducciones){
 //	<!------------------------------ VARIABLES DE prices start---------------------------------------------------------->							
 let precio_Grupo = prices.precioDoctoredGrupo.precios.precios;
-// console.log('precio grupo  :',precio_Grupo);
+// // console.log('precio grupo  :',precio_Grupo);
 let precio_3hijo = prices.precioDoctoredHijo3.precios.precios;
-// console.log('precio_3hijo ',precio_3hijo);
+// // console.log('precio_3hijo ',precio_3hijo);
 //	<!------------------------------ VARIABLES DE prices end---------------------------------------------------------->							
 //	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							
 let empresa = 'Doctored';
 let factores = arrayDeducciones.find(item => item.name === empresa);
-// console.log('factores   :' ,factores);
+// // console.log('factores   :' ,factores);
 let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
-// console.log('tipoAsociado   :' ,tipoAsociado);
+// // console.log('tipoAsociado   :' ,tipoAsociado);
 let promociones = factores.bonificaciones;
-// console.log('promociones   :' ,promociones);
+// // console.log('promociones   :' ,promociones);
 let bonAfinidad = promociones[promociones[0]];
-// console.log('bonAfinidad   :' ,bonAfinidad);
+// // console.log('bonAfinidad   :' ,bonAfinidad);
 let con_afinidad = false;
-// console.log('con_afinidad   :' ,con_afinidad);
+// // console.log('con_afinidad   :' ,con_afinidad);
 if (promociones[0] >= 1 ){
   con_afinidad === true;
 }
@@ -26,9 +26,9 @@ if (promociones[0] >= 1 ){
 //	<!------------------------------ AJUSTES DE familia start--------------------------------------------------------->							
 
 let hijos = grupo[3];
-// console.log('hijos   :',hijos);
+// // console.log('hijos   :',hijos);
 let familia = grupo[9];
-// console.log('familia   :' ,familia);
+// // console.log('familia   :' ,familia);
 if(familia === 1 || familia === 3 ){
     precio_3hijo = {};
 } 

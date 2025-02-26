@@ -49,11 +49,11 @@ const updateItem = async ({ params, body }: Request, res: Response) => {
 };
 
 const  updateClinicas = async (req: Request, res: Response) => {
-  console.log(' Hola uno')
+  // // console.log(' Hola uno')
 
   try {
     const  response = await getPlanes();
-    console.log(' Hola dos')
+    // // console.log(' Hola dos')
 
     res.status(200).send(response);
   } catch (e) {
@@ -78,11 +78,11 @@ const  deleteItem = async ({ params }: Request, res: Response) => {
 const searchItem = async ({ params }: Request, res: Response) => {
   try {
     const { query, concept } = params;
-    // console.log("query")
+    // // // console.log("query")
 
-    // console.log(query)
-    // console.log("concept")
-    // console.log(concept)
+    // // console.log(query)
+    // // console.log("concept")
+    // // // console.log(concept)
 
 
     const response = await searchProducts(query);

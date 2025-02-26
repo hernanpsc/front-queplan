@@ -25,7 +25,7 @@ import PlanesModel from "./../models/planes";
 
 //         // Asegurarse de que item_id esté definido antes de verificar la inclusión
 //         if (itemId && clinicas[x].cartillas.includes(itemId)) {
-//           console.log('itemId :  ', itemId);
+//           // console.log('itemId :  ', itemId);
 //           clinicPlan.push(clinicas[x]);
 //         }
 //       }
@@ -41,7 +41,7 @@ import PlanesModel from "./../models/planes";
 //       combinedPlans.push(combinedPlan);
 //     }
 
-//     console.log('combinedPlans: ', combinedPlans);
+//     // console.log('combinedPlans: ', combinedPlans);
 //     return combinedPlans;
     
 //   } catch (error) {
@@ -76,7 +76,7 @@ async function addClinicas() {
 
         // Asegurarse de que item_id esté definido antes de verificar la inclusión
         if (itemId && clinicas[x].cartillas.includes(itemId)) {
-          console.log('itemId: ', itemId);
+          // console.log('itemId: ', itemId);
 
           const { _id, cartillas, coberturas, ...clinicData } = clinicas[x].toObject();
 
@@ -92,7 +92,7 @@ async function addClinicas() {
         { $set: { clinicas: clinicPlan } }
       );
       
-      console.log(`Plan actualizado: ${products[i]._id}`);
+      // console.log(`Plan actualizado: ${products[i]._id}`);
     }
 
     return products;  // Devuelve la lista de productos actualizados
@@ -132,7 +132,7 @@ const getProduct = async (id: string) => {
 
     
     const responseGetOne = await PlanesModel.findOne({_id:id})
-    console.log( ' responseGetOne : ', id)
+    // console.log( ' responseGetOne : ', id)
 
     return responseGetOne
 };
@@ -156,7 +156,7 @@ const searchProducts = async (query: string) => {
 };
 
 const getPlanes = async () => {
-console.log('getPlanes ')
+// console.log('getPlanes ')
     const responseGet = await obtenerPlanesConClinicas();
 
     return responseGet

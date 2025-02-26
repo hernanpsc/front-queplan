@@ -2,23 +2,23 @@ import * as functions from './functions';
 export function valor_Swiss(prices,grupo,arrayDeducciones){
 //	<!------------------------------ VARIABLES DE prices start------------------------------------>							
         let precioTitular = prices.precioTitularSwiss.precios.precios;
-        // console.log(' SWISS precioTitular  ',precioTitular);
+        // // console.log(' SWISS precioTitular  ',precioTitular);
         let precioConyuge = prices.precioConyugeSwiss.precios.precios;
-        // console.log(' SWISS precioConyuge  ',precioConyuge);
+        // // console.log(' SWISS precioConyuge  ',precioConyuge);
         let hijo1 = prices.precioHijo1Swiss.precios.precios || {};
-        // console.log(' SWISS hijo1',hijo1);
+        // // console.log(' SWISS hijo1',hijo1);
         let hijo2 = prices.precioHijo2Swiss.precios.precios || {};
-        // console.log(' SWISS hijo2',hijo2);;
+        // // console.log(' SWISS hijo2',hijo2);;
 //	<!------------------------------ VARIABLES DE prices end------------------------------------>							
 //	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
         let edad2  = grupo[8];
-        // console.log(' SWISS edad2 ',edad2);
+        // // console.log(' SWISS edad2 ',edad2);
         let hijos  = grupo[3];
-        // console.log(' SWISS hijos ',hijos);
+        // // console.log(' SWISS hijos ',hijos);
         let restoHijos = grupo[2];
-        // console.log(' restoHijos hijos ',restoHijos);
+        // // console.log(' restoHijos hijos ',restoHijos);
         let familia = grupo[9];
-        // console.log(' SWISS familia  ',familia);
+        // // console.log(' SWISS familia  ',familia);
 //	<!------------------------------ VARIABLES DE grupo end ------------------------------------>							
 
 
@@ -27,7 +27,7 @@ export function valor_Swiss(prices,grupo,arrayDeducciones){
        let factores = arrayDeducciones.find(item => item.name === empresa);
        let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
        let promociones = factores.bonificaciones;
-    //    console.log(' SWISS promociones  ',promociones);
+    //    // console.log(' SWISS promociones  ',promociones);
        let bonAfinidad = promociones[promociones[0]];
        let con_afinidad = false;
      if (promociones[0] >= 1 ){
@@ -48,7 +48,7 @@ export function valor_Swiss(prices,grupo,arrayDeducciones){
             });
     } else {
         adultos = precioTitular
-        // console.log(' SWISS adultos ',adultos);
+        // // console.log(' SWISS adultos ',adultos);
     }
     if (hijos == 1) {
         precios = Object.entries(hijo1).reduce((acc, [key, value]) => ({

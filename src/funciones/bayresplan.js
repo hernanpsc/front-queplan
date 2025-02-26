@@ -2,26 +2,26 @@ import * as functions from './functions';
 export function valor_Bayresplan( prices,grupo, arrayDeducciones){
       //	<!------------------------------ VARIABLES DE prices start-------------------------------------------------------->							
       let precioPrincipal = prices.precioBayresAdultos.precios.precios;
-      // console.log('precioPrincipal BayresPlan :  ' , precioPrincipal);
+      // // console.log('precioPrincipal BayresPlan :  ' , precioPrincipal);
       let precioHijoHasta25 = prices.precioBayresHijoHasta25.precios.precios;
-      // console.log('precioHijoHasta25 BayresPlan :  ' ,precioHijoHasta25 );
+      // // console.log('precioHijoHasta25 BayresPlan :  ' ,precioHijoHasta25 );
       let precioAad18a49 = prices.precioBayresAd18a49.precios.precios;
-      // console.log('precioAad18a49 BayresPlan :  ',precioAad18a49  );
+      // // console.log('precioAad18a49 BayresPlan :  ',precioAad18a49  );
       let precioJovenSinMaternidad = prices.precioBayresJovenSinMaternidad.precios.precios;
-      // console.log('precioJovenSinMaternidad BayresPlan :  ',precioJovenSinMaternidad   );
+      // // console.log('precioJovenSinMaternidad BayresPlan :  ',precioJovenSinMaternidad   );
       let precioind18a29 = prices.precioBayresInd18a29.precios.precios;
-      // console.log('precioind18a29 BayresPlan :  ' , precioind18a29);
+      // // console.log('precioind18a29 BayresPlan :  ' , precioind18a29);
 //	<!------------------------------ VARIABLES DE prices end---------------------------------------------------------->							
 //	<!------------------------------ VARIABLES DE grupo start--------------------------------------------------------->						
       let numhijo2 = grupo[2];
       let edad_1 = grupo[7];
-      // console.log('edad1 BayresPlan :  '  , edad_1);
+      // // console.log('edad1 BayresPlan :  '  , edad_1);
       let edad_2 = grupo[8];
-      // console.log('edad_2 BayresPlan :  '  , edad_2);
+      // // console.log('edad_2 BayresPlan :  '  , edad_2);
       let hijos  = grupo[3];
-      // console.log('hijos BayresPlan :  '  , hijos);
+      // // console.log('hijos BayresPlan :  '  , hijos);
       let familia = grupo[9];   
-      // console.log('familia BayresPlan :  '  , familia);
+      // // console.log('familia BayresPlan :  '  , familia);
 //	<!------------------------------ VARIABLES DE grupo end----------------------------------------------------------->							
 //	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							
       let empresa = 'Bayres Plan';

@@ -30,16 +30,16 @@ export function valor_Hominis( prices,grupo,arrayDeducciones){
 	let edad_2 = grupo[8];
 	let hijos  = grupo[3];
   let familia = grupo[9];
-  console.log('hominis 1')
+  // console.log('hominis 1')
 
     let precioPrincipal = prices.precioHominis.precios.precios;
     let empresa = 'Hominis';
-    console.log('hominis 2 precioPrincipal : ', precioPrincipal)
+    // console.log('hominis 2 precioPrincipal : ', precioPrincipal)
 
 
 	  let precio_Hominis = {};
 	  let precios = {};
-    console.log('hominis 3 ',precios)
+    // console.log('hominis 3 ',precios)
 
     let factores = arrayDeducciones.find(item => item.name === empresa);
     let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
@@ -52,7 +52,7 @@ export function valor_Hominis( prices,grupo,arrayDeducciones){
     
       let array = [];
 
-console.log('hominis 3')
+// console.log('hominis 3')
       
       precios = precioPrincipal;
 
@@ -60,44 +60,44 @@ console.log('hominis 3')
 	// // //	<!-----------------------Bucle HOMINIS start------------------------>							
 	              
     for (let j in precios) {
-        // console.log('imprimir j')
+        // // console.log('imprimir j')
 
-        // console.log(j)
+        // // console.log(j)
 
 
                 
                 let conPromo = con_afinidad;
                 let promocion = bonAfinidad;
 
-                // console.log('promocion Hominis :  '  + promocion);
+                // // console.log('promocion Hominis :  '  + promocion);
             
                 let empresaPlan = [j][0];
 
                 let _id = empresaPlan;
                 let nombre = empresaPlan.substring(3);
 
-                // console.log('conPromo : ' + conPromo)
-                // console.log('precios[j] : ' + precios[j])
+                // // console.log('conPromo : ' + conPromo)
+                // // console.log('precios[j] : ' + precios[j])
 
                 // let promo = functions.promoDescuento(precios[j],promocion, conPromo)[2];
-                // console.log('promo : ' + promo)
+                // // console.log('promo : ' + promo)
 
                 // let descPromo = functions.promoDescuento(precios[j],promo, conPromo)[1];
-                // console.log('descPromo  >');
-                // console.log(descPromo)
+                // // console.log('descPromo  >');
+                // // console.log(descPromo)
                 // let precioTotal = functions.promoDescuento(precios[j],promo, conPromo)[0];
                 let precioTotal = precios[j];
 
-                 // console.log('precioTotal  >');
-                 // console.log(precioTotal)
+                 // // console.log('precioTotal  >');
+                 // // console.log(precioTotal)
                
-                //  console.log('factores');
-                //   console.log(factores)
+                //  // console.log('factores');
+                //   // console.log(factores)
          
 
                 // let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
-                // console.log('precio ')
-                // console.log(precio)
+                // // console.log('precio ')
+                // // console.log(precio)
 
     //         //	<!--------------------Crear Objeto HOMINIS end------------------------------>																            			
         var plan = new Object();
@@ -115,8 +115,8 @@ console.log('hominis 3')
                     
             
     //      //	<!-----------------------Bucle HOMINIS end------------------------>											
-    // //                 console.log( 'array HOMINIS')							
-    // //                 console.log(array)							
+    // //                 // console.log( 'array HOMINIS')							
+    // //                 // console.log(array)							
     // return "hola"
 
 

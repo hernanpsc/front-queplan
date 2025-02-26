@@ -45,21 +45,21 @@ if (promociones[0] >= 1 ){
 
 
 // export function valor_Cristal(aportes_OS, valorCoeficiente, edad_1, edad_2,numHijos, group, grupo, con_afinidad,  bonAfinidad, Titular, Hijo1, Hijo2, Hijo3, Conyuge){
-	// console.log(' valor_Cristal ' , Cristal)
+	// // console.log(' valor_Cristal ' , Cristal)
 ;   
 
 
-    // console.log('edad_1 Cristal :  '  + edad_1);
-    // console.log('edad_2 Cristal :  '  + edad_2);
-    // console.log('familia Cristal :  '  + familia);
-    // console.log('hijos Cristal :  '  + hijos);
-    // console.log('precioTitular Cristal :  '  );// console.log(precioTitular);
-    // console.log('precioHijo1 Cristal :  '  );// console.log(precioHijo1);
-    // console.log('precioHijo2 Cristal :  '  );// console.log(precioHijo2);
-    // console.log('precioHijo3 Cristal :  '  );// console.log(precioHijo3);
+    // // console.log('edad_1 Cristal :  '  + edad_1);
+    // // console.log('edad_2 Cristal :  '  + edad_2);
+    // // console.log('familia Cristal :  '  + familia);
+    // // console.log('hijos Cristal :  '  + hijos);
+    // // console.log('precioTitular Cristal :  '  );// // console.log(precioTitular);
+    // // console.log('precioHijo1 Cristal :  '  );// // console.log(precioHijo1);
+    // // console.log('precioHijo2 Cristal :  '  );// // console.log(precioHijo2);
+    // // console.log('precioHijo3 Cristal :  '  );// // console.log(precioHijo3);
   
-    // console.log('descuento_promo Cristal :  '  + descuento_promo);
-    // console.log('grupo_array Cristal :  '  + grupo_array);
+    // // console.log('descuento_promo Cristal :  '  + descuento_promo);
+    // // console.log('grupo_array Cristal :  '  + grupo_array);
 
 
 
@@ -68,17 +68,17 @@ if (promociones[0] >= 1 ){
 
     if(familia === 1 ){
 		precioConyuge = [];
-        // console.log('hijos 45 Cristal :  '  + hijos);
+        // // console.log('hijos 45 Cristal :  '  + hijos);
 
 	} else if (familia === 2 ) {
 		precioConyuge = [];
-        // console.log('hijos 51 Cristal :  '  + hijos);
+        // // console.log('hijos 51 Cristal :  '  + hijos);
 
 	  } else if ( familia === 3){
-        // console.log('precioConyuge Cristal :  '  + precioConyuge);
+        // // console.log('precioConyuge Cristal :  '  + precioConyuge);
 
 	  } else if ( familia ==4){
-        // console.log('precioConyuge Cristal :  '  + precioConyuge);
+        // // console.log('precioConyuge Cristal :  '  + precioConyuge);
           }
 	  let precio_adultos_Cristal = {};
 	  let precios = {};
@@ -125,46 +125,46 @@ if (promociones[0] >= 1 ){
 	// // //	<!-----------------------Bucle CRISTAL start------------------------>							
 	              
     for (let j in precios) {
-        // console.log('imprimir j')
+        // // console.log('imprimir j')
 
-        // console.log(j)
+        // // console.log(j)
 
 
                 
                 let conPromo = con_afinidad;
                 let promocion = bonAfinidad;
 
-                // console.log('promocion Cristal :  '  + promocion);
+                // // console.log('promocion Cristal :  '  + promocion);
             
                 let empresaPlan = [j][0];
 
                 let _id = empresaPlan;
                 let nombre = empresaPlan.substring(3);
 
-                // console.log('conPromo : ' + conPromo)
-                // console.log('precios[j] : ' + precios[j])
+                // // console.log('conPromo : ' + conPromo)
+                // // console.log('precios[j] : ' + precios[j])
 
                 // let promo = functions.promoDescuento(precios[j],promocion, conPromo)[2];
-                // console.log('promo : ' + promo)
+                // // console.log('promo : ' + promo)
 
                 // let descPromo = functions.promoDescuento(precios[j],promo, conPromo)[1];
-                // console.log('descPromo  >');
-                // console.log(descPromo)
+                // // console.log('descPromo  >');
+                // // console.log(descPromo)
                 // let precioTotal = functions.promoDescuento(precios[j],promo, conPromo)[0];
                 let precioTotal = precios[j];
 
-                 // console.log('precioTotal  >');
-                 // console.log(precioTotal)
+                 // // console.log('precioTotal  >');
+                 // // console.log(precioTotal)
                
-                //  console.log('factores');
-                //   console.log(factores)
+                //  // console.log('factores');
+                //   // console.log(factores)
          
 
    
 
                 // let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
-                // console.log('precio ')
-                // console.log(precio)
+                // // console.log('precio ')
+                // // console.log(precio)
 
     //         //	<!--------------------Crear Objeto CRISTAL end------------------------------>																            			
         var plan = new Object();
@@ -182,8 +182,8 @@ if (promociones[0] >= 1 ){
                     
             
     //      //	<!-----------------------Bucle CRISTAL end------------------------>											
-    // //                 console.log( 'array CRISTAL')							
-    // //                 console.log(array)							
+    // //                 // console.log( 'array CRISTAL')							
+    // //                 // console.log(array)							
     // return "hola"
 
 

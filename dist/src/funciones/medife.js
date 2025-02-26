@@ -38,23 +38,23 @@ const functions = __importStar(require("./functions"));
 function valor_Medife(prices, grupo, arrayDeducciones) {
     //	<!------------------------------ VARIABLES DE prices start---------------------------------------------------------->							
     let precioPrincipal = prices.precioMedifeAdultos.precios.precios;
-    console.log('precioPrincipal :', precioPrincipal);
+    // console.log('precioPrincipal :', precioPrincipal);
     let precioHijo1 = prices.precioMedifeHIJO0a1.precios.precios;
-    console.log('precioHijo1 :', precioHijo1);
+    // console.log('precioHijo1 :', precioHijo1);
     let precioHijo20 = prices.precioMedifeHIJO2a20.precios.precios;
-    console.log('precioHijo20 :', precioHijo20);
+    // console.log('precioHijo20 :', precioHijo20);
     let precioHijo29 = prices.precioMedifeHIJO21a29.precios.precios;
-    console.log('precioHijo29 :', precioHijo29);
+    // console.log('precioHijo29 :', precioHijo29);
     //	<!------------------------------ VARIABLES DE prices end---------------------------------------------------------->							
     //	<!------------------------------ VARIABLES DE grupo start--------------------------------------------------------->						
     let edadesHijos = grupo[6];
-    console.log('edadesHijos :', edadesHijos);
+    // console.log('edadesHijos :', edadesHijos);
     let menoresQueUno = 0;
-    console.log('menoresQueUno :', menoresQueUno);
+    // console.log('menoresQueUno :', menoresQueUno);
     let deCeroA20 = 0;
-    console.log('deCeroA20 :', deCeroA20);
+    // console.log('deCeroA20 :', deCeroA20);
     let familia = grupo[9];
-    console.log('familia :', familia);
+    // console.log('familia :', familia);
     //	<!------------------------------ VARIABLES DE grupo end----------------------------------------------------------->							
     //	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							
     //	<!------------------------------ CALCULO DE DEDUCCIONES end arrayDeducciones-------------------------------------->							
@@ -83,25 +83,25 @@ function valor_Medife(prices, grupo, arrayDeducciones) {
     }
     else { }
     ;
-    console.log('precioHijo1  3 :', precioHijo1);
-    console.log('precioHijo20  3 :', precioHijo20);
-    console.log('precioHijo29  3 :', precioHijo29);
-    console.log('menoresQueUno  3 :', menoresQueUno);
-    console.log('deCeroA20  3 :', deCeroA20);
-    console.log('de21A29  3 :', de21A29);
+    // console.log('precioHijo1  3 :', precioHijo1);
+    // console.log('precioHijo20  3 :', precioHijo20);
+    // console.log('precioHijo29  3 :', precioHijo29);
+    // console.log('menoresQueUno  3 :', menoresQueUno);
+    // console.log('deCeroA20  3 :', deCeroA20);
+    // console.log('de21A29  3 :', de21A29);
     //	<!------------------------------ AJUSTES DE familia end----------------------------------------------------------->							
     //	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							
     let empresa = 'Medife';
     let factores = arrayDeducciones.find(item => item.name === empresa);
-    console.log('factores   :', factores);
+    // console.log('factores   :', factores);
     let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
-    console.log('tipoAsociado   :', tipoAsociado);
+    // console.log('tipoAsociado   :', tipoAsociado);
     let promociones = factores.bonificaciones;
-    console.log('promociones   :', promociones);
+    // console.log('promociones   :', promociones);
     let bonAfinidad = promociones[promociones[0]];
-    console.log('bonAfinidad   :', bonAfinidad);
+    // console.log('bonAfinidad   :', bonAfinidad);
     let con_afinidad = false;
-    console.log('con_afinidad   :', con_afinidad);
+    // console.log('con_afinidad   :', con_afinidad);
     //	<!------------------------------ CALCULO DE DEDUCCIONES end arrayDeducciones-------------------------------------->							
     //	<!------------------------------ COTIZACION START ---------------------------------------------------------------->	
     //	<!------------------------------ COTIZACION END ------------------------------------------------------------------>							
@@ -109,7 +109,7 @@ function valor_Medife(prices, grupo, arrayDeducciones) {
     //	<!-------------------------------Crear Objeto SWISS start--------------------------------------------------------->				
     //	<!------------------------------ Bucle end ----------------------------------------------------------------------->							
     let de21A29 = 0;
-    console.log('de21A29   :', de21A29);
+    // console.log('de21A29   :', de21A29);
     // Contamos las edades de los hijos según los rangos
     for (let edad of edadesHijos) {
         if (edad <= 0) {
@@ -122,13 +122,13 @@ function valor_Medife(prices, grupo, arrayDeducciones) {
             de21A29++; // Edad entre 21 y 29
         }
     }
-    console.log('menoresQueUno  2 :', menoresQueUno);
-    console.log('deCeroA20  2 :', deCeroA20);
-    console.log('de21A29  2 :', de21A29);
+    // console.log('menoresQueUno  2 :', menoresQueUno);
+    // console.log('deCeroA20  2 :', deCeroA20);
+    // console.log('de21A29  2 :', de21A29);
     let precios = {};
     // Calculamos los precios finales
     precios = precioPrincipal;
-    console.log('precios  3 :', precios);
+    // console.log('precios  3 :', precios);
     if (menoresQueUno > 0) {
         precios = Object.entries(precioHijo1).reduce((acc, [key, value]) => {
             return {
@@ -136,7 +136,7 @@ function valor_Medife(prices, grupo, arrayDeducciones) {
                 [key]: (acc[key] || 0) + value * menoresQueUno
             };
         }, { ...precios });
-        console.log('precios  4 :', precios);
+        // console.log('precios  4 :', precios);
     }
     else if (deCeroA20 > 0) {
         precios = Object.entries(precioHijo20).reduce((acc, [key, value]) => {
@@ -145,7 +145,7 @@ function valor_Medife(prices, grupo, arrayDeducciones) {
                 [key]: (acc[key] || 0) + value * deCeroA20
             };
         }, { ...precios });
-        console.log('precios  5 :', precios);
+        // console.log('precios  5 :', precios);
     }
     else if (de21A29 > 0) {
         precios = Object.entries(precioHijo29).reduce((acc, [key, value]) => {
@@ -155,7 +155,7 @@ function valor_Medife(prices, grupo, arrayDeducciones) {
             };
         }, { ...precios });
     }
-    console.log('precios  6 :', precios);
+    // console.log('precios  6 :', precios);
     let array = [];
     //	<!-----------------------Bucle MEDIFE start------------------------>							
     for (let j in precios) {
@@ -164,22 +164,22 @@ function valor_Medife(prices, grupo, arrayDeducciones) {
         let confirmaSiTieneBonificaciones = con_afinidad;
         let porcentajeBonificado = bonAfinidad;
         let precioInicial = precios[j];
-        console.log('nombre  6 :', nombre);
-        console.log('confirmaSiTieneBonificaciones  6 :', confirmaSiTieneBonificaciones);
-        console.log('porcentajeBonificado  6 :', porcentajeBonificado);
-        console.log('precioInicial  6 :', precioInicial);
+        // console.log('nombre  6 :', nombre);
+        // console.log('confirmaSiTieneBonificaciones  6 :', confirmaSiTieneBonificaciones);
+        // console.log('porcentajeBonificado  6 :', porcentajeBonificado);
+        // console.log('precioInicial  6 :', precioInicial);
         // Llamar a la función y desestructurar el array devuelto
         let [valor_total_plan, valorBonificacion] = functions.promoDescuento(precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones);
-        console.log('valor_total_plan  6 :', valor_total_plan);
-        console.log('valorBonificacion  6 :', valorBonificacion);
+        // console.log('valor_total_plan  6 :', valor_total_plan);
+        // console.log('valorBonificacion  6 :', valorBonificacion);
         // Asignar los valores a nuevas variablessss
         let precioTotal = valor_total_plan;
         let bonificacionAplicada = valorBonificacion;
-        console.log('tipoAsociado  6 :', tipoAsociado);
-        console.log('factores.deduction  6 :', factores.deduction);
-        console.log('precioTotal  6 :', precioTotal);
+        // console.log('tipoAsociado  6 :', tipoAsociado);
+        // console.log('factores.deduction  6 :', factores.deduction);
+        // console.log('precioTotal  6 :', precioTotal);
         let precio = functions.final(tipoAsociado, factores.deduction, precioTotal);
-        console.log('precio  6 :', precio);
+        // console.log('precio  6 :', precio);
         //	<!--------------------Crear Objeto MEDIFE end------------------------------>																            			
         var plan = new Object();
         plan.item_id = _id;

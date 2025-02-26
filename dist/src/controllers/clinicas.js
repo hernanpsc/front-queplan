@@ -62,10 +62,10 @@ exports.deleteItem = deleteItem;
 const searchItem = async ({ params }, res) => {
     try {
         const { query, concept } = params;
-        console.log("query");
-        console.log(query);
-        console.log("concept");
-        console.log(concept);
+        // console.log("query");
+        // console.log(query);
+        // console.log("concept");
+        // console.log(concept);
         const response = await (0, clinicas_1.searchProducts)(query);
         res.send(response);
     }

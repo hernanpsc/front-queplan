@@ -14,7 +14,7 @@ const importModule = async (filename: string) => {
     if (cleanName !== 'index') {
         try {
             const moduleRouter = await import(`./${cleanName}`);
-            console.log(`Se está cargando la ruta.../${cleanName}`);
+            // console.log(`Se está cargando la ruta.../${cleanName}`);
             router.use(`/${cleanName}`, moduleRouter.router);
         } catch (error) {
             // Manejo del error: verificación del tipo de error

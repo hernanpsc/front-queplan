@@ -2,26 +2,26 @@ import * as functions from './functions';
 export function valor_Saludcentral(prices, grupo,arrayDeducciones){
 //	<!------------------------------ VARIABLES DE prices start------------------------------------>							
     let precioTitular = prices.precioSaludcentralTitular.precios.precios;
-    console.log('precioTitular Saludcentral :  ',precioTitular  );
+    // console.log('precioTitular Saludcentral :  ',precioTitular  );
     let precioConyuge = prices.precioSaludcentralConyuge.precios.precios;
-    console.log('precioConyuge Saludcentral :  ', precioConyuge );
+    // console.log('precioConyuge Saludcentral :  ', precioConyuge );
     let precioHijo1 = prices.precioSaludcentralHijo1.precios.precios;
-    console.log('precioHijo1 Saludcentral :  ' , precioHijo1);
+    // console.log('precioHijo1 Saludcentral :  ' , precioHijo1);
     let precioHijo2 = prices.precioSaludcentralHijo2.precios.precios;
-    console.log('precioHijo2 Saludcentral :  ' ,precioHijo2 );
+    // console.log('precioHijo2 Saludcentral :  ' ,precioHijo2 );
 //	<!------------------------------ VARIABLES DE prices end------------------------------------>							
 //	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
     let numhijo2 = grupo[2];
     let hijos  = grupo[3];
-    console.log('hijos Saludcentral :  '  + hijos);
+    // console.log('hijos Saludcentral :  '  + hijos);
     let capitas = grupo[5];
-    console.log('capitas Saludcentral :  '  + capitas);
+    // console.log('capitas Saludcentral :  '  + capitas);
     let edad_1 = grupo[7];
-    console.log('edad_1 Saludcentral :  '  + edad_1);
+    // console.log('edad_1 Saludcentral :  '  + edad_1);
 	let edad_2  = grupo[8];
-    console.log('edad_2 Saludcentral :  '  + edad_2);
+    // console.log('edad_2 Saludcentral :  '  + edad_2);
     let familia = grupo[9];
-    console.log('familia Saludcentral :  '  + familia);
+    // console.log('familia Saludcentral :  '  + familia);
 //	<!------------------------------ VARIABLES DE grupo end------------------------------------>							
 //	<!------------------------------ RESETEAR familia start------------------------------------>							
     switch (familia) {

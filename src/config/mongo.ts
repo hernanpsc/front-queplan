@@ -11,7 +11,7 @@ async function dbConnect(): Promise<void> {
   try {
     // Conectar a MongoDB usando Mongoose
     await mongoose.connect(DB_URI);
-    console.log('Conexión exitosa a MongoDB usando Mongoose');
+    // console.log('Conexión exitosa a MongoDB usando Mongoose');
   } catch (error) {
     // Manejo de errores de conexión
     console.error('Error al conectar a MongoDB:', error);
