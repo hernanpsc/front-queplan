@@ -63,6 +63,8 @@ if(formCotizar.supras = "test")
     formCotizar.segvida=false,
     formCotizar.segvida1=false
   }
+
+  console.log(formCotizar)
 const calcularGrupo = (edad_1: number, edad_2: number, numkids: number, group: string) => {
   let edad1 = edad_1;
   let edad2 = edad_2;
@@ -227,10 +229,10 @@ async function fetchPrices() {
     { variable: 'precioBayresJovenSinMaternidad', id: ids[11][3] },
     { variable: 'precioBayresInd18a29', id: ids[11][4] },
     { variable: 'precioHominis', id: ids[12][0] },
-    { variable: 'precioSaludcentralTitular', id: ids[13][0] },
-    { variable: 'precioSaludcentralConyuge', id: ids[13][1] },
-    { variable: 'precioSaludcentralHijo1', id: ids[13][2] },
-    { variable: 'precioSaludcentralHijo2', id: ids[13][3] }
+    // { variable: 'precioSaludcentralTitular', id: ids[13][0] },
+    // { variable: 'precioSaludcentralConyuge', id: ids[13][1] },
+    // { variable: 'precioSaludcentralHijo1', id: ids[13][2] },
+    // { variable: 'precioSaludcentralHijo2', id: ids[13][3] }
   ];
 
  const promises = productQueries.map(async (query) => {

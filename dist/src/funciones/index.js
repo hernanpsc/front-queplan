@@ -31,5 +31,5 @@ __exportStar(require("./bayresplan"), exports);
 __exportStar(require("./hominis"), exports);
 __exportStar(require("./medife"), exports);
 __exportStar(require("./functions"), exports);
-__exportStar(require("./saludcentral"), exports);
+// export * from './saludcentral';
 //# sourceMappingURL=index.js.map

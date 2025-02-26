@@ -773,7 +773,7 @@ export function productIdSaludcentral(grupo) {
     let rangoEtario_1 = getAgeRange(edad_1);
     let rangoEtario_2 = getAgeRange(edad_2);
 
-    let idSaludcentralTitular = 'saludcentral' + rangoEtario_1;
+    let idTitular = 'saludcentral' + rangoEtario_1;
     let idSaludcentralConyuge = 'saludcentral' + rangoEtario_2;
 
     const idHijo1 = 'saludcentral1H';

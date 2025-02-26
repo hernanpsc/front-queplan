@@ -49,6 +49,45 @@ const calcularPrecio = async (req, res) => {
         const { group, empresa_prepaga, edad_1, edad_2, numkids, edadHijo1, edadHijo2, edadHijo3, edadHijo4, edadHijo5, categoriaMono, plan_type, tipo, agree, aporteOS, sueldo, aporte, monoadic, cantAport, afinidad, bonAfinidad, supras, segvida, segvida1, region, } = formCotizar;
         console.log('formCotizar  : ');
         console.log(formCotizar);
+        if (formCotizar.supras = "test") {
+            formCotizar.grupo = 2,
+                formCotizar.empresa_prepaga = 0,
+                formCotizar.edad_1 = 19,
+                formCotizar.edad_2 = 0,
+                formCotizar.numkids = 0,
+                formCotizar.tipo = "P",
+                formCotizar.agree = true,
+                formCotizar.aporteOS = "",
+                formCotizar.sueldo = 0,
+                formCotizar.aporte = 0,
+                formCotizar.monoadic = false,
+                formCotizar.cantAport = 0,
+                formCotizar.afinidad = false,
+                formCotizar.bonAfinidad = 0,
+                formCotizar.supras = false,
+                formCotizar.segvida = false,
+                formCotizar.segvida1 = false;
+        }
+        else if (!formCotizar) {
+            formCotizar.grupo = 2,
+                formCotizar.empresa_prepaga = 0,
+                formCotizar.edad_1 = 19,
+                formCotizar.edad_2 = 0,
+                formCotizar.numkids = 0,
+                formCotizar.tipo = "P",
+                formCotizar.agree = true,
+                formCotizar.aporteOS = "",
+                formCotizar.sueldo = 0,
+                formCotizar.aporte = 0,
+                formCotizar.monoadic = false,
+                formCotizar.cantAport = 0,
+                formCotizar.afinidad = false,
+                formCotizar.bonAfinidad = 0,
+                formCotizar.supras = false,
+                formCotizar.segvida = false,
+                formCotizar.segvida1 = false;
+        }
+        console.log(formCotizar);
         const calcularGrupo = (edad_1, edad_2, numkids, group) => {
             let edad1 = edad_1;
             let edad2 = edad_2;
@@ -190,10 +229,10 @@ const calcularPrecio = async (req, res) => {
                 { variable: 'precioBayresJovenSinMaternidad', id: ids[11][3] },
                 { variable: 'precioBayresInd18a29', id: ids[11][4] },
                 { variable: 'precioHominis', id: ids[12][0] },
-                { variable: 'precioSaludcentralTitular', id: ids[13][0] },
-                { variable: 'precioSaludcentralConyuge', id: ids[13][1] },
-                { variable: 'precioSaludcentralHijo1', id: ids[13][2] },
-                { variable: 'precioSaludcentralHijo2', id: ids[13][3] }
+                // { variable: 'precioSaludcentralTitular', id: ids[13][0] },
+                // { variable: 'precioSaludcentralConyuge', id: ids[13][1] },
+                // { variable: 'precioSaludcentralHijo1', id: ids[13][2] },
+                // { variable: 'precioSaludcentralHijo2', id: ids[13][3] }
             ];
             const promises = productQueries.map(async (query) => {
                 // Verificar si el ID es válido

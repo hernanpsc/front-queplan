@@ -389,10 +389,10 @@ function imprimirPrecios(prices, ids) {
         { key: 'precioBayresJovenSinMaternidad', index: [11, 3] },
         { key: 'precioBayresInd18a29', index: [11, 4] },
         { key: 'precioHominis', index: [12] },
-        { key: 'precioSaludcentralTitular', index: [13, 0] },
-        { key: 'precioSaludcentralConyuge', index: [13, 1] },
-        { key: 'precioSaludcentralHijo1', index: [13, 2] },
-        { key: 'precioSaludcentralHijo2', index: [13, 3] },
+        // { key: 'precioSaludcentralTitular', index: [13, 0] },
+        // { key: 'precioSaludcentralConyuge', index: [13, 1] },
+        // { key: 'precioSaludcentralHijo1', index: [13, 2] },
+        // { key: 'precioSaludcentralHijo2', index: [13, 3] },
     ];
     claves.forEach(({ key, index }) => {
         try {
@@ -568,14 +568,13 @@ function ids_prepagas(grupo, arrayDeducciones) {
     let idsHominis = (0, index_2.productIdHominis)(grupo, arrayDeducciones);
     console.log(idsHominis);
     // <! ----------SALUD CENTRAL---------------------------------------------------->
-    let idsSaludcentral = (0, index_2.productIdSaludcentral)(grupo);
-    console.log(idsSaludcentral);
+    // let idsSaludcentral  = productIdSaludcentral(grupo);  console.log(idsSaludcentral);
     // <! ----------PREMEDIC---------------------------------------------------->
     let idsPremedic = (0, index_2.productIdPremedic)(grupo, arrayDeducciones);
     console.log(' idsPremedic : ', idsPremedic);
     let ids = [];
     // console.log('ids :',ids)
-    ids.push(idSancor, idOmint, idGaleno, idSwiss, idsMedife, idPrevencion, IdDoctored, IdsAvalian, idsCristalyRas, idsLuisPasteur, idsAsmepriv, idsBayresPlan, idsHominis, idsSaludcentral, idsPremedic);
+    ids.push(idSancor, idOmint, idGaleno, idSwiss, idsMedife, idPrevencion, IdDoctored, IdsAvalian, idsCristalyRas, idsLuisPasteur, idsAsmepriv, idsBayresPlan, idsHominis, idsPremedic);
     // console.log('ids :',ids)
     return ids;
 }
