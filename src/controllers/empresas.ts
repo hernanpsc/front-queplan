@@ -28,9 +28,9 @@ const  getItemById = async ({ params }:Request,res:Response) => {
   }
 };
 
-const  createItem = async (req: Request, res: Response) => {
+const  createItem = async ({ body }: Request, res: Response) => {
   try {
-    const responseItem = await createProduct(req);
+    const responseItem = await createProduct(body);
         res.send(responseItem);
 
   } catch (e) {

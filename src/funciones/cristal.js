@@ -1,27 +1,53 @@
 import * as functions from './functions';
 // export function valor_Cristal(aportes_OS, valorCoeficiente, edad_1, edad_2,numHijos, group, grupo, con_afinidad,  bonAfinidad,Titular, Hijo1, Hijo2, Hijo3, Conyuge){
     export function valor_Cristal( prices,grupo, arrayDeducciones){
+//	<!------------------------------ VARIABLES DE prices start---------------------------------------------------------->							
+let precioTitular = prices.precioTitularCristal.precios.precios;
+let precioConyuge = prices.precioConyugeCristal.precios.precios;
+let precioHijo1 = prices.precioHijo1Cristal.precios.precios;
+let precioHijo2 = prices.precioHijo2Cristal.precios.precios;
+let precioHijo3 = prices.precioHijo3Cristal.precios.precios;
+//	<!------------------------------ VARIABLES DE prices end---------------------------------------------------------->							
+//	<!------------------------------ VARIABLES DE grupo start--------------------------------------------------------->						
+let	num_adultos = grupo[0];
+let numhijo1 = grupo[1];
+let numhijo = grupo[3];
+let gen = grupo[4];
+let arrayEdades = grupo[6];
+let numhijo2 = grupo[2];
+let numHijos = grupo[3];
+let edad_1 = grupo[7];
+let edad_2 = grupo[8];
+let hijos  = grupo[3];
+let familia = grupo[9]
+//	<!------------------------------ VARIABLES DE grupo end----------------------------------------------------------->							
+//	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							
+let empresa = 'Cristal';
+let factores = arrayDeducciones.find(item => item.name === empresa);
+let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
+let promociones = factores.bonificaciones;
+let bonAfinidad = promociones[promociones[0]];
+let con_afinidad = false;
+if (promociones[0] >= 1 ){
+  con_afinidad === true;
+}
+//	<!------------------------------ CALCULO DE DEDUCCIONES end arrayDeducciones-------------------------------------->							
+//	<!------------------------------ AJUSTES DE familia start--------------------------------------------------------->							
+//	<!------------------------------ AJUSTES DE familia end----------------------------------------------------------->							
+//	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							
+//	<!------------------------------ CALCULO DE DEDUCCIONES end arrayDeducciones-------------------------------------->							
+//	<!------------------------------ COTIZACION START ---------------------------------------------------------------->	
+//	<!------------------------------ COTIZACION END ------------------------------------------------------------------>							
+//	<!------------------------------ Bucle start --------------------------------------------------------------------->							
+//	<!-------------------------------Crear Objeto SWISS start--------------------------------------------------------->				
+//	<!------------------------------ Bucle end ----------------------------------------------------------------------->							
+
 
 
 // export function valor_Cristal(aportes_OS, valorCoeficiente, edad_1, edad_2,numHijos, group, grupo, con_afinidad,  bonAfinidad, Titular, Hijo1, Hijo2, Hijo3, Conyuge){
 	// console.log(' valor_Cristal ' , Cristal)
-    let	num_adultos = grupo[0];
-	let numhijo1 = grupo[1];
-	let numhijo = grupo[3];
-	let gen = grupo[4];
-	let arrayEdades = grupo[6];
-	let numhijo2 = grupo[2];
-	let numHijos = grupo[3];
-	let edad_1 = grupo[7];
-	let edad_2 = grupo[8];
-	let hijos  = grupo[3];
-  let familia = grupo[9];   
-    let precioTitular = prices.precioTitularCristal.precios.precios;
-    let precioConyuge = prices.precioConyugeCristal.precios.precios;
-    let precioHijo1 = prices.precioHijo1Cristal.precios.precios;
-    let precioHijo2 = prices.precioHijo2Cristal.precios.precios;
-    let precioHijo3 = prices.precioHijo3Cristal.precios.precios;
-    let empresa = 'Cristal';
+;   
+
 
     // console.log('edad_1 Cristal :  '  + edad_1);
     // console.log('edad_2 Cristal :  '  + edad_2);
@@ -57,15 +83,7 @@ import * as functions from './functions';
 	  let precio_adultos_Cristal = {};
 	  let precios = {};
 
-      
-      let factores = arrayDeducciones.find(item => item.name === empresa);
-      let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
-      let promociones = factores.bonificaciones;
-      let bonAfinidad = promociones[promociones[0]];
-      let con_afinidad = false;
-    if (promociones[0] >= 1 ){
-        con_afinidad === true;
-    }
+
       let array = [];
 
       if (familia >=  3) {

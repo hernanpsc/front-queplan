@@ -1,38 +1,29 @@
 import * as functions from './functions';
-
 export function valor_Saludcentral(prices, grupo,arrayDeducciones){
-    	
-
-
-
-
-
-	let familia = grupo[9];
-	let capitas = grupo[5];
-    let edad_1 = grupo[7];
-	let edad_2  = grupo[8];
-	let hijos  = grupo[3];
+//	<!------------------------------ VARIABLES DE prices start------------------------------------>							
     let precioTitular = prices.precioSaludcentralTitular.precios.precios;
+    console.log('precioTitular Saludcentral :  ',precioTitular  );
     let precioConyuge = prices.precioSaludcentralConyuge.precios.precios;
+    console.log('precioConyuge Saludcentral :  ', precioConyuge );
     let precioHijo1 = prices.precioSaludcentralHijo1.precios.precios;
+    console.log('precioHijo1 Saludcentral :  ' , precioHijo1);
     let precioHijo2 = prices.precioSaludcentralHijo2.precios.precios;
-    let grupo_array = grupo;
+    console.log('precioHijo2 Saludcentral :  ' ,precioHijo2 );
+//	<!------------------------------ VARIABLES DE prices end------------------------------------>							
+//	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
     let numhijo2 = grupo[2];
-    let empresa = 'Salud Central';
-    console.log('familia Saludcentral :  '  + familia);
-    console.log('capitas Saludcentral :  '  + capitas);
-
-    console.log('edad_1 Saludcentral :  '  + edad_1);
-    console.log('edad_2 Saludcentral :  '  + edad_2);
+    let hijos  = grupo[3];
     console.log('hijos Saludcentral :  '  + hijos);
-    console.log('precioTitular Saludcentral :  ',precioTitular  );// console.log(precioTitular);
-    console.log('precioConyuge Saludcentral :  ', precioConyuge );// console.log(precioConyuge);
-    console.log('precioHijo1 Saludcentral :  ' , precioHijo1);// console.log(precioHijo1);
-    console.log('precioHijo2 Saludcentral :  ' ,precioHijo2 );// console.log(precioHijo2);
-  
-
-
-
+    let capitas = grupo[5];
+    console.log('capitas Saludcentral :  '  + capitas);
+    let edad_1 = grupo[7];
+    console.log('edad_1 Saludcentral :  '  + edad_1);
+	let edad_2  = grupo[8];
+    console.log('edad_2 Saludcentral :  '  + edad_2);
+    let familia = grupo[9];
+    console.log('familia Saludcentral :  '  + familia);
+//	<!------------------------------ VARIABLES DE grupo end------------------------------------>							
+//	<!------------------------------ RESETEAR familia start------------------------------------>							
     switch (familia) {
         case 1:
             precioHijo1 = {};
@@ -52,101 +43,62 @@ export function valor_Saludcentral(prices, grupo,arrayDeducciones){
             // Handle unknown group cases, if necessary
             break;
     }
-      // Reseteamos valores según el grupo
-      if (familia === 1) {
-        precioHijo1 = {};
-        precioHijo2 = {};
-    } else if (familia === 2) {
-        precioConyuge = {};
-
-    } else if (familia === 3) {
-        precioHijo1 = {};
-        precioHijo2 = {};
-    } else{};
-
-    console.log('precioHijo1 2 Saludcentral :  '  + precioHijo1);
-    console.log('precioHijo2 2 Saludcentral :  '  + precioHijo2);
+//	<!------------------------------ RESETEAR familia end------------------------------------>							
 
 
-    let array = [];
-	//   let precios = {};
-    let precios = {};
 
+//	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							
+
+    let empresa = 'Salud Central';
     let factores = arrayDeducciones.find(item => item.name === empresa);
-    console.log('factores   :' ,factores);
-    
     let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
-    console.log('tipoAsociado   :' ,tipoAsociado);
-    
     let promociones = factores.bonificaciones;
-    console.log('promociones   :' ,promociones);
-    
     let bonAfinidad = promociones[promociones[0]];
-    console.log('bonAfinidad   :' ,bonAfinidad);
-    
     let con_afinidad = false;
-    console.log('con_afinidad   :' ,con_afinidad);
   if (promociones[0] >= 1 ){
       con_afinidad === true;
   }
+//	<!------------------------------ CALCULO DE DEDUCCIONES end arrayDeducciones------------------------------------>							
+
+//	<!------------------------------ COTIZACION START ------------------------------------>							
+
+      let precios = {};
       precios = {...precioTitular, ...precioConyuge, ...precioHijo1, ...precioHijo2};
       precios = Object.entries(precios).reduce((acc, [key, value]) => {
           acc[key] = (acc[key] || 0) + parseInt(value);
           return acc;
       }, {});
-      console.log('precios  :' ,precios);
 
+//	<!------------------------------ COTIZACION END ------------------------------------>							
     
-	// // //	<!-----------------------Bucle SALUD CENTRAL start------------------------>							
+//	<!----------------------------Bucle SALUD CENTRAL start---------------------------------->							
+    let array = [];
     for (let j in precios) {
-        console.log('Valores iniciales:', {
-            precios,
-            con_afinidad,
-            bonAfinidad,
-            tipoAsociado,
-            factores
-        });
-        
-
         let _id = [j][0];
-
         let nombre = _id.substring(3);
+        nombre = nombre.replace(/_/g, ' '); // Reemplaza todos los guiones bajos por un espacio        nombre = nombre.replace(/_/g, ' '); // Reemplaza todos los guiones bajos por un espacio
         let confirmaSiTieneBonificaciones = con_afinidad;
         let porcentajeBonificado = bonAfinidad;
-        let precioInicial = precios[j];
-        // Dentro de functions.promoDescuento
-console.log('Entrando a promoDescuento con:', { precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones });
-        
+        let precioInicial = precios[j];  
         // Llamar a la función y desestructurar el array devuelto
         let [valor_total_plan, valorBonificacion] = functions.promoDescuento(precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones);
-        console.log('Saliendo de promoDescuento con:', [valor_total_plan, valorBonificacion]);
         // Asignar los valores a nuevas variables
         let precioTotal = valor_total_plan;
         let bonificacionAplicada = valorBonificacion;
-        
- 
-        
-        
-        
-
-        
-        
         let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
-        console.log('precio   :' ,precio);
-
-        //	<!--------------------Crear Objeto SWISS end------------------------------>																            			
-
-                var plan = new Object();
+        
+        //	<!--------------------Crear Objeto SWISS start------------------------------>																            			
+        var plan = new Object();
                 plan.item_id = _id
-                plan.name = 'Salud Central ' + nombre;
+                plan.name = empresa + ' ' + nombre;
                 plan.precio = precio;
                 plan.promoPorcentaje = porcentajeBonificado;
                 plan.promoDescuento = bonificacionAplicada;
                 plan.valorLista = precioInicial;
                 plan.aportes_OS = factores.deduction;
-                array.push(plan);	    
+                array.push(plan);
 }
-console.log('array   :' ,array);
+//	<!----------------------------Bucle SALUD CENTRAL end---------------------------------->							
 
 return array
 }

@@ -1,42 +1,37 @@
 import * as functions from './functions';
 
 export function valor_Avalian( prices,grupo,arrayDeducciones){
-
-	let hijos  = grupo[3];console.log('1 avalian');
-    let precioTitular = prices.precioAvalianTitular.precios.precios;console.log('1 avalian');
-    let precioConyuge = prices.precioAvalianConyuge.precios.precios;console.log('1 avalian');
-    let precioHijo1 = prices.precioAvalianHijo1.precios.precios;console.log('1 avalian');
-    let precioHijo2 = prices.precioAvalianHijo2.precios.precios;console.log('1 avalian');
-    let precioHijo3 = prices.precioAvalianHijo3.precios.precios;console.log('1 avalian');
-    let precioHijo4 = prices.precioAvalianHijo25.precios.precios;console.log('1 avalian');
-    let empresa = 'Avalian';console.log('1 avalian');
-    let familia = grupo[9];console.log('1 avalian');
-
-
-    console.log('familia :  ' , familia);
-    console.log('hijos :  ' , hijos);
-    console.log('precioTitular :  ' , precioTitular);
-    console.log('precioConyuge :  ' , precioConyuge);
-    console.log('precioHijo1 :  ' , precioHijo1);
-    console.log('precioHijo2 :  ' , precioHijo2);
-    console.log('precioHijo3 :  ' , precioHijo3);
-    console.log('precioHijo4 :  ' , precioHijo4);
-
-
+//	<!------------------------------ VARIABLES DE prices start------------------------------------>							
+let precioTitular = prices.precioAvalianTitular.precios.precios;
+// console.log('precioTitular :  ' , precioTitular);
+let precioConyuge = prices.precioAvalianConyuge.precios.precios;
+// console.log('precioConyuge :  ' , precioConyuge);
+let precioHijo1 = prices.precioAvalianHijo1.precios.precios;
+// console.log('precioHijo1 :  ' , precioHijo1);
+let precioHijo2 = prices.precioAvalianHijo2.precios.precios;
+// console.log('precioHijo2 :  ' , precioHijo2);
+let precioHijo3 = prices.precioAvalianHijo3.precios.precios;
+// console.log('precioHijo3 :  ' , precioHijo3);
+let precioHijo4 = prices.precioAvalianHijo25.precios.precios;
+// console.log('precioHijo4 :  ' , precioHijo4);
+//	<!------------------------------ VARIABLES DE prices end------------------------------------>							
+//	<!------------------------------ VARIABLES DE grupo start------------------------------------>							
+	let hijos  = grupo[3];
+    // console.log('hijos :  ' , hijos);
+    let familia = grupo[9];
+    // console.log('familia :  ' , familia);
+//	<!------------------------------ VARIABLES DE grupo end------------------------------------>							
+//	<!------------------------------ AJUSTES DE familia start-------------------------------------->							
 
     if(familia === 1 ){
 		precioConyuge = 0;
-		hijos =0;
 	} else if (familia == 2 ) {
 		precioConyuge = 0;
 	  } else if ( familia ==3){
-		hijos =0;
 	  }
-	  let precio_adultos_Avalian = {};
-	  let precios = {};
-
-      
-
+//	<!------------------------------ AJUSTES DE familia end-------------------------------------->							     
+//	<!------------------------------ CALCULO DE DEDUCCIONES start ------------------------------------>							
+      let empresa = 'Avalian';
       let factores = arrayDeducciones.find(item => item.name === empresa);
       let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
       let promociones = factores.bonificaciones;
@@ -45,8 +40,11 @@ export function valor_Avalian( prices,grupo,arrayDeducciones){
     if (promociones[0] >= 1 ){
         con_afinidad === true;
     }
-      let array = [];
-console.log(' factores:',factores)
+//	<!------------------------------ CALCULO DE DEDUCCIONES end ------------------------------------>							
+//	<!------------------------------ COTIZACION START ------------------------------------>							
+
+    let precio_adultos_Avalian = {};
+    let precios = {};
       if (familia >=  3) {
         precio_adultos_Avalian = Object.entries(precioConyuge).reduce((acc, [key, value]) => // matrimonio
             ({
@@ -82,53 +80,37 @@ console.log(' factores:',factores)
     } else {
         precios = precio_adultos_Avalian;
     }
+//	<!------------------------------ COTIZACION END ------------------------------------>							
 
-	// //	<!-----------------------Bucle AVALIAN start------------------------>							
-	              
+//	<!-----------------------------Bucle AVALIAN start------------------------------------>							
+    let array = [];          
     for (let j in precios) {
-    //     console.log('imprimir j')
-
-    //     console.log(j)
-
-
-                
-                let conPromo = con_afinidad;
-                let empresaPlan = [j][0];
-                // console.log('empresaPlan ')
-                // console.log(empresaPlan)
-
-                let _id = empresaPlan;
-                let nombre = empresaPlan.substring(3);
-
-                // console.log('conPromo : ' + conPromo)
-                let promo = functions.promoDescuento(precios[j],bonAfinidad, conPromo)[2];
-                let descPromo = functions.promoDescuento(precios[j],promo, conPromo)[1];
-                let precioTotal = functions.promoDescuento(precios[j],promo, conPromo)[0];
-                //  console.log('precioTotal');
-                //  console.log(precioTotal)
-               
-
-
-                let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);
-                // console.log('precio ')
-                // console.log(precio)
-
+        let _id = [j][0];
+        let nombre = _id.substring(3);
+        nombre = nombre.replace(/_/g, ' '); // Reemplaza todos los guiones bajos por un espacio        nombre = nombre.replace(/_/g, ' '); // Reemplaza todos los guiones bajos por un espacio
+        let confirmaSiTieneBonificaciones = con_afinidad;
+        let porcentajeBonificado = bonAfinidad;
+        let precioInicial = precios[j];  
+        // Llamar a la función y desestructurar el array devuelto
+        let [valor_total_plan, valorBonificacion] = functions.promoDescuento(precioInicial, porcentajeBonificado, confirmaSiTieneBonificaciones);
+        // Asignar los valores a nuevas variables
+        let precioTotal = valor_total_plan;
+        let bonificacionAplicada = valorBonificacion;
+        let precio = functions.final(tipoAsociado,factores.deduction,precioTotal);     
             //	<!--------------------Crear Objeto AVALIAN end------------------------------>																            			
             var plan = new Object();
-                        plan.item_id = _id
-                        plan.name = 'Avalian ' + nombre;			
-                        plan.precio = precio;
-                        plan.promoPorcentaje = promo;
-                        plan.promoDescuento = descPromo;
-                        plan.valorLista = precios[j];
-                        plan.aportes_OS = factores.deduction;
-                        array.push(plan);	
+                  plan.item_id = _id
+                  plan.name = empresa + ' ' + nombre;
+                  plan.precio = precio;
+                  plan.promoPorcentaje = porcentajeBonificado;
+                  plan.promoDescuento = bonificacionAplicada;
+                  plan.valorLista = precioInicial;
+                  plan.aportes_OS = factores.deduction;
+                  array.push(plan);	
                     }
          //	<!-----------------------Bucle AVALIAN end------------------------>											
-                    // console.log( 'array AVALIAN')							
-                    // console.log(array)							
 
-                    return array    
+        return array    
     } 
     
 

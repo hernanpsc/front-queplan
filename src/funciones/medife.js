@@ -1,68 +1,29 @@
 import * as functions from './functions';
 
 export function valor_Medife(prices,grupo,arrayDeducciones){
-	
-    
-    let empresa = 'Medife';
-
-
-
-    let edadesHijos = grupo[6];
-    console.log('edadesHijos :',edadesHijos)
-    let precioPrincipal = prices.precioMedifeAdultos.precios.precios;
-    console.log('precioPrincipal :',precioPrincipal)
-    let precioHijo1 = prices.precioMedifeHIJO0a1.precios.precios;
-    console.log('precioHijo1 :',precioHijo1)
-    let precioHijo20 = prices.precioMedifeHIJO2a20.precios.precios;
-    console.log('precioHijo20 :',precioHijo20)
-    let precioHijo29 = prices.precioMedifeHIJO21a29.precios.precios;
-    console.log('precioHijo29 :',precioHijo29)
-
-    // Inicializamos contadores
-    let menoresQueUno = 0;
-    console.log('menoresQueUno :',menoresQueUno)
-
-    let deCeroA20 = 0;
-    console.log('deCeroA20 :',deCeroA20)
-
-    let familia = grupo[9];
-    console.log('familia :',familia)
-
-
-    let precios = {};
-
-    let factores = arrayDeducciones.find(item => item.name === empresa);
-    console.log('factores   :' ,factores);
-    
-    let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
-    console.log('tipoAsociado   :' ,tipoAsociado);
-    
-    let promociones = factores.bonificaciones;
-    console.log('promociones   :' ,promociones);
-    
-    let bonAfinidad = promociones[promociones[0]];
-    console.log('bonAfinidad   :' ,bonAfinidad);
-    
-    let con_afinidad = false;
-    console.log('con_afinidad   :' ,con_afinidad);
-    let de21A29 = 0;
-    console.log('de21A29   :' ,de21A29);
-
-    console.log('promociones :',promociones)
-    // Contamos las edades de los hijos según los rangos
-    for (let edad of edadesHijos) {
-        if (edad <= 0) {
-            menoresQueUno++;  // Edad menor que 1 (o igual a 0)
-        } else if (edad >= 1 && edad <= 20) {
-            deCeroA20++;  // Edad entre 0 y 20
-        } else if (edad >= 21 && edad <= 29) {
-            de21A29++;  // Edad entre 21 y 29
-        }
-    }
-    console.log('menoresQueUno  2 :' , menoresQueUno);
-    console.log('deCeroA20  2 :' , deCeroA20);
-    console.log('de21A29  2 :' , de21A29);
-
+//	<!------------------------------ VARIABLES DE prices start---------------------------------------------------------->							
+            let precioPrincipal = prices.precioMedifeAdultos.precios.precios;
+            console.log('precioPrincipal :',precioPrincipal)
+            let precioHijo1 = prices.precioMedifeHIJO0a1.precios.precios;
+            console.log('precioHijo1 :',precioHijo1)
+            let precioHijo20 = prices.precioMedifeHIJO2a20.precios.precios;
+            console.log('precioHijo20 :',precioHijo20)
+            let precioHijo29 = prices.precioMedifeHIJO21a29.precios.precios;
+            console.log('precioHijo29 :',precioHijo29)
+//	<!------------------------------ VARIABLES DE prices end---------------------------------------------------------->							
+//	<!------------------------------ VARIABLES DE grupo start--------------------------------------------------------->						
+            let edadesHijos = grupo[6];
+            console.log('edadesHijos :',edadesHijos)
+            let menoresQueUno = 0;
+            console.log('menoresQueUno :',menoresQueUno)
+            let deCeroA20 = 0;
+            console.log('deCeroA20 :',deCeroA20)
+            let familia = grupo[9];
+            console.log('familia :',familia)
+//	<!------------------------------ VARIABLES DE grupo end----------------------------------------------------------->							
+//	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							
+//	<!------------------------------ CALCULO DE DEDUCCIONES end arrayDeducciones-------------------------------------->							
+//	<!------------------------------ AJUSTES DE familia start--------------------------------------------------------->							
     // Reseteamos valores según el grupo
     if (familia === 1) {
         precioHijo1 = {};
@@ -82,17 +43,63 @@ export function valor_Medife(prices,grupo,arrayDeducciones){
         menoresQueUno = {};
         deCeroA20 = {};
         de21A29 = {};
-    } else{};
-
-    console.log('precioHijo1  3 :' , precioHijo1);
+    } else{};    console.log('precioHijo1  3 :' , precioHijo1);
     console.log('precioHijo20  3 :' , precioHijo20);
     console.log('precioHijo29  3 :' , precioHijo29);
     console.log('menoresQueUno  3 :' , menoresQueUno);
     console.log('deCeroA20  3 :' , deCeroA20);
     console.log('de21A29  3 :' , de21A29);
 
+//	<!------------------------------ AJUSTES DE familia end----------------------------------------------------------->							
+//	<!------------------------------ CALCULO DE DEDUCCIONES start arrayDeducciones------------------------------------>							
+        let empresa = 'Medife';
+        let factores = arrayDeducciones.find(item => item.name === empresa);
+        console.log('factores   :' ,factores);
+        let tipoAsociado = factores.tipo_Ingreso_Original_P_D;
+        console.log('tipoAsociado   :' ,tipoAsociado);
+        let promociones = factores.bonificaciones;
+        console.log('promociones   :' ,promociones);
+        let bonAfinidad = promociones[promociones[0]];
+        console.log('bonAfinidad   :' ,bonAfinidad);
+        let con_afinidad = false;
+        console.log('con_afinidad   :' ,con_afinidad);
+//	<!------------------------------ CALCULO DE DEDUCCIONES end arrayDeducciones-------------------------------------->							
+//	<!------------------------------ COTIZACION START ---------------------------------------------------------------->	
+//	<!------------------------------ COTIZACION END ------------------------------------------------------------------>							
+//	<!------------------------------ Bucle start --------------------------------------------------------------------->							
+//	<!-------------------------------Crear Objeto SWISS start--------------------------------------------------------->				
+//	<!------------------------------ Bucle end ----------------------------------------------------------------------->							
+	
+    
 
 
+
+
+
+
+
+
+    let de21A29 = 0;
+    console.log('de21A29   :' ,de21A29);
+    // Contamos las edades de los hijos según los rangos
+    for (let edad of edadesHijos) {
+        if (edad <= 0) {
+            menoresQueUno++;  // Edad menor que 1 (o igual a 0)
+        } else if (edad >= 1 && edad <= 20) {
+            deCeroA20++;  // Edad entre 0 y 20
+        } else if (edad >= 21 && edad <= 29) {
+            de21A29++;  // Edad entre 21 y 29
+        }
+    }
+    console.log('menoresQueUno  2 :' , menoresQueUno);
+    console.log('deCeroA20  2 :' , deCeroA20);
+    console.log('de21A29  2 :' , de21A29);
+
+ 
+
+
+
+    let precios = {};
     // Calculamos los precios finales
     precios = precioPrincipal;
     console.log('precios  3 :' , precios);
